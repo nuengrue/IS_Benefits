@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>610003250069-la9aehvh03sd4cb54dslq0hhc53s6knq.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.610003250069-la9aehvh03sd4cb54dslq0hhc53s6knq</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDyVeua5qnW1HVA709oVscDKEHcWGxDVKc</string>
+	<key>GCM_SENDER_ID</key>
+	<string>610003250069</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.ghbBanefitsAdmin</string>
+	<key>PROJECT_ID</key>
+	<string>ghb-benefits</string>
+	<key>STORAGE_BUCKET</key>
+	<string>ghb-benefits.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:610003250069:ios:26221b897802464898649c</string>
+</dict>
+</plist>

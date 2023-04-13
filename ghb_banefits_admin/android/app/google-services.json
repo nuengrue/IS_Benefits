@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "610003250069",
+    "project_id": "ghb-benefits",
+    "storage_bucket": "ghb-benefits.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:610003250069:android:60cf0db32b6e94ba98649c",
+        "android_client_info": {
+          "package_name": "com.example.ghb_banefits_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "610003250069-hr589mjifu7gcqds5qr193tsk6h6srju.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXmwBZVvFVLh7xi9ReqXjTrM6tmizzYqs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "610003250069-hr589mjifu7gcqds5qr193tsk6h6srju.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "610003250069-g17efb7bdq3okes0hjq7l5oumau6oq1l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.ghbBenefits"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:610003250069:android:e5abdc2f6716313398649c",
+        "android_client_info": {
+          "package_name": "com.example.ghb_benefits"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "610003250069-hr589mjifu7gcqds5qr193tsk6h6srju.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXmwBZVvFVLh7xi9ReqXjTrM6tmizzYqs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "610003250069-hr589mjifu7gcqds5qr193tsk6h6srju.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "610003250069-g17efb7bdq3okes0hjq7l5oumau6oq1l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.ghbBenefits"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
