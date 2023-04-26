@@ -19,6 +19,13 @@ class EducationController {
     return educations;
   }
 
+    Future<List<Education>> fetchEducationDashboard() async {
+    onSyncController.add(true);
+    educations = await servies.getEducationDashboard();
+    onSyncController.add(false);
+    return educations;
+  }
+
 /*
   void updateTodo(ChildAllowaneModel todo) async{
     servies.update(todo);

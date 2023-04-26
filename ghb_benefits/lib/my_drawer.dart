@@ -42,8 +42,8 @@ class _MyDrawerState extends State<MyDrawer> {
               decoration: BoxDecoration(
                 color: iBlueColor,
               ),
-              accountName: Text('nuengruethai.p'),
-              accountEmail: Text('nuengruethai.p@gmail.com'),
+              accountName: Text(user.email!),
+              accountEmail: Text(user.email!),
               currentAccountPicture: CircleAvatar(
                   child: ClipRRect(
                 borderRadius: BorderRadius.circular(100),
@@ -76,14 +76,14 @@ class _MyDrawerState extends State<MyDrawer> {
                     builder: (context) => MainHomePage()));
               },
             ),
-            ListTile(
-              leading: Icon(Icons.dashboard),
-              title: const Text('My Dashboards'),
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => MyDashboardPage()));
-              },
-            ),
+            // ListTile(
+            //   leading: Icon(Icons.dashboard),
+            //   title: const Text('My Dashboards'),
+            //   onTap: () {
+            //     Navigator.of(context).push(MaterialPageRoute(
+            //         builder: (context) => MyDashboardPage()));
+            //   },
+            // ),
             ListTile(
               leading: Icon(Icons.medical_information),
               title: const Text('ค่าช่วยเหลือค่ารักษาพยาบาล'),
@@ -124,20 +124,20 @@ class _MyDrawerState extends State<MyDrawer> {
                     builder: (context) => ListCremationServicePage()));
               },
             ),
-            ListTile(
-              leading: Icon(Icons.notifications),
-              title: const Text('แจ้งสถานะรายการสวัสดิการ'),
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyDashboardPage()));
-              },
-            ),
-                        ListTile(
-              leading: Icon(Icons.note),
-              title: const Text('รายงานสวัสดิการ'),
-              onTap: () {
-                //Navigator.of(context).push(MaterialPageRoute( builder: (context) => NotificationPage()));
-              },
-            ),
+            // ListTile(
+            //   leading: Icon(Icons.notifications),
+            //   title: const Text('แจ้งสถานะรายการสวัสดิการ'),
+            //   onTap: () {
+            //     Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyDashboardPage()));
+            //   },
+            // ),
+            //             ListTile(
+            //   leading: Icon(Icons.note),
+            //   title: const Text('รายงานสวัสดิการ'),
+            //   onTap: () {
+            //     //Navigator.of(context).push(MaterialPageRoute( builder: (context) => NotificationPage()));
+            //   },
+            // ),
 
           ],
         ),

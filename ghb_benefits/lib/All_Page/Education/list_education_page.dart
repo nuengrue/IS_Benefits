@@ -36,6 +36,28 @@ class _ListEducationPageState extends State<ListEducationPage> {
             var newEducation = await controller.fetchEducation();
 
           context.read<EducationProviders>().EducationList = newEducation;
+
+calculateAge(DateTime birthDate) {
+  DateTime currentDate = DateTime.now();
+  int age = currentDate.year - birthDate.year;
+  int month1 = currentDate.month;
+  int month2 = birthDate.month;
+  if (month2 > month1) {
+    age--;
+  } else if (month1 == month2) {
+    int day1 = currentDate.day;
+    int day2 = birthDate.day;
+    if (day2 > day1) {
+      age--;
+    }
+  }
+  return age;
+}
+ var a =  "1993-04-01";
+DateTime b =  DateTime.parse(a);
+          var _age = calculateAge(b);
+
+          print(_age);
       }
  @override
   Widget build(BuildContext context) {

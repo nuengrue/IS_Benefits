@@ -15,6 +15,7 @@ import 'package:intl/intl.dart';
 import 'package:open_file/open_file.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 
 
 class AddEduPage extends StatefulWidget {
@@ -160,11 +161,11 @@ _receiptdate;
  _amountreceipt;
 
   ///
-_payamount = "";
+_payamount = "0";
  _paydate  = "";
 
         _status = "Request";
-      _email = user.email!;
+      _email = user.uid;
             _url = _url;
       _filename = _filename;
       _flagread = "0";
@@ -259,12 +260,30 @@ _payamount = "";
 
    
     context.read<flieEducationModal>().flieEducationChoice = '';
-      Navigator.pop(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ListEducationPage(),
-        ),
-      );
+
+ AwesomeDialog(
+        context: context,
+        dialogType: DialogType.success,
+        animType: AnimType.bottomSlide,
+        showCloseIcon: true,
+        title: "สำเร็จ",
+        desc: "ดำเนินการบันทึกข้อมูลสำเร็จ",
+        btnOkOnPress: () {
+          Navigator.pop(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ListEducationPage(),
+            ),
+          );
+        },
+      ).show();
+
+      // Navigator.pop(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => ListEducationPage(),
+      //   ),
+      // );
     }
   }  
     String url = "";
@@ -1102,12 +1121,27 @@ _payamount = "";
                               SizedBox(
                   height: 10,
                 ),
-                              ElevatedButton(
-                child: Text("บันทึกข้อมูล"),
+                 ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: iBluebuttonColor,
+                  onPrimary: Colors.white,
+                  shadowColor: iBluebuttonColor,
+                  elevation: 3,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(32.0)),
+                  minimumSize: Size(200, 40), //////// HERE
+                ),
                 onPressed: () {
                   addEducation();
                 },
+                child: Text('บันทึกข้อมูล'),
               ),
+              //                 ElevatedButton(
+              //   child: Text("บันทึกข้อมูล"),
+              //   onPressed: () {
+              //     addEducation();
+              //   },
+              // ),
                 // Padding(
                 //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 //   child: GestureDetector(

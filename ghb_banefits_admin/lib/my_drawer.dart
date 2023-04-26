@@ -1,5 +1,12 @@
 
 import 'package:flutter/material.dart';
+import 'package:ghb_banefits_admin/All_Page_Admin/Child_Allowances/list_child_allowance.dart';
+import 'package:ghb_banefits_admin/All_Page_Admin/Cremation_Service/list_cremation_service.dart';
+import 'package:ghb_banefits_admin/All_Page_Admin/Education/list_education_page.dart';
+import 'package:ghb_banefits_admin/All_Page_Admin/House_Allowance/list_house_allowance.dart';
+import 'package:ghb_banefits_admin/All_Page_Admin/Medical/list_medical_page.dart';
+import 'package:ghb_banefits_admin/Dashborad/all_dashborad.dart';
+import 'package:ghb_banefits_admin/Dashborad/list_dashborad.dart';
 import 'package:ghb_banefits_admin/color.dart';
 import 'package:ghb_banefits_admin/main_home_admin_page.dart';
 import 'package:ghb_banefits_admin/test.dart';
@@ -75,7 +82,7 @@ class _MyDrawerState extends State<MyDrawer> {
               title: const Text('Dashboard รายการอนุมัติสวัสดิการ'),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => Test()));
+                    builder: (context) => AllDashboradPage()));
               },
             ),
             ListTile(
@@ -83,7 +90,7 @@ class _MyDrawerState extends State<MyDrawer> {
               title: const Text('ค่าช่วยเหลือค่ารักษาพยาบาล'),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => Test()));
+                    builder: (context) => ListMedicalAdminPage()));
               },
             ),
             ListTile(
@@ -91,7 +98,7 @@ class _MyDrawerState extends State<MyDrawer> {
               title: const Text('ค่าช่วยเหลือการศึกษาบุตร'),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => Test()));
+                    builder: (context) => ListEducationAdminPage()));
               },
             ),
             ListTile(
@@ -99,7 +106,7 @@ class _MyDrawerState extends State<MyDrawer> {
               title: const Text('เงินช่วยเหลือบุตร'),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => Test()));
+                    builder: (context) => ListChildAllowanceAdminPage()));
               },
             ),
             ListTile(
@@ -107,7 +114,7 @@ class _MyDrawerState extends State<MyDrawer> {
               title: const Text('ค่าเช่าบ้านสำหรับพนักงาน'),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => Test()));
+                    builder: (context) => ListHouseAllowanceAdminPage()));
               },
             ),
             ListTile(
@@ -115,7 +122,7 @@ class _MyDrawerState extends State<MyDrawer> {
               title: const Text('ฌาปนกิจสงเคราะห์'),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => Test()));
+                    builder: (context) => ListCremationServiceAdminPage()));
               },
             ),
             // ListTile(

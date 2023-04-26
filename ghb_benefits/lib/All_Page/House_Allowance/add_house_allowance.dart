@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -106,10 +107,10 @@ class _AddHouseAllowancePageState extends State<AddHouseAllowancePage> {
       _county;
       _province;
       _workstatus  = _selectedpartner!;
-      _payamount= "";
+      _payamount= "0";
       _paydate= "";    
       _status = "Request";
-      _email = user.email!;
+      _email = user.uid;
       _url = _url;
       _filename = _filename;
       _flagread = "0";
@@ -190,12 +191,29 @@ class _AddHouseAllowancePageState extends State<AddHouseAllowancePage> {
       //Provider.of<ChildAllowaneProviders>(context,listen: false).addNotes(_Title.text, _Description.text);
     context.read<flieHouseAllowanceModal>().flieHouseAllowanceChoice = '';
       //Navigator.of(context).pop();
-      Navigator.pop(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ListHouseAllowanceePage(),
-        ),
-      );
+      AwesomeDialog(
+        context: context,
+        dialogType: DialogType.success,
+        animType: AnimType.bottomSlide,
+        showCloseIcon: true,
+        title: "สำเร็จ",
+        desc: "ดำเนินการบันทึกข้อมูลสำเร็จ",
+        btnOkOnPress: () {
+          Navigator.pop(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ListHouseAllowanceePage(),
+            ),
+          );
+        },
+      ).show();
+
+      // Navigator.pop(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => ListHouseAllowanceePage(),
+      //   ),
+      // );
     }
   }
 
@@ -965,12 +983,27 @@ class _AddHouseAllowancePageState extends State<AddHouseAllowancePage> {
               SizedBox(
                 height: 10,
               ),
-                            ElevatedButton(
-                child: Text("บันทึกข้อมูล"),
+               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: iBluebuttonColor,
+                  onPrimary: Colors.white,
+                  shadowColor: iBluebuttonColor,
+                  elevation: 3,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(32.0)),
+                  minimumSize: Size(200, 40), //////// HERE
+                ),
                 onPressed: () {
                   AddHouseAllowance();
                 },
+                child: Text('บันทึกข้อมูล'),
               ),
+              //               ElevatedButton(
+              //   child: Text("บันทึกข้อมูล"),
+              //   onPressed: () {
+              //     AddHouseAllowance();
+              //   },
+              // ),
               // Padding(
               //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
               //   child: GestureDetector(

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -116,7 +117,7 @@ class _AddMedPageState extends State<AddMedPage> {
       _paydate = "0";
       _status = "Request";
 
-      _email = user.email!;
+      _email = user.uid;
    //   _cedtreat = medtreatList;
       _url = _url;
       _filename = _filename;
@@ -195,14 +196,29 @@ class _AddMedPageState extends State<AddMedPage> {
 
       context.read<flieMedicalModal>().flieMedicalChoice = '';
       //Provider.of<ChildAllowaneProviders>(context,listen: false).addNotes(_Title.text, _Description.text);
-
+      AwesomeDialog(
+        context: context,
+        dialogType: DialogType.success,
+        animType: AnimType.bottomSlide,
+        showCloseIcon: true,
+        title: "สำเร็จ",
+        desc: "ดำเนินการบันทึกข้อมูลสำเร็จ",
+        btnOkOnPress: () {
+          Navigator.pop(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ListMedicalPage(),
+            ),
+          );
+        },
+      ).show();
       //Navigator.of(context).pop();
-      Navigator.pop(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ListMedicalPage(),
-        ),
-      );
+      // Navigator.pop(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => ListMedicalPage(),
+      //   ),
+      // );
     }
   }
 
@@ -306,7 +322,7 @@ class _AddMedPageState extends State<AddMedPage> {
                 child: Column(
                   children: <Widget>[
                     Text(
-                      'สร้างคำขอเงินช่วยเหลือการศึกษาบุตร',
+                      'สร้างคำขอค่ารักษาพยาบาล',
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
@@ -1186,12 +1202,27 @@ class _AddMedPageState extends State<AddMedPage> {
               SizedBox(
                 height: 10,
               ),
-              ElevatedButton(
-                child: Text("บันทึกข้อมูล"),
+                            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: iBluebuttonColor,
+                  onPrimary: Colors.white,
+                  shadowColor: iBluebuttonColor,
+                  elevation: 3,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(32.0)),
+                  minimumSize: Size(200, 40), //////// HERE
+                ),
                 onPressed: () {
                   addMedical();
                 },
+                child: Text('บันทึกข้อมูล'),
               ),
+              // ElevatedButton(
+              //   child: Text("บันทึกข้อมูล"),
+              //   onPressed: () {
+              //     addMedical();
+              //   },
+              // ),
               // Padding(
               //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
               //   child: GestureDetector(

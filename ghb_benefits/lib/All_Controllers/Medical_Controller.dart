@@ -21,6 +21,13 @@ class MedicalController {
     return medicals;
   }
 
+    Future<List<Medical>> fetchMedicalDashboard() async {
+    onSyncController.add(true);
+    medicals = await servies.getMedicalDashboard();
+    onSyncController.add(false);
+    return medicals;
+  }
+
 /*
   void updateTodo(ChildAllowaneModel todo) async{
     servies.update(todo);

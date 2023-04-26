@@ -1,19 +1,22 @@
-
 import 'dart:io';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:ghb_benefits/All_Controllers/master_controllers.dart';
+import 'package:ghb_benefits/All_Models/employee_model.dart';
 import 'package:ghb_benefits/All_Page/Child_Allowances/list_child_allowance.dart';
 import 'package:ghb_benefits/All_Providers/provider_child_allowance.dart';
+import 'package:ghb_benefits/All_Providers/provider_master.dart';
+import 'package:ghb_benefits/All_Services/servics.dart';
 import 'package:ghb_benefits/color.dart';
 import 'package:ghb_benefits/pdf/files_page.dart';
 import 'package:intl/intl.dart';
 import 'package:open_file/open_file.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
-
 
 class AddChildAllowancePage extends StatefulWidget {
   const AddChildAllowancePage({Key? key}) : super(key: key);
@@ -24,6 +27,20 @@ class AddChildAllowancePage extends StatefulWidget {
 }
 
 class _AddChildAllowancePageState extends State<AddChildAllowancePage> {
+  MasterController mastecontroller = MasterController(FirebaseServices());
+
+  void initState() {
+    super.initState();
+    _getMaster(context);
+  }
+
+  void _getMaster(BuildContext context) async {
+    var newEmployee = await mastecontroller.fetchEmployee();
+    context.read<EmployeeProviders>().EmployeeList = newEmployee;
+    var newChilder = await mastecontroller.fetchChilder();
+    context.read<ChilderProviders>().ChilderList = newChilder;
+  }
+
   _AddChildAllowancePageState() {
     _selectedVal = _childName[0];
     _selectedpartner = _childpartner[0];
@@ -100,7 +117,7 @@ class _AddChildAllowancePageState extends State<AddChildAllowancePage> {
       }
       _status = "Request";
       //print(_status);
-      _email = user.email!;
+      _email = user.uid;
       _url = _url;
       _filename = _filename;
       _flagread = "0";
@@ -151,13 +168,30 @@ class _AddChildAllowancePageState extends State<AddChildAllowancePage> {
         'id': doc.id,
       });
 
-    context.read<flieChildAllowanceModal>().flieChildAllowanceChoice = '';
-      Navigator.pop(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ListChildAllowancePage(),
-        ),
-      );
+      context.read<flieChildAllowanceModal>().flieChildAllowanceChoice = '';
+
+      AwesomeDialog(
+        context: context,
+        dialogType: DialogType.success,
+        animType: AnimType.bottomSlide,
+        showCloseIcon: true,
+        title: "สำเร็จ",
+        desc: "ดำเนินการบันทึกข้อมูลสำเร็จ",
+        btnOkOnPress: () {
+          Navigator.pop(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ListChildAllowancePage(),
+            ),
+          );
+        },
+      ).show();
+      // Navigator.pop(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => ListChildAllowancePage(),
+      //   ),
+      // );
     }
   }
 
@@ -172,10 +206,8 @@ class _AddChildAllowancePageState extends State<AddChildAllowancePage> {
     var filename = filedetail.name;
 
     String name = DateTime.now().microsecondsSinceEpoch.toString();
-    var pdfFile = FirebaseStorage.instance
-        .ref()
-        .child(name)
-        .child("/" + filename.toString() + ".pdf");
+    var pdfFile = FirebaseStorage.instance.ref().child(filename.toString());
+    // .child("/" + filename.toString());
     UploadTask task = pdfFile.putData(file);
     TaskSnapshot snapshot = await task;
     url = await snapshot.ref.getDownloadURL();
@@ -241,7 +273,7 @@ class _AddChildAllowancePageState extends State<AddChildAllowancePage> {
                       ),
                     ),
                     const Divider(),
-                       Row(
+                    Row(
                       children: [
                         Expanded(
                           child: Text(
@@ -303,7 +335,6 @@ class _AddChildAllowancePageState extends State<AddChildAllowancePage> {
                       ),
                     ),
                     const Divider(),
-                 
                     Row(
                       children: [
                         Expanded(
@@ -314,6 +345,14 @@ class _AddChildAllowancePageState extends State<AddChildAllowancePage> {
                           ),
                         ),
                         Expanded(
+                          // child: Consumer<EmployeeProviders>(builder: (context,value, child) {
+                          //   final Employee  Etest;
+                          //   Etest =  value.EmployeeList as Employee;
+                          // return  Text(
+                          // Etest.nameemp,
+                          //   textAlign: TextAlign.end,
+                          // );
+                          // },),
                           child: Text(
                             'หนึ่งฤทัย พวงแก้ว',
                             textAlign: TextAlign.end,
@@ -672,10 +711,9 @@ class _AddChildAllowancePageState extends State<AddChildAllowancePage> {
                     const Divider(),
                     Consumer<flieChildAllowanceModal>(
                       builder: (context, value, child) {
-
                         if (value.flieChildAllowanceChoice
-                                  .toString()
-                                  .isNotEmpty) {
+                            .toString()
+                            .isNotEmpty) {
                           //Carimg = '${value.flieChildAllowanceChoice}';
                           return ListTile(
                             title: Text(_filename.toString()),
@@ -692,7 +730,6 @@ class _AddChildAllowancePageState extends State<AddChildAllowancePage> {
                         }
                       },
                     ),
-
                   ],
                 ),
               ),
@@ -700,36 +737,51 @@ class _AddChildAllowancePageState extends State<AddChildAllowancePage> {
                 height: 10,
               ),
               ElevatedButton(
-                child: Text("บันทึกข้อมูล"),
+                style: ElevatedButton.styleFrom(
+                  primary: iBluebuttonColor,
+                  onPrimary: Colors.white,
+                  shadowColor: iBluebuttonColor,
+                  elevation: 3,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(32.0)),
+                  minimumSize: Size(200, 40), //////// HERE
+                ),
                 onPressed: () {
                   AddChildAllowance();
                 },
+                child: Text('บันทึกข้อมูล'),
               ),
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              //   child: GestureDetector(
-              //     onTap: AddChildAllowance,
-              //     child: Container(
-              //       padding: EdgeInsets.all(20),
-              //       decoration: BoxDecoration(
-              //         color: iBlueColor,
-              //         borderRadius: BorderRadius.circular(12),
-              //       ),
-              //       child: Center(
-              //         child: Text(
-              //           'บันทึกข้อมูล',
-              //           style: TextStyle(
-              //               color: iWhiteColor,
-              //               fontWeight: FontWeight.bold,
-              //               fontSize: 18),
-              //         ),
-              //       ),
-              //     ),
+
+              // ElevatedButton(
+              //   child: Text("บันทึกข้อมูล"),
+              //   onPressed: () {
+              //     AddChildAllowance();
+
+              //   },
+              // ),
+
+              SizedBox(
+                height: 10,
+              ),
+
+              // AnimatedButton(
+              //   text: "บันทึกข้อมูลสำเร็จ",
+              //   color: Colors.green,
+              //   pressEvent: () {
+              //     AwesomeDialog(
+              //       context: context,
+              //       dialogType: DialogType.success,
+              //       animType: AnimType.bottomSlide,
+              //       showCloseIcon: true,
+              //       title: "สำเร็จ",
+              //       desc: "ดำเนินการบันทึกข้อมูลสำเร็จ",
+              //       btnOkOnPress: () {
+              //         AddChildAllowance();
+              //       },
+              //     ).show();
+              //   },
+
               //   ),
-              // ),
-              // SizedBox(
-              //   height: 30,
-              // ),
 
               ///
             ],

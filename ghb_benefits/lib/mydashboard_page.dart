@@ -1,13 +1,15 @@
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:ghb_benefits/All_Controllers/Education_Controller.dart';
+import 'package:ghb_benefits/All_Controllers/Medical_Controller.dart';
+import 'package:ghb_benefits/All_Providers/provider_dashboard.dart';
+import 'package:ghb_benefits/All_Providers/provider_education.dart';
+import 'package:ghb_benefits/All_Providers/provider_medical.dart';
+import 'package:ghb_benefits/All_Services/servics.dart';
 
 import 'package:ghb_benefits/color.dart';
 import 'package:ghb_benefits/my_drawer.dart';
-
-
-
+import 'package:provider/provider.dart';
 
 class MyDashboardPage extends StatefulWidget {
   @override
@@ -15,403 +17,385 @@ class MyDashboardPage extends StatefulWidget {
 }
 
 class _MyDashboardPageState extends State<MyDashboardPage> {
-  //final _formKey = GlobalKey<FormState>();
-  //final user = FirebaseAuth.instance.currentUser!;
+  double AMedical = 40000;
 
+
+  MedicalController medicalcontroller = MedicalController(FirebaseServices());
+  EducationController educationcontroller = EducationController(FirebaseServices());
+
+  void initState() {
+    super.initState();
+    _getDashboard(context);
+  }
+
+  void _getDashboard(BuildContext context) async {
+    // get data  MedicalDashboard
+    var newMedicalDashboard = await medicalcontroller.fetchMedicalDashboard();
+    context.read<MedicalProviders>().MedicalList = newMedicalDashboard;
+    final medical = [];
+    for (var doc in newMedicalDashboard) {
+      double a = double.parse(doc.payamount);
+      medical.add(a);
+    }
+    var sumamountmedical = medical.reduce((a, b) => a + b);
+    var RemainMedical = AMedical - sumamountmedical;
+    context.read<MyDashboardProviders>().SumMedicalModalChoice = sumamountmedical;
+    context.read<MyDashboardProviders>().RemainMedicalModalChoice = RemainMedical;
+
+        // get data  EducationDashboard
+    var newEducationDashboard = await educationcontroller.fetchEducationDashboard();
+    context.read<EducationProviders>().EducationList = newEducationDashboard;
+    final education = [];
+    for (var doc in newEducationDashboard) {
+      double a = double.parse(doc.payamount);
+      education.add(a);
+    }
+    var sumamounteducation = education.reduce((a, b) => a + b);
+    var RemainEducation = AMedical - sumamounteducation;
+    context.read<MyDashboardProviders>().SumEducationModalChoice = sumamounteducation;
+    context.read<MyDashboardProviders>().RemainEducationModalChoice = RemainEducation;
+    
+
+  }
 
   @override
-
- Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('My Dashboard',style: TextStyle(
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold,
-                            color: iOrangeColor,
-                          ),),
-      backgroundColor: iBlueColor,),
-
-
-      body: SingleChildScrollView(
-
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              /*
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          'GHB',
-                          style: TextStyle(
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold,
-                            color: iOrangeColor,
-                          ),
-                        ),
-                        Text(
-                          ' Benefit' 
-                          //+ user.email!
-                          ,
-                          style: TextStyle(fontSize: 28, color:iOrangeColor),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                        color: iGreyColor,
-                        shape: BoxShape.circle,
-                      ),
-                      child: IconButton(
-                        icon: Icon(Icons.person),
-                        color: iOrangeColor,
-                        onPressed: () {
-                        //  Navigator.of(context).push(MaterialPageRoute(
-                          //    builder: (context) => ()));
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              */
-
-              SizedBox(height: 10),
-              /*
-                Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          'Hi!',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: iBlueColor,
-                          ),
-                        ),
-                        Text(
-                          '  ' 
-                          + user.email!
-                          ,
-                          style: TextStyle(fontSize: 18, color:iBlueColor),
-                        ),
-                      ],
-                    ),
-                   
-                  ],
-                ),
-              ),
-              */
-              SizedBox(height: 20),
-
-       /// my dash border
-       Container(
-
-        child: Padding(
-          padding:  const EdgeInsets.symmetric(horizontal: 25.0),
-          
-          child: Text('My Dashboard', textAlign: TextAlign.left,style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color:iBlueColor),),
-
+      appBar: AppBar(
+        title: Text(
+          'My Dashboard',
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+            color: iOrangeColor,
+          ),
         ),
-       ),
-             Padding(
-               padding: const EdgeInsets.all(8.0),
-               child: Container(
-                
-            child:  Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-           Container(
-                margin: const EdgeInsets.all(10.0),
-                padding: const EdgeInsets.all(10.0),
-                //height: double.infinity,
-                width: 400,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(
-                    color: Colors.white,
-                  ),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 6.0,
-                      spreadRadius: 2.0,
-                      color: Colors.grey,
-                      offset: Offset(0.0, 0.0),
-                    )
-                  ],
-                ),
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      'ค่ารักษาพยาบาล',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const Divider(),
-                            SizedBox(
-                              height: 100,
-                              child: PieChart(
-                                PieChartData(
+        backgroundColor: iBlueColor,
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
 
-                          startDegreeOffset: 30,
-                                  sections: [
-                                    //
-                                    PieChartSectionData(
-                                      color: Colors.blue,
-                                      value: 20000,
-                                      showTitle: false,
-                                      radius: 25,
-                                    ),
-                                    PieChartSectionData(
-                                      color: Colors.green,
-                                      value: 20000,
-                                      showTitle: false,
-                                      radius: 25,
-                                    ),
-                                  ], //
-                                ),
-                              ),
-                            ),
-                    const Divider(),
-                    Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: [
+            SizedBox(height: 10),
 
-                                   Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'เงินที่ใช้ได้',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                                        '32000',
-                                        textAlign: TextAlign.end,
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          color: Colors.blue,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                        ),
-                      ],
-                    ),
-                                                  Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'เงินที่ใช้ไป',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                                        '8000',
-                                        textAlign: TextAlign.end,
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          color: Colors.green,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                                        children: [
-                        Expanded(
-                          child: Text(
-                            'วงเงินตามสิทธิ',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                                        '40000',
-                                        textAlign: TextAlign.end,
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                        ),
-                      ],
-                    ),
-                                  ],   
-                    ),
-                    
+            SizedBox(height: 20),
 
-                  ],
-                ),
-            ),
- 
-            ///
+            /// my dash border
             Container(
-                margin: const EdgeInsets.all(10.0),
-                padding: const EdgeInsets.all(10.0),
-                //height: double.infinity,
-                width: 400,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(
-                    color: Colors.white,
-                  ),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 6.0,
-                      spreadRadius: 2.0,
-                      color: Colors.grey,
-                      offset: Offset(0.0, 0.0),
-                    )
-                  ],
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: Text(
+                  'My Dashboard',
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: iBlueColor),
                 ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text(
-                      'ค่าช่วยเหลือการศึกษาบุตร',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                    Container(
+                      margin: const EdgeInsets.all(10.0),
+                      padding: const EdgeInsets.all(10.0),
+                      //height: double.infinity,
+                      width: 400,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(
+                          color: Colors.white,
+                        ),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 6.0,
+                            spreadRadius: 2.0,
+                            color: Colors.grey,
+                            offset: Offset(0.0, 0.0),
+                          )
+                        ],
                       ),
-                    ),
-                    const Divider(),
-                            SizedBox(
-                              height: 100,
-                              child: PieChart(
-                                PieChartData(
-                                  startDegreeOffset: 30,
-                                  sections: [
-                                    //
-                                    PieChartSectionData(
-                                      color: Colors.blue,
-                                      value: 32000,
-                                      showTitle: false,
-                                      radius: 25,
-                                    ),
-                                    PieChartSectionData(
-                                      color: Colors.green,
-                                      value: 8000,
-                                      showTitle: false,
-                                      radius: 25,
-                                    ),
-                                  ], //
-                                ),
+                      child: Column(
+                        children: <Widget>[
+                          Text(
+                            'ค่ารักษาพยาบาล',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Color.fromARGB(255, 9, 28, 235),
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const Divider(),
+                          SizedBox(
+                            height: 100,
+                            child: PieChart(
+                              PieChartData(
+                                startDegreeOffset: 30,
+                                sections: [
+                                  //
+                                  PieChartSectionData(
+                                    color: Colors.blue,
+                                    value:  context
+                                          .watch<MyDashboardProviders>()
+                                          .RemainMedicalModalChoice,
+                                    showTitle: false,
+                                    radius: 25,
+                                  ),
+                                  PieChartSectionData(
+                                    color: Colors.green,
+                                    value: context
+                                          .watch<MyDashboardProviders>()
+                                          .SumMedicalModalChoice,
+                                    showTitle: false,
+                                    radius: 25,
+                                  ),
+                                ], //
                               ),
                             ),
-                    const Divider(),
-                    Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          ),
+                          const Divider(),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Row(
                                 children: [
-
-                                   Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'เงินที่ใช้ได้',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                                        '32000',
-                                        textAlign: TextAlign.end,
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          color: Colors.blue,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                  Expanded(
+                                    child: Text(
+                                      'เงินที่ใช้ได้',
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      context
+                                          .watch<MyDashboardProviders>()
+                                          .RemainMedicalModalChoice
+                                          .toString(),
+                                      textAlign: TextAlign.end,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.blue,
+                                        fontWeight: FontWeight.bold,
                                       ),
-                        ),
-                      ],
-                    ),
-                                                  Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'เงินที่ใช้ไป',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                                        '8000',
-                                        textAlign: TextAlign.end,
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          color: Colors.green,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      'เงินที่ใช้ไป',
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      context
+                                          .watch<MyDashboardProviders>()
+                                          .SumMedicalModalChoice
+                                          .toString(),
+                                      textAlign: TextAlign.end,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.green,
+                                        fontWeight: FontWeight.bold,
                                       ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                                        children: [
-                        Expanded(
-                          child: Text(
-                            'วงเงินตามสิทธิ',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                                        '40000',
-                                        textAlign: TextAlign.end,
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      'วงเงินตามสิทธิ',
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      AMedical.toString(),
+                                      textAlign: TextAlign.end,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
                                       ),
-                        ),
-                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
 
-                                  ],   
+                    ///
+                    Container(
+                      margin: const EdgeInsets.all(10.0),
+                      padding: const EdgeInsets.all(10.0),
+                      //height: double.infinity,
+                      width: 400,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(
+                          color: Colors.white,
+                        ),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 6.0,
+                            spreadRadius: 2.0,
+                            color: Colors.grey,
+                            offset: Offset(0.0, 0.0),
+                          )
+                        ],
+                      ),
+                      child: Column(
+                        children: <Widget>[
+                          Text(
+                            'ค่าช่วยเหลือการศึกษาบุตร',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Color.fromARGB(255, 9, 28, 235),
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const Divider(),
+                           SizedBox(
+                            height: 100,
+                            child: PieChart(
+                              PieChartData(
+                                startDegreeOffset: 30,
+                                sections: [
+                                  //
+                                  PieChartSectionData(
+                                    color: Colors.blue,
+                                    value:  context
+                                          .watch<MyDashboardProviders>()
+                                          .RemainEducationModalChoice,
+                                    showTitle: false,
+                                    radius: 25,
+                                  ),
+                                  PieChartSectionData(
+                                    color: Colors.green,
+                                    value: context
+                                          .watch<MyDashboardProviders>()
+                                          .SumEducationModalChoice,
+                                    showTitle: false,
+                                    radius: 25,
+                                  ),
+                                ], //
+                              ),
+                            ),
+                          ),
+                          const Divider(),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      'เงินที่ใช้ได้',
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      context
+                                          .watch<MyDashboardProviders>()
+                                          .RemainEducationModalChoice
+                                          .toString(),
+                                      textAlign: TextAlign.end,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.blue,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      'เงินที่ใช้ไป',
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                           context
+                                          .watch<MyDashboardProviders>()
+                                          .SumEducationModalChoice
+                                          .toString(),
+                                      textAlign: TextAlign.end,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.green,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      'วงเงินตามสิทธิ',
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      AMedical.toString(),
+                                      textAlign: TextAlign.end,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                    
-
                   ],
                 ),
+              ),
             ),
           ],
         ),
-               ),
-             ),
-            ],
-            
-          ),
-
-        ),
-       drawer: MyDrawer(),
+      ),
+      drawer: MyDrawer(),
     );
   }
-
- 
 }
-
-
 

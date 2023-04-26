@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ghb_benefits/All_Page/Child_Allowances/add_child_allowance.dart';
 import 'package:ghb_benefits/All_Providers/provider_child_allowance.dart';
+import 'package:ghb_benefits/All_Providers/provider_dashboard.dart';
+import 'package:ghb_benefits/All_Providers/provider_master.dart';
 import 'package:ghb_benefits/child_allowance/viewtestb.dart';
 import 'package:ghb_benefits/All_Page/Cremation_Service/add_cremation_service.dart';
 import 'package:ghb_benefits/All_Page/Cremation_Service/list_cremation_service.dart';
@@ -14,10 +16,10 @@ import 'package:ghb_benefits/All_Page/Medical/add_medical_page.dart';
 import 'package:ghb_benefits/All_Providers/provider_medical.dart';
 import 'package:ghb_benefits/All_Providers/provider_education.dart';
 import 'package:ghb_benefits/All_Page/Education/add_education_page.dart';
+
 import 'package:ghb_benefits/pdf/uploadfiles.dart';
 import 'package:provider/provider.dart';
-import 'htttpTest/view.dart';
-import 'page/notification_page.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -51,6 +53,11 @@ void main() async {
       ChangeNotifierProvider(create: (context) => flieMedicalModal()),
       ChangeNotifierProvider(create: (context) => EducationProviders()),
       ChangeNotifierProvider(create: (context) => flieEducationModal()),
+      ChangeNotifierProvider(create: (context) => MyDashboardProviders()),
+      ChangeNotifierProvider(create: (context) => EmployeeProviders()),
+      ChangeNotifierProvider(create: (context) => ChilderProviders()),      
+      ChangeNotifierProvider(create: (context) => filedEmployeeProviders()),      
+
     ],
     child: MyApp(),
   ));

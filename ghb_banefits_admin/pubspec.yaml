@@ -46,6 +46,7 @@ dependencies:
   firebase_storage: ^11.0.7
   provider: ^6.0.5
   syncfusion_flutter_pdfviewer: ^19.2.51-beta
+  awesome_dialog: ^3.0.2
 
 
 dev_dependencies:

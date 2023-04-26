@@ -13,6 +13,7 @@ import 'package:intl/intl.dart';
 import 'package:open_file/open_file.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 
 class AddCremationServicePage extends StatefulWidget {
   const AddCremationServicePage({Key? key}) : super(key: key);
@@ -157,11 +158,11 @@ class _AddCremationServicePageState extends State<AddCremationServicePage> {
 //
 
       ///
-      _payamount = "";
+      _payamount = "0";
       _paydate = "";
 
       _status = "Request";
-      _email = user.email!;
+      _email = user.uid;
       _url = _url;
       _filename = _filename;
       _flagread = "0";
@@ -249,12 +250,30 @@ class _AddCremationServicePageState extends State<AddCremationServicePage> {
         //'id' : result,
       });
     context.read<flieCremationServiceModal>().flieCremationServiceChoice = "";
-      Navigator.pop(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ListCremationServicePage(),
-        ),
-      );
+
+  AwesomeDialog(
+        context: context,
+        dialogType: DialogType.success,
+        animType: AnimType.bottomSlide,
+        showCloseIcon: true,
+        title: "สำเร็จ",
+        desc: "ดำเนินการบันทึกข้อมูลสำเร็จ",
+        btnOkOnPress: () {
+          Navigator.pop(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ListCremationServicePage(),
+            ),
+          );
+        },
+      ).show();
+
+      // Navigator.pop(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => ListCremationServicePage(),
+      //   ),
+      // );
     }
   }
 
@@ -1943,12 +1962,28 @@ Padding(
                     SizedBox(
                       height: 10,
                     ),
+                    // ElevatedButton(
+                    //   child: Text("บันทึกข้อมูล"),
+                    //   onPressed: () {
+                    //     AddCremationService();
+                    //   },
+                    // ),
+
                     ElevatedButton(
-                      child: Text("บันทึกข้อมูล"),
-                      onPressed: () {
-                        AddCremationService();
-                      },
-                    ),
+                style: ElevatedButton.styleFrom(
+                  primary: iBluebuttonColor,
+                  onPrimary: Colors.white,
+                  shadowColor: iBluebuttonColor,
+                  elevation: 3,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(32.0)),
+                  minimumSize: Size(200, 40), //////// HERE
+                ),
+                onPressed: () {
+                  AddCremationService();
+                },
+                child: Text('บันทึกข้อมูล'),
+              ),
 
                     //               SizedBox(
                     //   height: 10,

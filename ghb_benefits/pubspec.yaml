@@ -36,6 +36,7 @@ dependencies:
   pie_chart: ^5.3.2
   provider: ^6.0.4
   syncfusion_flutter_pdfviewer: ^19.2.51-beta
+  awesome_dialog: ^3.0.2
 
 dev_dependencies:
   flutter_test:
