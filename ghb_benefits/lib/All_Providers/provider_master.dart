@@ -1,7 +1,7 @@
 
 import 'package:flutter/widgets.dart';
 import 'package:ghb_benefits/All_Controllers/master_controllers.dart';
-import 'package:ghb_benefits/All_Models/childer_model.dart';
+import 'package:ghb_benefits/All_Models/child_model.dart';
 import 'package:ghb_benefits/All_Models/employee_model.dart';
 import 'package:ghb_benefits/All_Services/servics.dart';
 
@@ -87,11 +87,20 @@ class filedEmployeeProviders with ChangeNotifier {
 class ChilderProviders with ChangeNotifier {
   MasterController controller = MasterController(FirebaseServices());
 
-  List<Childer> _ChilderList = [];
-  List<Childer> get ChilderList => this._ChilderList;
+  List<Child> _ChilderList = [];
+  List<Child> get ChilderList => this._ChilderList;
 
-  set ChilderList(List<Childer> value) {
+  set ChilderList(List<Child> value) {
     this._ChilderList = value;
+
+    notifyListeners();
+  }
+
+    List<String> _childname = [];
+  List<String> get childnamerList => this._childname;
+
+  set childnamerList(List<String> value) {
+    this._childname = value;
 
     notifyListeners();
   }

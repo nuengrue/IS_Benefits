@@ -39,20 +39,29 @@ class _AddChildAllowancePageState extends State<AddChildAllowancePage> {
     context.read<EmployeeProviders>().EmployeeList = newEmployee;
     var newChilder = await mastecontroller.fetchChilder();
     context.read<ChilderProviders>().ChilderList = newChilder;
+   List<String>  childName = [];
+    for (var doc in newChilder) {
+      childName.add(doc.namechild);
+    }
+    List<String>  sumamounteducation = childName;
+    context.read<ChilderProviders>().childnamerList = sumamounteducation;
+    print(sumamounteducation);
   }
 
   _AddChildAllowancePageState() {
-    _selectedVal = _childName[0];
+    // _selectedVal = _childName[0];
     _selectedpartner = _childpartner[0];
     _selectedstatuspartner = _childstatuspartner[0];
   }
 
-  final _childName = [
-    "เลือกบุตร",
-    "ด.ช. น้ำใจ มาดี",
-    "ด.ช. อุ่นใจ มาดี",
-    "ด.ช. ตาใจ มาดี"
-  ];
+
+  // final _childName = [
+  //   "เลือกบุตร",
+  //   "ด.ช. น้ำใจ มาดี",
+  //   "ด.ช. อุ่นใจ มาดี",
+  //   "ด.ช. ตาใจ มาดี"
+  // ];
+  late final List<String> _childName ;
   String? _selectedVal = "";
   final _childpartner = [
     "เลือกสถานะ",
@@ -231,6 +240,8 @@ class _AddChildAllowancePageState extends State<AddChildAllowancePage> {
   @override
   Widget build(BuildContext context) {
     // Scaffold is a layout for
+      final List<String> _childName = context.read<ChilderProviders>().childnamerList ;
+
     // the major Material Components.
     return Scaffold(
       appBar: AppBar(
@@ -465,8 +476,9 @@ class _AddChildAllowancePageState extends State<AddChildAllowancePage> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: DropdownButtonFormField(
-                        value: _selectedVal,
-                        items: _childName
+                        // value: _selectedVal,
+                        value:context.read<ChilderProviders>().childnamerList.toList(),
+                        items: context.read<ChilderProviders>().childnamerList
                             .map((e) => DropdownMenuItem(
                                   child: Text(e),
                                   value: e,

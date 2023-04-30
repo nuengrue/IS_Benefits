@@ -50,18 +50,29 @@ class _ListMedicalPageState extends State<ListMedicalPage> {
                             color: iOrangeColor,
                           ),),
       backgroundColor: iBlueColor,
-       actions: <Widget>[
+      //  actions: <Widget>[
                     
-          IconButton(
-            icon: const Icon(Icons.add),
-            // tooltip: 'Show Snackbar',
+      //     IconButton(
+      //       icon: const Icon(Icons.add),
+      //       // tooltip: 'Show Snackbar',
+      //       onPressed: () {
+
+      //         Navigator.of(context).push(
+      //             MaterialPageRoute(builder: (context) => AddMedPage()));
+      //       },
+      //     ),
+      //   ],
+        ),
+                  floatingActionButton: FloatingActionButton(  
+        child: Icon(Icons.add),  
+        backgroundColor: iBlueColor,  
+        foregroundColor: Colors.white,  
             onPressed: () {
 
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => AddMedPage()));
             },
-          ),
-        ],),
+      ),
         /*
 body:FutureBuilder<List<ChildAllowance>>(
     future: _getChildAllowance(context),

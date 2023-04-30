@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:ghb_benefits/All_Models/child_allowane_model.dart';
-import 'package:ghb_benefits/All_Models/childer_model.dart';
+import 'package:ghb_benefits/All_Models/child_model.dart';
 import 'package:ghb_benefits/All_Models/employee_model.dart';
 import 'package:ghb_benefits/All_Services/servics.dart';
 
 class MasterController {
   final FirebaseServices servies;
-  List<Childer> childers = List.empty();
+  List<Child> childers = List.empty();
   List<Employee> employees = List.empty();
 
   StreamController<bool> onSyncController = StreamController();
@@ -15,7 +15,7 @@ class MasterController {
 
   MasterController(this.servies);
 
-  Future<List<Childer>> fetchChilder() async {
+  Future<List<Child>> fetchChilder() async {
     onSyncController.add(true);
     childers = await servies.getChilder();
     onSyncController.add(false);

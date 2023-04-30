@@ -43,4 +43,34 @@ class MyDashboardProviders with ChangeNotifier {
     notifyListeners();
     
   }
+
+     double _Sumchild = 0;
+  get SumchildnModalChoice => this._Sumchild;
+
+  set SumchildModalChoice(value) {
+    this._Sumchild = value;
+    notifyListeners();
+    
+  }
+  
+      double _Remainchild = 0;
+  get RemainchildModalChoice => this._Remainchild;
+
+  set RemainchildModalChoice(value) {
+    this._Remainchild = value;
+    notifyListeners();
+    
+  }
+
+
+      int _Childage = 0;
+  get Childage => this._Childage;
+
+  set Childage(value) {
+    this._Childage = value;
+    notifyListeners();
+    
+  }
 }
+
+

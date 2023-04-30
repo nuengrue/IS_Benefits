@@ -57,7 +57,7 @@ void main() async {
       ChangeNotifierProvider(create: (context) => EmployeeProviders()),
       ChangeNotifierProvider(create: (context) => ChilderProviders()),      
       ChangeNotifierProvider(create: (context) => filedEmployeeProviders()),      
-
+      // ChangeNotifierProvider(create: (context) => filedCountchildProviders()),      
     ],
     child: MyApp(),
   ));

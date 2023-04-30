@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:ghb_benefits/All_Controllers/Education_Controller.dart';
 import 'package:ghb_benefits/All_Models/education_model.dart';
+import 'package:ghb_benefits/All_Providers/provider_dashboard.dart';
 import 'package:ghb_benefits/All_Providers/provider_education.dart';
 import 'package:ghb_benefits/All_Services/servics.dart';
 import 'package:ghb_benefits/color.dart';
@@ -19,10 +20,13 @@ class ListEducationPage extends StatefulWidget {
 }
 
 class _ListEducationPageState extends State<ListEducationPage> {
+
     List<Education> educations = List.empty();
   bool isloading = false;
   late int count ;
-
+   String checkit = '';
+  late int ages = 0;
+// var sum = context.read<MyDashboardProviders>().SumMedicalModalChoice;
   EducationController controller =
       EducationController(FirebaseServices());
       
@@ -30,6 +34,8 @@ class _ListEducationPageState extends State<ListEducationPage> {
       void initState() {
         super.initState();
         _getEducation(context);
+        
+
       }
 
    void   _getEducation(BuildContext context) async {
@@ -56,11 +62,19 @@ calculateAge(DateTime birthDate) {
  var a =  "1993-04-01";
 DateTime b =  DateTime.parse(a);
           var _age = calculateAge(b);
-
+context.read<MyDashboardProviders>().Childage = _age;
           print(_age);
+
+setState(() {
+ ages = _age;
+});
+          
       }
+
  @override
   Widget build(BuildContext context) {
+    return Consumer<MyDashboardProviders>(
+      builder: (context, value, child) {
     return Scaffold(
             appBar: AppBar(title: Text('รายการคำขอช่วยเหลือการศึกษา',style: TextStyle(
                             fontSize: 16,
@@ -68,16 +82,29 @@ DateTime b =  DateTime.parse(a);
                             color: iOrangeColor,
                           ),),
       backgroundColor: iBlueColor,
-       actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.add),
-            // tooltip: 'Show Snackbar',
-            onPressed: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => AddEduPage()));
-            },
-          ),
-        ],),
+      
+      //  actions: <Widget>[
+      //     IconButton(
+      //       icon: const Icon(Icons.add),
+      //       // tooltip: 'Show Snackbar',
+      //       onPressed: () {
+      //         Navigator.of(context).push(
+      //             MaterialPageRoute(builder: (context) => AddEduPage()));
+      //       },
+      //     ),
+      //   ],
+        ),
+
+      //    floatingActionButton: FloatingActionButton(  
+      //   child: Icon(Icons.add),  
+      //   backgroundColor: iBlueColor,  
+      //   foregroundColor: Colors.white,  
+      //       onPressed: () {
+
+      //         Navigator.of(context).push(
+      //             MaterialPageRoute(builder: (context) => AddEduPage()));
+      //       },
+      // ), 
              body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Consumer<EducationProviders>(
@@ -108,7 +135,46 @@ DateTime b =  DateTime.parse(a);
           },
         ),
       ),
+
              drawer: MyDrawer(),
+      persistentFooterButtons: <Widget>[
+             if (value.SumEducationModalChoice.toString() == '40000.0') ...[
+                   
+ Text('ท่านได้ใช้วงเงินตามสิทธิ์ครบกำหนดแล้ว: ${value.SumEducationModalChoice.toString()} บาท ${ages.toString()}'),
+
+    ] else ...[
+   Text('ท่านได้ใช้วงเงินตามสิทธิ์ครบกำหนดแล้ว: ${value.Childage.toString()}'),
+
+         FloatingActionButton(  
+        child: Icon(Icons.add),  
+        backgroundColor: iBlueColor,  
+        foregroundColor: Colors.white,  
+            onPressed: () {
+
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => AddEduPage()));
+            },
+      ),
+    ]
+
+        // floatingActionButton: FloatingActionButton(  
+        // child: Icon(Icons.add),  
+        // backgroundColor: iBlueColor,  
+        // foregroundColor: Colors.white,  
+        //     onPressed: () {
+
+        //       Navigator.of(context).push(
+        //           MaterialPageRoute(builder: (context) => AddEduPage()));
+        //     },
+      // ), 
+
+
+      ]
+
+    
+                      
+      );
+  }
       );
   }
 }

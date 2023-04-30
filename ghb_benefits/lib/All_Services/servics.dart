@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:ghb_benefits/All_Models/child_allowane_model.dart';
-import 'package:ghb_benefits/All_Models/childer_model.dart';
+import 'package:ghb_benefits/All_Models/child_model.dart';
 import 'package:ghb_benefits/All_Models/cremation_service_model.dart';
 import 'package:ghb_benefits/All_Models/employee_model.dart';
 import 'package:ghb_benefits/All_Models/house_model.dart';
@@ -24,12 +24,12 @@ class FirebaseServices{
    return employee.employees;
   }
 
-  Future<List<Childer>> getChilder() async {
+  Future<List<Child>> getChilder() async {
    QuerySnapshot snapshot = 
-   await FirebaseFirestore.instance.collection('Childer').where('uid',isEqualTo: user.uid).get();
+   await FirebaseFirestore.instance.collection('child').where('uid',isEqualTo: user.uid).get();
 
-   AllChilder childer = AllChilder.fromSnapshot(snapshot);
-   return childer.childers;
+   AllChild child = AllChild.fromSnapshot(snapshot);
+   return child.childs;
   }
 
   Future<List<ChildAllowance>> getChildAllowance() async {

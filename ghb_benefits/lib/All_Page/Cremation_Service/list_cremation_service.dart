@@ -46,16 +46,27 @@ class _ListCremationServicePageState extends State<ListCremationServicePage> {
                             color: iOrangeColor,
                           ),),
       backgroundColor: iBlueColor,
-       actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.add),
-            // tooltip: 'Show Snackbar',
+      //  actions: <Widget>[
+      //     IconButton(
+      //       icon: const Icon(Icons.add),
+      //       // tooltip: 'Show Snackbar',
+      //       onPressed: () {
+      //         Navigator.of(context).push(
+      //             MaterialPageRoute(builder: (context) => AddCremationServicePage()));
+      //       },
+      //     ),
+      //   ],
+        ),
+          floatingActionButton: FloatingActionButton(  
+        child: Icon(Icons.add),  
+        backgroundColor: iBlueColor,  
+        foregroundColor: Colors.white,  
             onPressed: () {
+
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => AddCremationServicePage()));
             },
-          ),
-        ],),
+      ), 
              body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Consumer<CremationServiceProviders>(

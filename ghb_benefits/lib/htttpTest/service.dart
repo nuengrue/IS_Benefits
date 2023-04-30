@@ -1,14 +1,12 @@
-/*
-import 'dart:convert';
 
-import 'package:ghb_benefits/child_allowance/child_allowane_model.dart';
+import 'dart:convert';
 import 'package:ghb_benefits/htttpTest/post_modal.dart';
 import 'package:http/http.dart';
 
 
 class Service {
   List<Post> mydata = [];
-    List<ChildAllowaneModel> dataChildAllowane = [];
+    // List<ChildAllowaneModel> dataChildAllowane = [];
 
    Future<List<Post>?> getPosts() async {
         Client client = Client();
@@ -39,19 +37,18 @@ class Service {
  // print(responseJson);
  return mydata;
 }
-   Future<List<ChildAllowaneModel>> fetchChildAllowaneModel() async {
-            Client client = Client();
-   final response = await client.get(Uri.parse(
-      'http://localhost:5000/SQL/GetChildAllowance',
-    ));
-  var responseJson = json.decode(response.body);
-  print(responseJson["data"]);
-  for (var ls in responseJson["data"]) {
-   dataChildAllowane.add(ChildAllowaneModel.fromJson(ls));
-    print(dataChildAllowane);
-  }
- // print(responseJson);
- return dataChildAllowane;
+//    Future<List<ChildAllowaneModel>> fetchChildAllowaneModel() async {
+//             Client client = Client();
+//    final response = await client.get(Uri.parse(
+//       'http://localhost:5000/SQL/GetChildAllowance',
+//     ));
+//   var responseJson = json.decode(response.body);
+//   print(responseJson["data"]);
+//   for (var ls in responseJson["data"]) {
+//    dataChildAllowane.add(ChildAllowaneModel.fromJson(ls));
+//     print(dataChildAllowane);
+//   }
+//  // print(responseJson);
+//  return dataChildAllowane;
+// }
 }
-}
-*/

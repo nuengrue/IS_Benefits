@@ -32,7 +32,8 @@ class _MainHomePageState extends State<MainHomePage> {
 
  double AMedical = 40000;
  double sMedical = 0;
-
+ double Achild = 3;
+ double schild = 0;
 
   MedicalController medicalcontroller = MedicalController(FirebaseServices());
   EducationController educationcontroller = EducationController(FirebaseServices());
@@ -56,6 +57,7 @@ class _MainHomePageState extends State<MainHomePage> {
       medical.add(a);
     }
     var sumamountmedical = medical.reduce((a, b) => a + b);
+        print(sumamountmedical);
     var RemainMedical = AMedical - sumamountmedical;
     print(RemainMedical);
     context.read<MyDashboardProviders>().SumMedicalModalChoice = sumamountmedical;
@@ -76,6 +78,7 @@ class _MainHomePageState extends State<MainHomePage> {
       education.add(a);
     }
     var sumamounteducation = education.reduce((a, b) => a + b);
+    print(sumamounteducation);
     var RemainEducation = AMedical - sumamounteducation;
     context.read<MyDashboardProviders>().SumEducationModalChoice = sumamounteducation;
     context.read<MyDashboardProviders>().RemainEducationModalChoice = RemainEducation;
@@ -84,10 +87,7 @@ class _MainHomePageState extends State<MainHomePage> {
     context.read<MyDashboardProviders>().SumEducationModalChoice = sMedical;
     context.read<MyDashboardProviders>().RemainEducationModalChoice = AMedical;
     }
-//  print(context.read<MyDashboardProviders>().SumEducationModalChoice);
-//   print(context.read<MyDashboardProviders>().RemainEducationModalChoice);
-//    print(context.read<MyDashboardProviders>().SumMedicalModalChoice);
-//     print(context.read<MyDashboardProviders>().RemainMedicalModalChoice);
+
     var newEmployee = await mastecontroller.fetchEmployee();
 
     context.read<EmployeeProviders>().EmployeeList = newEmployee;
@@ -97,11 +97,15 @@ class _MainHomePageState extends State<MainHomePage> {
      context.read<filedEmployeeProviders>().Empno = newEmployee.first.no;
      context.read<filedEmployeeProviders>().Empempcode = newEmployee.first.empcode;
      context.read<filedEmployeeProviders>().Empnameemp = newEmployee.first.nameemp;
-     //context.read<filedEmployeeProviders>().Empnameemp = newEmployee.first.nameemp;
+     context.read<filedEmployeeProviders>().Empdepartment = newEmployee.first.department;
+     context.read<filedEmployeeProviders>().Empdivisionment = newEmployee.first.divisionment;
+     context.read<filedEmployeeProviders>().Empdate = newEmployee.first.date;   
+     context.read<filedEmployeeProviders>().Empuid = newEmployee.first.uid;         
       //      print(context.read<filedEmployeeProviders>().Empempcode);
       // print(context.read<filedEmployeeProviders>().Empnameemp);
     var newChilder = await mastecontroller.fetchChilder();
     context.read<ChilderProviders>().ChilderList = newChilder;
+    print(newChilder);
   }
 
   @override
@@ -168,7 +172,7 @@ class _MainHomePageState extends State<MainHomePage> {
                 ),
               ),
               
-              SizedBox(height: 20),
+              SizedBox(height: 10),
               //SizedBox(height: 25),
             //   Container(
             //     height: 200,
@@ -890,8 +894,8 @@ class _MainHomePageState extends State<MainHomePage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Container(
-                      margin: const EdgeInsets.all(10.0),
-                      padding: const EdgeInsets.all(10.0),
+                      margin: const EdgeInsets.all(5.0),
+                      padding: const EdgeInsets.all(5.0),
                       //height: double.infinity,
                       width: 400,
                       decoration: BoxDecoration(
@@ -921,11 +925,11 @@ class _MainHomePageState extends State<MainHomePage> {
                           ),
                           const Divider(),
                           SizedBox(
-                            height: 100,
+                            height: 70,
 
                             child: PieChart(
                               PieChartData(
-                                startDegreeOffset: 30,
+                                startDegreeOffset: 20,
                                 sections: [
                                   //
                                    if (context.watch<MyDashboardProviders>()
@@ -936,7 +940,7 @@ class _MainHomePageState extends State<MainHomePage> {
                                           .watch<MyDashboardProviders>()
                                           .RemainMedicalModalChoice,
                                     showTitle: false,
-                                    radius: 25,
+                                    radius: 10,
                                   ),
                                   PieChartSectionData(
                                     color: Colors.green,
@@ -944,17 +948,32 @@ class _MainHomePageState extends State<MainHomePage> {
                                           .watch<MyDashboardProviders>()
                                           .SumMedicalModalChoice,
                                     showTitle: false,
-                                    radius: 25,
+                                    radius: 10,
                                   ),
-                                   ] else ...[
+                                   ] 
+                                   else if (context.watch<MyDashboardProviders>()
+                                          .RemainMedicalModalChoice == 0.0) ...[
+ PieChartSectionData(
+                                    color: Colors.green,
+                                    value: context
+                                          .watch<MyDashboardProviders>()
+                                          .SumMedicalModalChoice,
+                                    showTitle: false,
+                                    radius: 10,
+                                  ),
+    ]
+                                   else ...[
+                                    
                    PieChartSectionData(
                                     color: Colors.blue,
                                     value:  context
                                           .watch<MyDashboardProviders>()
                                           .RemainEducationModalChoice,
                                     showTitle: false,
-                                    radius: 25,
+                                    radius: 10,
                                   ),
+
+
               ]
                                          
                                 ], //
@@ -1048,8 +1067,8 @@ class _MainHomePageState extends State<MainHomePage> {
 
                     ///
                     Container(
-                      margin: const EdgeInsets.all(10.0),
-                      padding: const EdgeInsets.all(10.0),
+                      margin: const EdgeInsets.all(5.0),
+                      padding: const EdgeInsets.all(5.0),
                       //height: double.infinity,
                       width: 400,
                       decoration: BoxDecoration(
@@ -1079,10 +1098,10 @@ class _MainHomePageState extends State<MainHomePage> {
                           ),
                           const Divider(),
                            SizedBox(
-                            height: 100,
+                            height: 70,
                             child: PieChart(
                               PieChartData(
-                                startDegreeOffset: 30,
+                                startDegreeOffset: 20,
                                 sections: [
                                   //
                                    if (context.watch<MyDashboardProviders>()
@@ -1093,7 +1112,7 @@ class _MainHomePageState extends State<MainHomePage> {
                                           .watch<MyDashboardProviders>()
                                           .RemainEducationModalChoice,
                                     showTitle: false,
-                                    radius: 25,
+                                    radius: 10,
                                   ),
                                   PieChartSectionData(
                                     color: Colors.green,
@@ -1101,16 +1120,29 @@ class _MainHomePageState extends State<MainHomePage> {
                                           .watch<MyDashboardProviders>()
                                           .SumEducationModalChoice,
                                     showTitle: false,
-                                    radius: 25,
+                                    radius: 10,
                                   ),
-                                   ] else ...[
+                                  
+                                   ]
+                                     else if (context.watch<MyDashboardProviders>()
+                                          .RemainEducationModalChoice == 0.0) ...[
+ PieChartSectionData(
+                                    color: Colors.green,
+                                    value: context
+                                          .watch<MyDashboardProviders>()
+                                          .SumMedicalModalChoice,
+                                    showTitle: false,
+                                    radius: 10,
+                                  ),
+    ]
+                                    else ...[
                    PieChartSectionData(
                                     color: Colors.blue,
                                     value:  context
                                           .watch<MyDashboardProviders>()
                                           .RemainEducationModalChoice,
                                     showTitle: false,
-                                    radius: 25,
+                                    radius: 10,
                                   ),
               ]
                                 ], //
@@ -1178,6 +1210,172 @@ class _MainHomePageState extends State<MainHomePage> {
                                   Expanded(
                                     child: Text(
                                       'วงเงินตามสิทธิ',
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      AMedical.toString(),
+                                      textAlign: TextAlign.end,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                       Container(
+                      margin: const EdgeInsets.all(5.0),
+                      padding: const EdgeInsets.all(5.0),
+                      //height: double.infinity,
+                      width: 400,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(
+                          color: Colors.white,
+                        ),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 6.0,
+                            spreadRadius: 2.0,
+                            color: Colors.grey,
+                            offset: Offset(0.0, 0.0),
+                          )
+                        ],
+                      ),
+                      child: Column(
+                        children: <Widget>[
+                          Text(
+                            'เงินช่วยเหลือบุตร',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Color.fromARGB(255, 9, 28, 235),
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const Divider(),
+                           SizedBox(
+                            height: 70,
+                            child: PieChart(
+                              PieChartData(
+                                startDegreeOffset: 20,
+                                sections: [
+                                  //
+                                   if (context.watch<MyDashboardProviders>()
+                                          .RemainEducationModalChoice != 0.0) ...[
+                                  PieChartSectionData(
+                                    color: Colors.blue,
+                                   value:  context
+                                          .watch<MyDashboardProviders>()
+                                          .RemainEducationModalChoice,
+                                    showTitle: false,
+                                    radius: 10,
+                                  ),
+                                  PieChartSectionData(
+                                    color: Colors.green,
+                                    value: context
+                                          .watch<MyDashboardProviders>()
+                                          .SumEducationModalChoice,
+                                    showTitle: false,
+                                    radius: 10,
+                                  ),
+                                   ]   else if (context.watch<MyDashboardProviders>()
+                                          .RemainEducationModalChoice == 0.0) ...[
+ PieChartSectionData(
+                                    color: Colors.green,
+                                    value: context
+                                          .watch<MyDashboardProviders>()
+                                          .SumMedicalModalChoice,
+                                    showTitle: false,
+                                    radius: 10,
+                                  ),
+    ]
+                                   
+                                   else ...[
+                   PieChartSectionData(
+                                    color: Colors.blue,
+                                    value:  context
+                                          .watch<MyDashboardProviders>()
+                                          .RemainEducationModalChoice,
+                                    showTitle: false,
+                                    radius: 10,
+                                  ),
+              ]
+                                ], //
+                              ),
+                            ),
+                          ),
+                          const Divider(),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      'จำนวนบุตรที่ขอเบิกได้',
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      context
+                                          .watch<MyDashboardProviders>()
+                                          .RemainEducationModalChoice
+                                          .toString(),
+                                      textAlign: TextAlign.end,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.blue,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      'จำนวนบุตรที่ขอเบิก',
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                           context
+                                          .watch<MyDashboardProviders>()
+                                          .SumEducationModalChoice
+                                          .toString(),
+                                      textAlign: TextAlign.end,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.green,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      'จำนวนบุตรตามสิทธิ์',
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold),

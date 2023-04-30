@@ -26,6 +26,8 @@ class EducationProviders with ChangeNotifier {
 
   notifyListeners();
   } 
+
+ 
 //   final firestoreService = FirebaseServices();
 //   //Notes List
 //   List<EducationModels> _educationList = [];

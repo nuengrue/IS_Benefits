@@ -45,16 +45,27 @@ class _ListHouseAllowanceePageState extends State<ListHouseAllowanceePage> {
                             color: iOrangeColor,
                           ),),
       backgroundColor: iBlueColor,
-       actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.add),
-            // tooltip: 'Show Snackbar',
+      //  actions: <Widget>[
+      //     IconButton(
+      //       icon: const Icon(Icons.add),
+      //       // tooltip: 'Show Snackbar',
+      //       onPressed: () {
+      //         Navigator.of(context).push(
+      //             MaterialPageRoute(builder: (context) => AddHouseAllowancePage()));
+      //       },
+      //     ),
+      //   ],
+        ),
+        floatingActionButton: FloatingActionButton(  
+        child: Icon(Icons.add),  
+        backgroundColor: iBlueColor,  
+        foregroundColor: Colors.white,  
             onPressed: () {
+
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => AddHouseAllowancePage()));
             },
-          ),
-        ],),
+      ), 
              body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Consumer<HouseAllowanceProviders>(

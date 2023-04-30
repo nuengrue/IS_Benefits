@@ -59,16 +59,27 @@ class _ListChildAllowancePageState extends State<ListChildAllowancePage> {
       backgroundColor: iBlueColor,
        actions: <Widget>[
                     
-          IconButton(
-            icon: const Icon(Icons.add),
-            // tooltip: 'Show Snackbar',
+          // IconButton(
+          //   icon: const Icon(Icons.add),
+          //   // tooltip: 'Show Snackbar',
+          //   onPressed: () {
+
+          //     Navigator.of(context).push(
+          //         MaterialPageRoute(builder: (context) => AddChildAllowancePage()));
+          //   },
+          // ),
+        ],),
+
+              floatingActionButton: FloatingActionButton(  
+        child: Icon(Icons.add),  
+        backgroundColor: iBlueColor,  
+        foregroundColor: Colors.white,  
             onPressed: () {
 
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => AddChildAllowancePage()));
             },
-          ),
-        ],),
+      ), 
         /*
 body:FutureBuilder<List<ChildAllowance>>(
     future: _getChildAllowance(context),
