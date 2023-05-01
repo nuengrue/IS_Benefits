@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:ghb_benefits/All_Controllers/master_controllers.dart';
+import 'package:ghb_benefits/All_Models/child_model.dart';
 import 'package:ghb_benefits/All_Models/employee_model.dart';
 import 'package:ghb_benefits/All_Page/Child_Allowances/list_child_allowance.dart';
 import 'package:ghb_benefits/All_Providers/provider_child_allowance.dart';
@@ -13,6 +14,7 @@ import 'package:ghb_benefits/All_Providers/provider_master.dart';
 import 'package:ghb_benefits/All_Services/servics.dart';
 import 'package:ghb_benefits/color.dart';
 import 'package:ghb_benefits/pdf/files_page.dart';
+import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:open_file/open_file.dart';
 import 'package:provider/provider.dart';
@@ -45,23 +47,29 @@ class _AddChildAllowancePageState extends State<AddChildAllowancePage> {
     }
     List<String>  sumamounteducation = childName;
     context.read<ChilderProviders>().childnamerList = sumamounteducation;
-    print(sumamounteducation);
+
+
+    //print(sumamounteducation);
   }
 
   _AddChildAllowancePageState() {
-    // _selectedVal = _childName[0];
+    _selectedVal = _childName[0];
     _selectedpartner = _childpartner[0];
     _selectedstatuspartner = _childstatuspartner[0];
   }
 
+  late String _selectedchild;
+  String dropdownValue = 'Dog';
 
-  // final _childName = [
-  //   "เลือกบุตร",
-  //   "ด.ช. น้ำใจ มาดี",
-  //   "ด.ช. อุ่นใจ มาดี",
-  //   "ด.ช. ตาใจ มาดี"
-  // ];
-  late final List<String> _childName ;
+  final _childName = [
+    "เลือกบุตร",
+    "ทดสอบ คนที่1",
+    "ทดสอบ คนที่2",
+    "ทดสอบ คนที่3",
+    "ทดสอบ คนที่4"    
+  ];
+List<String> _childNames = [];
+  // late  List<String> _childName =[];
   String? _selectedVal = "";
   final _childpartner = [
     "เลือกสถานะ",
@@ -237,11 +245,16 @@ class _AddChildAllowancePageState extends State<AddChildAllowancePage> {
     // //.set({'fileUrl':url,'num' : "file FDF" + number.toString()});
   }
 
+void deleteflie()async{
+  Provider.of<flieChildAllowanceModal>(context, listen: false)
+          .deleteflie();
+}
   @override
   Widget build(BuildContext context) {
     // Scaffold is a layout for
-      final List<String> _childName = context.read<ChilderProviders>().childnamerList ;
-
+    return Consumer<ChilderProviders>(
+      builder: (context, value, child) {
+                              _childNames = value.childnamerList.toList();
     // the major Material Components.
     return Scaffold(
       appBar: AppBar(
@@ -473,12 +486,56 @@ class _AddChildAllowancePageState extends State<AddChildAllowancePage> {
                         ],
                       ),
                     ),
+//              if (value.ChilderList.isNotEmpty) ...[
+
+
+                   
+//  Text('ท่านได้ใช้วงเงินตามสิทธิ์ครบกำหนดแล้ว:'),
+
+
+// // Step 1.
+
+// // Step 2.
+// // DropdownButton<String>(
+
+// //   // Step 3.
+// //   value: dropdownValue,
+// //   // Step 4.
+// //   items: context.read<ChilderProviders>().childnamerList.toList()
+// //   // <String>['Dog', 'Cat', 'Tiger', 'Lion']     context.read<ChilderProviders>().childnamerList
+// //       .map<DropdownMenuItem<String>>((String value) {
+// //     return DropdownMenuItem<String>(
+// //       value: value,
+// //       child: Text(
+// //         value,
+// //         style: TextStyle(fontSize: 30),
+// //       ),
+// //     );
+// //   }).toList(),
+// //   // Step 5.
+// //   onChanged: (String? newValue) {
+// //     setState(() {
+// //       dropdownValue = newValue!;
+// //     });
+// //   },
+// // ),
+
+
+         
+
+//     ] else ...[
+//      Text('ท่านได้ใช้วงเงินตามสิทธิ์ครบกำหนดแล้ว: ไม่มี'),
+
+
+//     ]
+                    // var clients = context.read<ChilderProviders>().ChilderList.toList();
                     Padding(
                       padding: const EdgeInsets.all(8.0),
+
                       child: DropdownButtonFormField(
                         // value: _selectedVal,
-                        value:context.read<ChilderProviders>().childnamerList.toList(),
-                        items: context.read<ChilderProviders>().childnamerList
+                        value: _selectedVal,
+                        items: _childName
                             .map((e) => DropdownMenuItem(
                                   child: Text(e),
                                   value: e,
@@ -487,10 +544,12 @@ class _AddChildAllowancePageState extends State<AddChildAllowancePage> {
                         onChanged: (val) {
                           setState(() {
                             _selectedVal = val as String;
+                            
                           });
                         },
                       ),
                     ),
+
                   ],
                 ),
               ),
@@ -727,15 +786,33 @@ class _AddChildAllowancePageState extends State<AddChildAllowancePage> {
                             .toString()
                             .isNotEmpty) {
                           //Carimg = '${value.flieChildAllowanceChoice}';
-                          return ListTile(
+                          return 
+                          
+                          ListTile(
                             title: Text(_filename.toString()),
-                            trailing: Icon(Icons.remove_red_eye),
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => View(url: _url)));
-                            },
+                            trailing: Container(
+                              width: 70,
+                              child: Row(
+                                children: [
+                                  Expanded(child:IconButton(
+                                    onPressed:() { Navigator.push(
+                                      context,MaterialPageRoute
+                                      (builder: (context) => View(url: _url)));},
+                                      icon:Icon(Icons.remove_red_eye) ,) ),
+                                  Expanded(child:IconButton(
+                                    onPressed:() { deleteflie();},
+                                      icon:Icon(Icons.delete) ,) ),
+                                ],
+                              ),
+                            )
+                            // Icon(Icons.remove_red_eye),
+                            // onTap: () {
+                            //   Navigator.push(
+                            //       context,
+                            //       MaterialPageRoute(
+                            //           builder: (context) => View(url: _url)));
+                            // },
+
                           );
                         } else {
                           return Text("");
@@ -801,6 +878,9 @@ class _AddChildAllowancePageState extends State<AddChildAllowancePage> {
         ),
       ),
     );
+    }
+      );
+  
   }
 
   void openFiles(context, List<PlatformFile> files) =>
@@ -842,4 +922,11 @@ class flieChildAllowanceModal extends ChangeNotifier {
     this._flie = value;
     notifyListeners();
   }
+
+  void deleteflie(){
+    this._flie = '';
+   notifyListeners();
+
+
+}
 }
