@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ghb_banefits_admin/Dashborad/list_Reports.dart';
 import 'package:ghb_banefits_admin/button_menu.dart';
 import 'package:ghb_banefits_admin/color.dart';
 import 'package:ghb_banefits_admin/my_drawer.dart';
@@ -17,15 +18,12 @@ class _MainHomeAdminPageState extends State<MainHomeAdminPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'GHB Benefit Admin',
+          'GHB Welfare Admin',
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontSize: 28,
-            fontWeight: FontWeight.bold,
-            color: iOrangeColor,
-          ),
-        ),
-        backgroundColor: iBlueColor,
+            fontSize: 30,
+            fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
+            color: iWhiteColor,),),backgroundColor: iOrangeColor,
         actions: [
           IconButton(
             icon: Icon(Icons.logout),
@@ -49,18 +47,18 @@ class _MainHomeAdminPageState extends State<MainHomeAdminPage> {
                   Row(
                     children: [
                       Text(
-                        'Hi!',
+                        'สวัสดี ',
                         style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                           color: iBlueColor,
                         ),
                       ),
                       Text(
-                        ' j '
+                        ' gggggg '
                         //+ user.email!
                         ,
-                        style: TextStyle(fontSize: 18, color: iBlueColor),
+                        style: TextStyle(fontSize: 18, fontFamily: 'Sarabun',color: iBlueColor),
                       ),
                     ],
                   ),
@@ -112,18 +110,111 @@ class _MainHomeAdminPageState extends State<MainHomeAdminPage> {
               children: [
                 ButtonMenu(
                   iconImagePath: Icons.home_repair_service,
-                  buttonText: 'ค่าเช่าบ้าน',
+                  buttonText: 'ค่าเช่าบ้านพนักงาน',
                   index: '/5',
                 ),
                 ButtonMenu(
                   iconImagePath: Icons.cyclone,
-                  buttonText: 'ฌาปนกิจ',
+                  buttonText: 'ฌาปนกิจสงเคราะห์',
                   index: '/6',
                 ),
               ],
             ),
             SizedBox(height: 10),
             //buttons
+                        Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              
+              children: [
+                  Column(
+          children: [
+           InkWell(
+            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute( builder: (context) => const ListReports()));
+            },
+              child: Container(
+                height: 120,
+                width: 120,
+                padding: EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.shade400,
+                      blurRadius: 6.0,
+                      spreadRadius: 2.0,
+                    ),
+                  ],
+                ),
+                child: Center(
+                  child: Icon(Icons.book,size: 70,
+                  color: iOrangeColor,),
+                  //Image.asset(iconImagePath),
+                ),
+              ),
+            ),
+                        SizedBox(height: 12),
+            //text
+            Text('รายงานสวัสดิการ',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
+              color: iBlueColor,
+            ),
+            ),
+          ],
+        ),
+
+          Column(
+          children: [
+           InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, '');
+            },
+              child: Container(
+                height: 120,
+                width: 120,
+          //       padding: EdgeInsets.all(20),
+          //       decoration: BoxDecoration(
+          //         color: Colors.white,
+          //         borderRadius: BorderRadius.circular(20),
+          //         boxShadow: [
+          //           BoxShadow(
+          //             color: Colors.grey.shade400,
+          //             blurRadius: 6.0,
+          //             spreadRadius: 2.0,
+          //           ),
+          //         ],
+          //       ),
+          //       child: Center(
+          //         child: Icon(Icons.book,size: 70,
+          //         color: iOrangeColor,),
+          //         //Image.asset(iconImagePath),
+          //       ),
+          //     ),
+          //   ),
+          //               SizedBox(height: 12),
+          //   //text
+          //   Text('',
+          //   style: TextStyle(
+          //     fontSize: 14,
+          //     fontWeight: FontWeight.bold,
+          //     color: iBlueColor,
+            ),
+            ),
+          ],
+        ),
+                // ButtonMenu(
+                //   iconImagePath: Icons.book,
+                //   buttonText: 'รายงานสวัสดิการทั้งหมด',
+                //   index: '/5',
+                // ),
+                
+                
+                           
+              ],
+            ),
           ],
         ),
       ),

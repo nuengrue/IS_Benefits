@@ -1,162 +1,303 @@
-/*
-import 'package:cloud_firestore/cloud_firestore.dart';
+
+//import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:ghb_benefits/child_allowance/child_allowane_model.dart';
-import 'package:ghb_benefits/main_home_page.dart';
 
-//import '../nav_bar.dart';
+import 'package:ghb_benefits/All_Controllers/Notifications_controllers.dart';
+import 'package:ghb_benefits/All_Models/Notifications_model.dart';
+import 'package:ghb_benefits/All_Models/medical_model.dart';
+import 'package:ghb_benefits/All_Page/Medical/add_medical_page.dart';
+import 'package:ghb_benefits/All_Page/Medical/detail_medical_page.dart';
+import 'package:ghb_benefits/All_Providers/provider_dashboard.dart';
+import 'package:ghb_benefits/All_Providers/provider_medical.dart';
+import 'package:ghb_benefits/All_Providers/provider_notifications.dart';
+import 'package:ghb_benefits/All_Services/servics.dart';
 
-//import 'update_status_admin.dart';
+import 'package:ghb_benefits/color.dart';
 
-// ignore: must_be_immutable
-class NotisPage extends StatelessWidget {
+import 'package:ghb_benefits/my_drawer.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
-    //final user = FirebaseAuth.instance.currentUser!;
-     List<ChildAllowaneModel> orders = List.empty();
-     /// childAllowanceController controller = childAllowanceController(FirebaseServices());
-Stream<List<ChildAllowaneModel>> adminstatus() => FirebaseFirestore.instance
-    .collection('ChildAllowance')
-    //.where('email',isEqualTo: user.email.toString())
+//import 'package:flutter/widgets.dart';
 
-        .snapshots().map((snapshot) => snapshot.docs.map((doc) => ChildAllowaneModel.fromJson(doc.data())).toList());
-    @override
+
+class NotificationsPage extends StatefulWidget {
+  @override
+  State<NotificationsPage> createState() => _NotificationsPageState();
+}
+
+class _NotificationsPageState extends State<NotificationsPage> {
+    List<Notifications> medicals = List.empty();
+  bool isloading = false;
+  late int count ;
+
+  NotificationsController controller =
+      NotificationsController(FirebaseServices());
+      
+
+      void initState() {
+        super.initState();
+        _getNotifications(context);
+      }
+
+   void   _getNotifications(BuildContext context) async {
+            var newNotification = await controller.fetchNotifications();
+
+          context.read<NotificationsProviders>().NotificationsList = newNotification;
+      }
+  @override
+    Widget build(BuildContext context) {
+          return Consumer<NotificationsProviders>(
+      builder: (context, value, child) {
+    return Scaffold(
+            appBar: AppBar(title: Text('รายการแจ้งเตือน',style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: iWhiteColor,
+                          ),),
+      backgroundColor: iBlueColor,
+        ),
+            body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Consumer<NotificationsProviders>(
+          builder: (context,NotificationsProviders data,child){
+             print(data.NotificationsList);
+            return data.NotificationsList.length !=0 ? ListView.builder(
+              itemCount: data.NotificationsList.length,
+              
+              itemBuilder: (context,index){
+                print(data.NotificationsList.length);
+
+
+                return CardList(data.NotificationsList[index],index);
+              },
+            ): GestureDetector(
+              //onTap: (){ Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddChildAllowancePage()));},
+              child: Center(child: Text("ไม่พบรายการคำขอ",style: TextStyle(color: iBlueColor,),)));
+          },
+        ),
+      ),
+    
+
+      );
+ }
+      );
+  }
+}
+
+
+ class CardList extends StatelessWidget {
+  final Notifications notes;
+  int index;
+  CardList(this.notes,this.index);
+  
+  @override
+  Widget build(BuildContext context) {
+                          NumberFormat myFormat =
+                          NumberFormat.decimalPattern('en_us');
+    return Padding(
+      padding: const EdgeInsets.all(2.0),
+
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(10),
+              topLeft: Radius.circular(10),
+            )
+          ),
+          child: Card(
+            child: ListTile(
+            leading: Icon(Icons.notifications),
+              title: Column(  children: [
+                                    Row(
+                    children: [
+                      Expanded(child: Text(notes.createDate,)),
+                    ],
+                  ),
+                                                      Row(
+                    children: [
+                      Expanded(child: Text(notes.title,)),
+                    ],
+                  ),
+                ],
+                
+                
+                ),
+              subtitle: Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(child: Text(notes.content,)),
+                    ],
+                  ),
+                ],
+              ),
+              trailing: Icon(Icons.arrow_forward_ios,color: Colors.black26,),
+               onTap: () {
+                    // Navigator.push( context,MaterialPageRoute(builder: (context) =>DetailMedicalPage(Notes : notes)));
+                    },
+            ),
+          ),
+        ),
+    );
+  }
+}
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//         appBar: AppBar(
+//           title: const Text('รายการคำขอเบิก'),
+//            actions: <Widget>[
+//           IconButton(
+//             icon: const Icon(Icons.add),
+//             // tooltip: 'Show Snackbar',
+//             onPressed: () {
+//               Navigator.of(context).push(
+//                   MaterialPageRoute(builder: (context) => AddMedPage()));
+//             },
+//           ),
+//         ],
+//         ),
+//         body: ListView.builder(
+//             itemCount: ListdataMedicalmodal.length,
+//             itemBuilder: (context, index) {
+//               ListdataMedical listdatamedical = ListdataMedicalmodal[index];
+//               return Card(
+//                 child: ListTile(
+//                   title: Text(listdatamedical.idreceiptnumber),
+//                   subtitle: Text(listdatamedical.savedate),
+//                   trailing: Icon(Icons.arrow_circle_right),
+//                   onTap: () {
+//                     Navigator.push(
+//                         context,
+//                         MaterialPageRoute(
+//                             builder: (context) =>
+//                                 SubDetailMedicalPage(listdatamedical)));
+//                   },
+//                 ),
+//               );
+//             }));
+//   }
+// }
+
+
+//import 'dart:developer';
+/*
+import 'package:flutter/material.dart';
+import 'package:ghb_benefits/color.dart';
+import 'package:ghb_benefits/medical/add_medical_page.dart';
+import 'package:ghb_benefits/medical/medical_model.dart';
+import 'package:ghb_benefits/medical/provider.dart';
+import 'package:ghb_benefits/medical/subdetail_medical_page.dart';
+import 'package:ghb_benefits/my_drawer.dart';
+import 'package:provider/provider.dart';
+
+//import 'package:flutter/widgets.dart';
+
+class DetailMedicalPage extends StatelessWidget {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('จัดการสถานะ'),
-        actions: <Widget>[
+            appBar: AppBar(title: Text('รายการคำขอเบิกค่ารักษาพยาบาล',style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: iOrangeColor,
+                          ),),
+      backgroundColor: iBlueColor,
+       actions: <Widget>[
           IconButton(
-            icon: const Icon(Icons.home),
+            icon: const Icon(Icons.add),
             // tooltip: 'Show Snackbar',
             onPressed: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => MainHomePage()));
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => AddMedPage()));
+            },
+          ),
+        ],),
+        /*
+        appBar: AppBar(
+          title: const Text('รายการคำขอเบิก'),
+           actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.add),
+            // tooltip: 'Show Snackbar',
+            onPressed: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => AddMedPage()));
             },
           ),
         ],
-      ),
-
-
-      body: StreamBuilder<List<ChildAllowaneModel>>(
-                    stream: adminstatus(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData)
-                      {
-                        final cars = snapshot.data!;
-          
-                        return buildordersadmin(cars);
-                        /*return ListView(
-                          children: casr.map(buildcars).toList(),
-                        );
-                        */
-                      }
-                      else {
-                        return Center(child : CircularProgressIndicator());
-                      }
-                    }
+        ),
+        */
+             body:  Padding(
+                     padding: const EdgeInsets.all(8.0),
+                     child: Consumer<MedicalModelProviders>(
+                       builder: (context,MedicalModelProviders data,child){
+                        // return data.getChildAllowane.length !=0 ? ListView.builder(
+                         return data.getmedicalModel.length !=0 ? ListView.builder(
+                itemCount: data.getmedicalModel.length,
+                itemBuilder: (context,index){
+             
+                  return CardList(data.getmedicalModel[index],index);
+                  /*Card(
+                  child: ListTile(
+                    title: Text(data.getChildAllowane[index].no),
+                    subtitle: Text(data.getChildAllowane[index].status),
+                    trailing: Icon(Icons.arrow_circle_right),
+                    onTap: () {
+                    //  Navigator.push( context,MaterialPageRoute(builder: (context) =>SubListChildAllowancePage(listdatamedical)));
+                    },
                   ),
+                );
+                  */
+                  
+                  
+                  CardList(data.getmedicalModel[index],index);
+                },
+                         ): GestureDetector(onTap: (){
+                 Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => AddMedPage()));
+                         },child: Center(child: Text("ไม่พบรายการคำขอ",style: TextStyle(color: iBlueColor,),)));
+                       },
+                     ),
+                   ),
+             
+             drawer: MyDrawer(),
+      );
+  }
+
+ 
+}
+
+ class CardList extends StatelessWidget {
+  final MedicalModel notes;
+  int index;
+  CardList(this.notes,this.index);
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(2.0),
+
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(10),
+              topLeft: Radius.circular(10),
+            )
+          ),
+          child: ListTile(
+           leading: Icon(Icons.note),
+            title: Text(notes.idreceiptnumber),
+            subtitle: Text(notes.status),
+            trailing: Icon(Icons.arrow_forward_ios,color: Colors.black26,),
+             onTap: () {
+                  Navigator.push( context,MaterialPageRoute(builder: (context) =>SubDetailMedicalPage(Notes : notes)));
+                  },
+          ),
+        ),
     );
   }
-    Widget buildordersadmin(List<ChildAllowaneModel> orders) => ListView.builder(
-    itemCount: !orders.isEmpty ? orders.length : 0,
-    itemBuilder: (context, index) {
-           if(index >= 0)
-      {
- return InkWell(
-              //onTap: () { Navigator.push(context,MaterialPageRoute(builder: (context) => UpdateStatusAdminPage(order: orders[index])));},
-
-    child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                width: 300,
-                padding: EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.shade400,
-                      blurRadius: 6.0,
-                      spreadRadius: 2.0,
-                    ),
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          orders[index].no.substring(1,8),
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                
-                      ],
-                    ),
-                    /*
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                         Text(
-                              'จำนวนเงิน ${childallowances[index].savedate}',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                //fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                        Text(
-                              childallowances[index].maritalstatus,
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                //fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                      ],
-                    ),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                                                    Text(
-                                'สถานะการ',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                        Text(
-                              childallowances[index].status,
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                //fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                         
-                      ],
-                    ),
-*/
-                  ],
-                ),
-              ),
-            ),
-    
-
-          );
-      }
-         else{
-              return const Center(child: Text("No Data"));
-            }
-
-          },
-          
-          );
 }
 */
