@@ -61,12 +61,12 @@ class EducationAdminProviders with ChangeNotifier {
     
   }
 // function to update data to list of notes
-void modify(int Indexs, String status, String flagread, String payamount, String paydate){
+void modify(int Indexs, String status, String flagread, String payamount, String paydate, String remarks){
   _EducationAdminList[Indexs].status = status ;
   _EducationAdminList[Indexs].flagread = flagread; 
   _EducationAdminList[Indexs].payamount = payamount ;
   _EducationAdminList[Indexs].paydate = paydate; 
-
+  _EducationAdminList[Indexs].remarks = remarks; 
   notifyListeners();
 
 }

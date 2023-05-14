@@ -9,7 +9,7 @@ class NotificationsAdmin {
   final String createDate;
   final String uid; 
   String id;
-  final  String   remarks;
+  late  String   remarks;
   NotificationsAdmin(
        this.no,
        this.title,

@@ -60,12 +60,12 @@ class HouseAllowanceAdminProviders with ChangeNotifier {
     
   }
 // function to update data to list of notes
-void modify(int Indexs, String status, String flagread, String payamount, String paydate){
+void modify(int Indexs, String status, String flagread, String payamount, String paydate, String remarks){
   _houseAllowanceAdminList[Indexs].status = status ;
   _houseAllowanceAdminList[Indexs].flagread = flagread; 
   _houseAllowanceAdminList[Indexs].payamount = payamount ;
   _houseAllowanceAdminList[Indexs].paydate = paydate; 
-
+  _houseAllowanceAdminList[Indexs].remarks = remarks; 
   notifyListeners();
 
 }

@@ -30,13 +30,13 @@ class EducationAdmin {
   final String amountreceipt;
 
   ///
-  late final String payamount;
-  late final String paydate;
-  late final String status;
+  late  String payamount;
+  late  String paydate;
+  late  String status;
   final String email;
     final String fileUrl;
   final String filename;
-  late final String  flagread;
+  late  String  flagread;
   String id;
   late  String   remarks;
   EducationAdmin(

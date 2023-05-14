@@ -72,12 +72,12 @@ class CremationServiceAdminProviders with ChangeNotifier {
     
   }
 // function to update data to list of notes
-void modify(int Indexs, String status, String flagread ,String payamount, String paydate ){
+void modify(int Indexs, String status, String flagread ,String payamount, String paydate , String remarks ){
   _cremationserviceAdminList[Indexs].status = status ;
   _cremationserviceAdminList[Indexs].flagread = flagread; 
   _cremationserviceAdminList[Indexs].payamount = payamount; 
   _cremationserviceAdminList[Indexs].paydate = paydate; 
-
+  _cremationserviceAdminList[Indexs].remarks = remarks; 
   
 
   notifyListeners();

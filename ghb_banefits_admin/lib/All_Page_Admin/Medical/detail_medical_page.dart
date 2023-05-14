@@ -1,10 +1,13 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:ghb_banefits_admin/All_Controllers_Admin/master_controllers.dart';
 import 'package:ghb_banefits_admin/All_Models_Admin/medical_model.dart';
 import 'package:ghb_banefits_admin/All_Page_Admin/Medical/list_medical_page.dart';
 import 'package:ghb_banefits_admin/All_Providers_Admin/provider_child_allowance.dart';
+import 'package:ghb_banefits_admin/All_Providers_Admin/provider_master.dart';
 import 'package:ghb_banefits_admin/All_Providers_Admin/provider_medical.dart';
+import 'package:ghb_banefits_admin/All_Services_Admin/servics.dart';
 import 'package:ghb_banefits_admin/color.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -23,19 +26,35 @@ class DetailMedicalAdminPage extends StatefulWidget {
 }
 
 class _DetailMedicalAdminPageState extends State<DetailMedicalAdminPage> {
-  late String _status;
-  late String _flagread;
+  late String _status = "";
+  late String _flagread = "";
   late int _Indexs;
-  late String _payamount;
+  late String _payamount = "";
   late String _remark = "";
   final _formKey = GlobalKey<FormState>();
-  late String _paydate;
+  late String _paydate = "";
   late final String _title = "แจ้งผลรายการคำขอเบิกค่ารักษาพยาบาล";
   late String _content;
   final String _createDate =
       DateFormat('dd-MM-yyyy  kk:mm').format(DateTime.now());
   late String _id = "";
   late String _uid;
+
+    MasterController mastecontroller = MasterController(FirebaseServicesAdmin());
+  void initState() {
+    super.initState();
+    _getcountnoti(context);
+  }
+  late int _idcounts = 0;
+  void _getcountnoti(BuildContext context) async {
+
+                var newNotification = await mastecontroller.fetchNotiAdmin();
+          context.read<NotificationsProviders>().NotificationsAdminList = newNotification;
+    setState(() {
+      _idcounts = newNotification.length + 1;
+    });
+  }
+
   void ModifydataApprove() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
@@ -44,7 +63,7 @@ class _DetailMedicalAdminPageState extends State<DetailMedicalAdminPage> {
       _flagread = "1";
       _payamount = _payamount;
       _remark = _remark;
-      _paydate = DateFormat.yMd().add_jm().format(DateTime.now());
+      _paydate = DateFormat('dd-MM-yyyy  kk:mm').format(DateTime.now());
       print(_status);
       Provider.of<MedicalAdminProviders>(context, listen: false)
           .modify(_Indexs, _status, _flagread, _payamount, _paydate, _remark);
@@ -69,7 +88,7 @@ class _DetailMedicalAdminPageState extends State<DetailMedicalAdminPage> {
       CollectionReference Notifications =
           FirebaseFirestore.instance.collection('Notifications');
       DocumentReference doc = await Notifications.add({
-        'no': 1,
+        'no': _idcounts,
         'title': _title,
         'content': _content,
         'read': 0,
@@ -91,13 +110,13 @@ class _DetailMedicalAdminPageState extends State<DetailMedicalAdminPage> {
   }
 
   void ModifydataReject() async {
-    // if (_formKey.currentState!.validate()) {
-    // _formKey.currentState!.save();
+    if (_formKey.currentState!.validate()) {
+    _formKey.currentState!.save();
     _Indexs = widget.Indexs.toInt();
     _status = "ปฏิเสธ";
     _flagread = "1";
     _payamount = "0";
-    _paydate = DateFormat.yMd().add_jm().format(DateTime.now());
+    _paydate = DateFormat('dd-MM-yyyy  kk:mm').format(DateTime.now());
     _remark = _remark;
     Provider.of<MedicalAdminProviders>(context, listen: false)
         .modify(_Indexs, _status, _flagread, _payamount, _paydate, _remark);
@@ -116,13 +135,13 @@ class _DetailMedicalAdminPageState extends State<DetailMedicalAdminPage> {
     _content = "คำขอเบิกค่ารักษาพยาบาล  เลขที่ใบเสร็จ " +
         widget.Notes.idreceiptnumber +
         " ได้รับการปฏิเสธจำนวน " +
-        widget.Notes.payamount +
+        widget.Notes.receiptamount +
         " บาท";
     _uid = widget.Notes.email;
     CollectionReference Notifications =
         FirebaseFirestore.instance.collection('Notifications');
     DocumentReference doc = await Notifications.add({
-      'no': 1,
+      'no': _idcounts,
       'title': _title,
       'content': _content,
       'read': 0,
@@ -141,7 +160,7 @@ class _DetailMedicalAdminPageState extends State<DetailMedicalAdminPage> {
         builder: (context) => ListMedicalAdminPage(Status: "ร้องขอ"),
       ),
     );
-    // }
+     }
   }
 
   @override
@@ -876,7 +895,7 @@ class _DetailMedicalAdminPageState extends State<DetailMedicalAdminPage> {
                                   //     return 'โปรดระบุจำนวนเงินจ่าย';
                                   //   }
                                   // },
-                                  onSaved: (newValue) => _remark = newValue!,
+                                  onSaved: (value) => _remark = value!,
                                 ),
                               ),
                             ),

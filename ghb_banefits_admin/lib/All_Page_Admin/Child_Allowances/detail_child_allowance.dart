@@ -2,14 +2,19 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:ghb_banefits_admin/All_Controllers_Admin/Medical_Controller.dart';
+import 'package:ghb_banefits_admin/All_Controllers_Admin/master_controllers.dart';
 import 'package:ghb_banefits_admin/All_Models_Admin/child_allowane_model.dart';
 import 'package:ghb_banefits_admin/All_Page_Admin/Child_Allowances/list_child_allowance.dart';
 import 'package:ghb_banefits_admin/All_Providers_Admin/provider_child_allowance.dart';
+import 'package:ghb_banefits_admin/All_Services_Admin/servics.dart';
 import 'package:ghb_banefits_admin/color.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+
+import '../../All_Providers_Admin/provider_master.dart';
 
 //import 'package:flutter/widgets.dart';
 
@@ -28,8 +33,8 @@ class DetailChildAllowanceAdminPage extends StatefulWidget {
 
 class _DetailChildAllowanceAdminPageState
     extends State<DetailChildAllowanceAdminPage> {
-  late String _status;
-  late String _flagread;
+  late String _status = "";
+  late String _flagread = "";
   late int _Indexs;
 
   late final String _title = "แจ้งผลรายการคำขอเบิกเงินค่าช่วยเหลือบุตร";
@@ -41,10 +46,27 @@ class _DetailChildAllowanceAdminPageState
    late String _remark = "";
   final _formKey = GlobalKey<FormState>();
 
+    MasterController mastecontroller = MasterController(FirebaseServicesAdmin());
+  void initState() {
+    super.initState();
+    _getcountnoti(context);
+  }
+  late int _idcounts = 0;
+  void _getcountnoti(BuildContext context) async {
+
+                var newNotification = await mastecontroller.fetchNotiAdmin();
+          context.read<NotificationsProviders>().NotificationsAdminList = newNotification;
+    setState(() {
+      _idcounts = newNotification.length + 1;
+    });
+  }
   void ModifydataApprove() async {
+        if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
     _Indexs = widget.Indexs.toInt();
     _status = "อนุมัติ";
     _flagread = "1";
+          _remark = _remark;
        Provider.of<ChildAllowanceAdminProviders>(context, listen: false)
         .modify(_Indexs, _status, _flagread, _remark);
     print("done");
@@ -61,7 +83,7 @@ class _DetailChildAllowanceAdminPageState
           CollectionReference Notifications =
           FirebaseFirestore.instance.collection('Notifications');
       DocumentReference doc = await Notifications.add({
-        'no': 1,
+        'no': _idcounts,
         'title': _title,
         'content': _content,
         'read': 0,
@@ -80,12 +102,16 @@ class _DetailChildAllowanceAdminPageState
         builder: (context) => ListChildAllowanceAdminPage(Status:""),
       ),
     );
+        }
   }
 
   void ModifydataReject() async {
+        if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
     _Indexs = widget.Indexs.toInt();
     _status = "ปฏิเสธ";
     _flagread = "1";
+          _remark = _remark;
     print(_status);
     print(_flagread);
     print(_Indexs);
@@ -100,13 +126,13 @@ class _DetailChildAllowanceAdminPageState
 
     docStatus.update({'status': _status, 'flagread': _flagread,'remarks': _remark});
     
-   _content = "คำขอเบิกเงินค่าช่วยเหลือบุตร ชื่อ "+  widget.Notes.namechild + " ได้รับการอนุมัติเรียบร้อยแล้ว" ;
+   _content = "คำขอเบิกเงินค่าช่วยเหลือบุตร ชื่อ "+  widget.Notes.namechild + " ได้รับการปฏิเสธ" ;
      _uid = widget.Notes.email;
 
           CollectionReference Notifications =
           FirebaseFirestore.instance.collection('Notifications');
       DocumentReference doc = await Notifications.add({
-        'no': 1,
+        'no': _idcounts,
         'title': _title,
         'content': _content,
         'read': 0,
@@ -124,6 +150,7 @@ class _DetailChildAllowanceAdminPageState
         builder: (context) => ListChildAllowanceAdminPage(Status:"ร้องขอ"),
       ),
     );
+        }
   }
 
   @override
@@ -138,6 +165,8 @@ class _DetailChildAllowanceAdminPageState
       backgroundColor: iOrangeColor,
       ),
       body: SingleChildScrollView(
+                        child: Form(
+          key: _formKey,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -432,6 +461,106 @@ class _DetailChildAllowanceAdminPageState
               ),
             ),
 
+              Container(
+                margin: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(10.0),
+                //height: double.infinity,
+                width: 450,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  border: Border.all(
+                    color: Colors.white,
+                  ),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 6.0,
+                      spreadRadius: 2.0,
+                      color: Colors.grey,
+                      offset: Offset(0.0, 0.0),
+                    )
+                  ],
+                ),
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      'หมายเหตุ',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Color.fromARGB(255, 9, 28, 235),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const Divider(),
+                    // Padding(
+                    //   padding: const EdgeInsets.all(8.0),
+                    //   child: Row(
+                    //     children: [
+                    //       Expanded(
+                    //         child: Text(
+                    //           'หมายเหตุ',
+                    //           textAlign: TextAlign.left,
+                    //           style: TextStyle(fontWeight: FontWeight.bold),
+                    //         ),
+                    //       ),
+                    //       Expanded(
+                    //         child: Text(
+                    //           widget.Notes.receiptamount,
+                    //           textAlign: TextAlign.end,
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          if (widget.Notes.status == "ร้องขอ") ...[
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(1.0),
+                                child: TextFormField(
+                                  maxLength: 150,
+                                  maxLines: 3,
+
+                                  //controller: _addressc,
+                                  keyboardType: TextInputType.text,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    hintText: 'หมายเหตุ',
+                                  ),
+                                  // validator: (value) {
+                                  //   if (value == null || value.isEmpty) {
+                                  //     return 'โปรดระบุจำนวนเงินจ่าย';
+                                  //   }
+                                  // },
+                                 onSaved: (value) => _remark = value!,
+                                ),
+                              ),
+                            ),
+                          ] else ...[
+                            Expanded(
+                              child: Text(
+                                'หมายเหตุ',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                widget.Notes.remarks,
+                                textAlign: TextAlign.end,
+                              ),
+                            ),
+                          ]
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
             Container(
               margin: const EdgeInsets.all(10.0),
               padding: const EdgeInsets.all(10.0),
@@ -547,6 +676,7 @@ class _DetailChildAllowanceAdminPageState
 
           ],
         ),
+      ),
       ),
     );
   }

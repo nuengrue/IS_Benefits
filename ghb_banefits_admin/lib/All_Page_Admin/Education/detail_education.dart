@@ -2,9 +2,12 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:ghb_banefits_admin/All_Controllers_Admin/master_controllers.dart';
 import 'package:ghb_banefits_admin/All_Models_Admin/education_model.dart';
 import 'package:ghb_banefits_admin/All_Page_Admin/Education/list_education_page.dart';
 import 'package:ghb_banefits_admin/All_Providers_Admin/provider_education.dart';
+import 'package:ghb_banefits_admin/All_Providers_Admin/provider_master.dart';
+import 'package:ghb_banefits_admin/All_Services_Admin/servics.dart';
 import 'package:ghb_banefits_admin/color.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -24,17 +27,34 @@ class DetailEducationAdminPage extends StatefulWidget {
 }
 
 class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
-  late String _status;
-  late String _flagread;
+  late String _status = "";
+  late String _flagread = "";
   late int _Indexs;
   late String _payamount;
+    late String _remark = "";
   final _formKey = GlobalKey<FormState>();
-  late String _paydate;
-  late final String _title = "แจ้งผลรายการคำขอเบิกค่ารักษาพยาบาล";
+  late String _paydate = "";
+  late final String _title = "แจ้งผลรายการคำขอช่วยเหลือการศึกษา";
   late String _content;
    final String _createDate = DateFormat('dd-MM-yyyy  kk:mm').format(DateTime.now());
   late String _id = "";
   late String _uid;
+
+  
+    MasterController mastecontroller = MasterController(FirebaseServicesAdmin());
+  void initState() {
+    super.initState();
+    _getcountnoti(context);
+  }
+  late int _idcounts = 0;
+  void _getcountnoti(BuildContext context) async {
+
+                var newNotification = await mastecontroller.fetchNotiAdmin();
+          context.read<NotificationsProviders>().NotificationsAdminList = newNotification;
+    setState(() {
+      _idcounts = newNotification.length + 1;
+    });
+  }
   void ModifydataApprove() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
@@ -42,10 +62,11 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
       _status = "อนุมัติ";
       _flagread = "1";
       _payamount = _payamount;
-      _paydate = DateFormat.yMd().add_jm().format(DateTime.now());
+            _remark = _remark;
+      _paydate = DateFormat('dd-MM-yyyy  kk:mm').format(DateTime.now());
 
       Provider.of<EducationAdminProviders>(context, listen: false)
-          .modify(_Indexs, _status, _flagread, _payamount, _paydate);
+          .modify(_Indexs, _status, _flagread, _payamount, _paydate, _remark);
       print("done");
 
       final docStatus = FirebaseFirestore.instance
@@ -53,23 +74,25 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
           .doc(widget.Notes.id);
 
       docStatus.update({
-        'status': _status,
+        'status': _idcounts,
         'flagread': _flagread,
         'payamount': _payamount,
-        'paydate': _paydate
+        'paydate': _paydate,
+        'remarks': _remark
       });
-   _content = "คำขอเบิกค่ารักษาพยาบาล  เลขที่ใบเสร็จ "+  widget.Notes.receiptnumber + "ได้รับการอนุมัติจำนวน "+ widget.Notes.payamount + " บาท" ;
+   _content = "คำขอช่วยเหลือการศึกษา  เลขที่ใบเสร็จ "+  widget.Notes.receiptnumber + "ได้รับการอนุมัติจำนวน "+ widget.Notes.payamount + " บาท" ;
      _uid = widget.Notes.email;
           CollectionReference Notifications =
           FirebaseFirestore.instance.collection('Notifications');
       DocumentReference doc = await Notifications.add({
-        'no': 1,
+        'no': _idcounts,
         'title': _title,
         'content': _content,
         'read': 0,
         'createDate': _createDate,
         'uid': _uid,
-        'id': _id
+        'id': _id,
+              'remarks': _remark
       });
       doc.update({
         'id': doc.id,
@@ -84,28 +107,48 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
   }
 
   void ModifydataReject() async {
+        if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
     _Indexs = widget.Indexs.toInt();
     _status = "ปฏิเสธ";
     _flagread = "1";
     _payamount = "0";
-    _paydate = DateFormat.yMd().add_jm().format(DateTime.now());
-
+    _paydate = DateFormat('dd-MM-yyyy  kk:mm').format(DateTime.now());
+            _remark = _remark;
     Provider.of<EducationAdminProviders>(context, listen: false)
-        .modify(_Indexs, _status, _flagread, _payamount, _paydate);
+        .modify(_Indexs, _status, _flagread, _payamount, _paydate, _remark);
     print("done");
 
     final docStatus =
         FirebaseFirestore.instance.collection('Education').doc(widget.Notes.id);
 
     docStatus.update(
-        {'status': _status, 'flagread': _flagread, 'paydate': _paydate});
-
+        {'status': _status, 'flagread': _flagread, 'paydate': _paydate,
+        'remarks': _remark});
+   _content = "คำขอช่วยเหลือการศึกษา  เลขที่ใบเสร็จ "+  widget.Notes.receiptnumber + "ได้รับการปฏิเสธจำนวน "+ widget.Notes.amountreceipt + " บาท" ;
+     _uid = widget.Notes.email;
+          CollectionReference Notifications =
+          FirebaseFirestore.instance.collection('Notifications');
+      DocumentReference doc = await Notifications.add({
+        'no': _idcounts,
+        'title': _title,
+        'content': _content,
+        'read': 0,
+        'createDate': _createDate,
+        'uid': _uid,
+        'id': _id,
+              'remarks': _remark
+      });
+      doc.update({
+        'id': doc.id,
+      });
     Navigator.pop(
       context,
       MaterialPageRoute(
         builder: (context) => ListEducationAdminPage(Status:"ร้องขอ"),
       ),
     );
+        }
   }
 
   @override
@@ -789,6 +832,108 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                   ],
                 ),
               ),
+             Container(
+                margin: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(10.0),
+                //height: double.infinity,
+                width: 450,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  border: Border.all(
+                    color: Colors.white,
+                  ),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 6.0,
+                      spreadRadius: 2.0,
+                      color: Colors.grey,
+                      offset: Offset(0.0, 0.0),
+                    )
+                  ],
+                ),
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      'หมายเหตุ',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Color.fromARGB(255, 9, 28, 235),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const Divider(),
+                    // Padding(
+                    //   padding: const EdgeInsets.all(8.0),
+                    //   child: Row(
+                    //     children: [
+                    //       Expanded(
+                    //         child: Text(
+                    //           'หมายเหตุ',
+                    //           textAlign: TextAlign.left,
+                    //           style: TextStyle(fontWeight: FontWeight.bold),
+                    //         ),
+                    //       ),
+                    //       Expanded(
+                    //         child: Text(
+                    //           widget.Notes.receiptamount,
+                    //           textAlign: TextAlign.end,
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          if (widget.Notes.status == "ร้องขอ") ...[
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(1.0),
+                                child: TextFormField(
+                                  maxLength: 150,
+                                  maxLines: 3,
+
+                                  //controller: _addressc,
+                                  keyboardType: TextInputType.text,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    hintText: 'หมายเหตุ',
+                                  ),
+                                  // validator: (value) {
+                                  //   if (value == null || value.isEmpty) {
+                                  //     return 'โปรดระบุจำนวนเงินจ่าย';
+                                  //   }
+                                  // },
+                                  onSaved: (value) => _remark = value!,
+                                ),
+                              ),
+                            ),
+                          ] else ...[
+                            Expanded(
+                              child: Text(
+                                'หมายเหตุ',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                widget.Notes.remarks,
+                                textAlign: TextAlign.end,
+                              ),
+                            ),
+                          ]
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              
+
+
               Container(
                 margin: const EdgeInsets.all(10.0),
                 padding: const EdgeInsets.all(10.0),
