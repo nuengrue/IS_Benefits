@@ -5,6 +5,10 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:ghb_benefits/All_Controllers/cremation_service_controllers.dart';
+import 'package:ghb_benefits/All_Controllers/master_controllers.dart';
+import 'package:ghb_benefits/All_Providers/provider_master.dart';
+import 'package:ghb_benefits/All_Services/servics.dart';
 import 'package:ghb_benefits/color.dart';
 import 'package:ghb_benefits/All_Page/Cremation_Service/list_cremation_service.dart';
 import 'package:ghb_benefits/All_Providers/provider_cremation.dart';
@@ -24,6 +28,49 @@ class AddCremationServicePage extends StatefulWidget {
 }
 
 class _AddCremationServicePageState extends State<AddCremationServicePage> {
+  MasterController mastecontroller = MasterController(FirebaseServices());
+  CremationServiceController controller =
+      CremationServiceController(FirebaseServices());
+
+  void initState() {
+    super.initState();
+    _getCremationServiceadd(context);
+  }
+
+  late int _idcounts = 0;
+  void _getCremationServiceadd(BuildContext context) async {
+    var newEmployee = await mastecontroller.fetchEmployee();
+    context.read<EmployeeProviders>().EmployeeList = newEmployee;
+    context.read<filedEmployeeProviders>().Empno = newEmployee.first.no;
+    context.read<filedEmployeeProviders>().Empempcode =
+        newEmployee.first.empcode;
+    context.read<filedEmployeeProviders>().Empnameemp =
+        newEmployee.first.nameemp;
+    context.read<filedEmployeeProviders>().Empdepartment =
+        newEmployee.first.department;
+    context.read<filedEmployeeProviders>().Empdivisionment =
+        newEmployee.first.divisionment;
+    context.read<filedEmployeeProviders>().Empdate = newEmployee.first.date;
+    context.read<filedEmployeeProviders>().Empuid = newEmployee.first.uid;
+    context.read<filedEmployeeProviders>().Empuid = newEmployee.first.idcard;
+
+    setState(() {
+      _empcode = newEmployee.first.empcode;
+      _name = newEmployee.first.nameemp;
+      _department = newEmployee.first.department;
+      _divisionment = newEmployee.first.divisionment;
+      _idcard = newEmployee.first.idcard;
+    });
+
+    var newCremation = await controller.fetchCremationServiceno();
+
+    setState(() {
+      _idcounts = newCremation.length + 1;
+    });
+    // = newCremation;
+    // context.read<CremationServiceProviders>().CremationServiceList = newCremation;
+  }
+
   _AddCremationServicePageState() {
     _selectedVal = _childName[0];
   }
@@ -79,27 +126,27 @@ class _AddCremationServicePageState extends State<AddCremationServicePage> {
   final user = FirebaseAuth.instance.currentUser!;
 
   late String _no;
-  late String _empcode;
-  late String _name;
-  late String _department;
-  late String _divisionment;
-  late String _idcard;
+  late String _empcode = "";
+  late String _name = "";
+  late String _department = "";
+  late String _divisionment = "";
+  late String _idcard = "";
   late String _savedate;
 
 //
-  late String _housenumber;
-  late String _alley;
-  late String _road;
-  late String _district;
-  late String _county;
-  late String _province;
-  late String _tel;
+  late String _housenumber = "";
+  late String _alley = "";
+  late String _road = "";
+  late String _district = "";
+  late String _county = "";
+  late String _province = "";
+  late String _tel = "";
   //
   late bool _readrules;
   //
 
-  late String _age;
-  late String _datebirth;
+  late String _age = "";
+  late String _datebirth = "";
 //
   late String _namepartner;
   //
@@ -111,7 +158,7 @@ class _AddCremationServicePageState extends State<AddCremationServicePage> {
   late String _managername;
   late String _cardnumber;
   late String _relationship;
-  late String _percentage;
+  late String _percentage = "";
   late String _conditions;
 //
 
@@ -121,20 +168,20 @@ class _AddCremationServicePageState extends State<AddCremationServicePage> {
   late String _status;
   late String _email;
   late String _url;
-  late String _filename;
+  late String _filename = "";
   late String _flagread;
   late String _id;
-
+  late String _remarks = "";
   void AddCremationService() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      _no = _no;
-      _empcode = "57315";
-      _name = "หนึ่งฤทัย พวงแก้ว";
-      _department = "ฝ่ายพัฒนาระบบสารสนเทศ";
-      _divisionment = "ส่วนสวัสดิการ";
-      _idcard;
-      _savedate = DateFormat.yMd().add_jm().format(DateTime.now());
+      _idcounts = _idcounts;
+      _empcode = _empcode;
+      _name = _name;
+      _department = _department;
+      _divisionment = _divisionment;
+      _idcard = _idcard;
+      _savedate = DateFormat('dd-MM-yyyy  kk:mm').format(DateTime.now());
       _housenumber;
       _alley;
       _road;
@@ -161,16 +208,16 @@ class _AddCremationServicePageState extends State<AddCremationServicePage> {
       _payamount = "0";
       _paydate = "";
 
-      _status = "Request";
+      _status = "ร้องขอ";
       _email = user.uid;
       _url = _url;
       _filename = _filename;
       _flagread = "0";
       _id = "";
-
+      _remarks = _remarks;
       Provider.of<CremationServiceProviders>(context, listen: false)
           .addCremationService(
-              _no,
+              _idcounts,
               _empcode,
               _name,
               _department,
@@ -203,13 +250,14 @@ class _AddCremationServicePageState extends State<AddCremationServicePage> {
               _url,
               _filename,
               _flagread,
-              _id);
+              _id,
+              _remarks);
 
       //final docStatus = FirebaseFirestore.instance.collection('ChildAllowance');
       CollectionReference CremationService =
           FirebaseFirestore.instance.collection('CremationService');
       DocumentReference doc = await CremationService.add({
-        'no': _no,
+        'no': _idcounts,
         'empcode': _empcode,
         'name': _name,
         'department': _department,
@@ -242,16 +290,17 @@ class _AddCremationServicePageState extends State<AddCremationServicePage> {
         'fileUrl': _url,
         'filename': _filename,
         'flagread': _flagread,
-        'id': _id
+        'id': _id,
+        'remarks': _remarks
       });
       doc.update({
         'id': doc.id,
 
         //'id' : result,
       });
-    context.read<flieCremationServiceModal>().flieCremationServiceChoice = "";
+      // context.read<flieCremationServiceModal>().flieCremationServiceChoice = "";
 
-  AwesomeDialog(
+      AwesomeDialog(
         context: context,
         dialogType: DialogType.success,
         animType: AnimType.bottomSlide,
@@ -303,7 +352,8 @@ class _AddCremationServicePageState extends State<AddCremationServicePage> {
       _url = url;
       // print(_url);
     });
-    context.read<flieCremationServiceModal>().flieCremationServiceChoice = filename;
+    context.read<flieCremationServiceModal>().flieCremationServiceChoice =
+        filename;
 
     // await FirebaseFirestore.instance
     // .collection("file")
@@ -312,13 +362,29 @@ class _AddCremationServicePageState extends State<AddCremationServicePage> {
     // //.set({'fileUrl':url,'num' : "file FDF" + number.toString()});
   }
 
+  void deleteflie() async {
+    Provider.of<flieCremationServiceModal>(context, listen: false).deleteflie();
+    setState(() {
+      _filename = "";
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // Scaffold is a layout for
     // the major Material Components.
     return Scaffold(
       appBar: AppBar(
-        title: Text('เพิ่มรายการ'),
+        title: Text(
+          'สร้างคำขอสมัครฌาปนกิจสงเคราะห์',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Sarabun',
+            color: iWhiteColor,
+          ),
+        ),
+        backgroundColor: iBlueColor,
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -354,36 +420,37 @@ class _AddCremationServicePageState extends State<AddCremationServicePage> {
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'เลขที่',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Consumer<CremationServiceProviders>(
-                          builder: (context, value, child) {
-                            int Counts = 0;
-                            String number_text = "";
+                    // Row(
+                    //   children: [
+                    //     Expanded(
+                    //       child: Text(
+                    //         'เลขที่',
+                    //         textAlign: TextAlign.left,
+                    //         style: TextStyle(fontWeight: FontWeight.bold),
+                    //       ),
+                    //     ),
+                    //     Consumer<CremationServiceProviders>(
+                    //       builder: (context, value, child) {
+                    //         int Counts = 0;
+                    //         String number_text = "";
 
-                            Counts = value.CremationServiceList.length + 1;
-                            _no = "200000" + Counts.toString();
+                    //         Counts = value.CremationServiceList.length + 1;
+                    //         _no = "200000" + Counts.toString();
 
-                            return Expanded(
-                              child: Text(
-                                _no.toString(),
-                                textAlign: TextAlign.end,
-                              ),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
+                    //         return Expanded(
+                    //           child: Text(
+                    //             _no.toString(),
+                    //             textAlign: TextAlign.end,
+                    //           ),
+                    //         );
+                    //       },
+                    //     ),
+                    //   ],
+                    // ),
                   ],
                 ),
               ),
@@ -415,29 +482,30 @@ class _AddCremationServicePageState extends State<AddCremationServicePage> {
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              'รหัสพนักงาน',
-                              textAlign: TextAlign.left,
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Expanded(
-                            child: Text(
-                              '57315',
-                              textAlign: TextAlign.end,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.all(8.0),
+                    //   child: Row(
+                    //     children: [
+                    //       Expanded(
+                    //         child: Text(
+                    //           'รหัสพนักงาน',
+                    //           textAlign: TextAlign.left,
+                    //           style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
+                    //         ),
+                    //       ),
+                    //       Expanded(
+                    //         child: Text(
+                    //           '57315',
+                    //           textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
@@ -446,13 +514,19 @@ class _AddCremationServicePageState extends State<AddCremationServicePage> {
                             child: Text(
                               'พนักงาน',
                               textAlign: TextAlign.left,
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Sarabun',
+                              ),
                             ),
                           ),
                           Expanded(
                             child: Text(
-                              'หนึ่งฤทัย พวงแก้ว',
+                              _name,
                               textAlign: TextAlign.end,
+                              style: TextStyle(
+                                fontFamily: 'Sarabun',
+                              ),
                             ),
                           ),
                         ],
@@ -466,7 +540,10 @@ class _AddCremationServicePageState extends State<AddCremationServicePage> {
                             child: Text(
                               'หน่วยงาน',
                               textAlign: TextAlign.left,
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Sarabun',
+                              ),
                             ),
                           ),
                           Column(
@@ -474,40 +551,22 @@ class _AddCremationServicePageState extends State<AddCremationServicePage> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(
-                                'ฝ่ายทรัพยากรบุคคล',
+                                _department,
                                 textAlign: TextAlign.end,
+                                style: TextStyle(
+                                  fontFamily: 'Sarabun',
+                                ),
                               ),
                               Text(
-                                'ส่วนสวัสดิการ',
+                                _divisionment,
                                 textAlign: TextAlign.end,
+                                style: TextStyle(
+                                  fontFamily: 'Sarabun',
+                                ),
                               ),
                             ],
                           ),
                         ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: TextFormField(
-                        maxLength: 13,
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: 'เลขที่บัตรประชาชน',
-                          labelText: 'เลขที่บัตรประชาชน',
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'โปรดระบุเลขที่บัตรประชาชน';
-                          } else if (value.length != 13) {
-                            return 'โปรดระบุข้อมูล 13 ตัวอักษร';
-                          } else {
-                            return null;
-                          }
-                        },
-                        onSaved: (newValue) {
-                          _idcard = newValue!;
-                        },
                       ),
                     ),
                     Padding(
@@ -516,15 +575,72 @@ class _AddCremationServicePageState extends State<AddCremationServicePage> {
                         children: [
                           Expanded(
                             child: Text(
-                              'วันที่บันทึก',
+                              'เลขที่บัตรประชาชน',
                               textAlign: TextAlign.left,
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Sarabun',
+                              ),
                             ),
                           ),
                           Expanded(
                             child: Text(
-                              DateFormat.yMd().add_jm().format(DateTime.now()),
+                              _idcard,
                               textAlign: TextAlign.end,
+                              style: TextStyle(
+                                fontFamily: 'Sarabun',
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.all(5.0),
+                    //   child: TextFormField(
+                    //     maxLength: 13,
+                    //     keyboardType: TextInputType.text,
+                    //     decoration: InputDecoration(
+                    //       border: OutlineInputBorder(),
+                    //       hintText: 'เลขที่บัตรประชาชน',
+                    //       labelText: 'เลขที่บัตรประชาชน',
+                    //     ),
+                    //     validator: (value) {
+                    //       if (value == null || value.isEmpty) {
+                    //         return 'โปรดระบุเลขที่บัตรประชาชน';
+                    //       } else if (value.length != 13) {
+                    //         return 'โปรดระบุข้อมูล 13 ตัวอักษร';
+                    //       } else {
+                    //         return null;
+                    //       }
+                    //     },
+                    //     onSaved: (newValue) {
+                    //       _idcard = newValue!;
+                    //     },
+                    //   ),
+                    // ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              'วันที่บันทึก',
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Sarabun',
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              DateFormat('dd-MM-yyyy  kk:mm')
+                                  .format(DateTime.now()),
+                              textAlign: TextAlign.end,
+                              style: TextStyle(
+                                fontFamily: 'Sarabun',
+                              ),
                             ),
                           ),
                         ],
@@ -535,208 +651,208 @@ class _AddCremationServicePageState extends State<AddCremationServicePage> {
               ),
 
               ///
-              Container(
-                margin: const EdgeInsets.all(10.0),
-                padding: const EdgeInsets.all(10.0),
-                //height: double.infinity,
-                width: 450,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(
-                    color: Colors.white,
-                  ),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 6.0,
-                      spreadRadius: 2.0,
-                      color: Colors.grey,
-                      offset: Offset(0.0, 0.0),
-                    )
-                  ],
-                ),
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      'ข้อมูลที่อยู่ปัจจุบันของพนักงาน',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const Divider(),
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: TextFormField(
-                        maxLength: 50,
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: 'บ้านเลขที่',
-                          labelText: 'บ้านเลขที่',
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'โปรดระบุบ้านเลขที่';
-                          } else if (value.length >= 50) {
-                            return 'โปรดระบุข้อมูลไม่เกิน 50 ตัวอักษร';
-                          } else {
-                            return null;
-                          }
-                        },
-                        onSaved: (newValue) {
-                          _housenumber = newValue!;
-                        },
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: TextFormField(
-                        maxLength: 50,
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: 'ตรอก/ซอย',
-                          labelText: 'ตรอก/ซอย',
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'โปรดระบุตรอก/ซอย';
-                          } else if (value.length >= 50) {
-                            return 'โปรดระบุข้อมูลไม่เกิน 50 ตัวอักษร';
-                          } else {
-                            return null;
-                          }
-                        },
-                        onSaved: (newValue) {
-                          _alley = newValue!;
-                        },
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: TextFormField(
-                        maxLength: 50,
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: 'ถนน',
-                          labelText: 'ถนน',
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'โปรดระบุถนน';
-                          } else if (value.length >= 50) {
-                            return 'โปรดระบุข้อมูลไม่เกิน 50 ตัวอักษร';
-                          } else {
-                            return null;
-                          }
-                        },
-                        onSaved: (newValue) {
-                          _road = newValue!;
-                        },
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: TextFormField(
-                        maxLength: 50,
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: 'ตำบล/แขวง',
-                          labelText: 'ตำบล/แขวง',
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'โปรดระบุตำบล/แขวง';
-                          } else if (value.length >= 50) {
-                            return 'โปรดระบุข้อมูลไม่เกิน 50 ตัวอักษร';
-                          } else {
-                            return null;
-                          }
-                        },
-                        onSaved: (newValue) {
-                          _district = newValue!;
-                        },
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: TextFormField(
-                        maxLength: 50,
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: 'อำเภอ/เขต',
-                          labelText: 'อำเภอ/เขต',
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'โปรดระบุอำเภอ/เขต';
-                          } else if (value.length >= 50) {
-                            return 'โปรดระบุข้อมูลไม่เกิน 50 ตัวอักษร';
-                          } else {
-                            return null;
-                          }
-                        },
-                        onSaved: (newValue) {
-                          _county = newValue!;
-                        },
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: TextFormField(
-                        maxLength: 50,
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: 'จังหวัด',
-                          labelText: 'จังหวัด',
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'โปรดระบุจังหวัด';
-                          } else if (value.length >= 50) {
-                            return 'โปรดระบุข้อมูลไม่เกิน 50 ตัวอักษร';
-                          } else {
-                            return null;
-                          }
-                        },
-                        onSaved: (newValue) {
-                          _province = newValue!;
-                        },
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: TextFormField(
-                        maxLength: 10,
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: 'หมายเลขติดต่อ',
-                          labelText: 'หมายเลขติดต่อ',
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'โปรดระบุหมายเลขติดต่อ';
-                          } else if (value.length > 10) {
-                            return 'โปรดระบุข้อมูลไม่เกิน 10 ตัวอักษร';
-                          } else {
-                            return null;
-                          }
-                        },
-                        onSaved: (newValue) {
-                          _tel = newValue!;
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              // Container(
+              //   margin: const EdgeInsets.all(10.0),
+              //   padding: const EdgeInsets.all(10.0),
+              //   //height: double.infinity,
+              //   width: 450,
+              //   decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.circular(5),
+              //     border: Border.all(
+              //       color: Colors.white,
+              //     ),
+              //     color: Colors.white,
+              //     boxShadow: [
+              //       BoxShadow(
+              //         blurRadius: 6.0,
+              //         spreadRadius: 2.0,
+              //         color: Colors.grey,
+              //         offset: Offset(0.0, 0.0),
+              //       )
+              //     ],
+              //   ),
+              //   child: Column(
+              //     children: <Widget>[
+              //       Text(
+              //         'ข้อมูลที่อยู่ปัจจุบันของพนักงาน',
+              //         style: TextStyle(
+              //           fontSize: 16,
+              //           color: Color.fromARGB(255, 9, 28, 235),
+              //           fontWeight: FontWeight.bold,
+              //         ),
+              //       ),
+              //       const Divider(),
+              //       Padding(
+              //         padding: const EdgeInsets.all(5.0),
+              //         child: TextFormField(
+              //           maxLength: 50,
+              //           keyboardType: TextInputType.text,
+              //           decoration: InputDecoration(
+              //             border: OutlineInputBorder(),
+              //             hintText: 'บ้านเลขที่',
+              //             labelText: 'บ้านเลขที่',
+              //           ),
+              //           validator: (value) {
+              //             if (value == null || value.isEmpty) {
+              //               return 'โปรดระบุบ้านเลขที่';
+              //             } else if (value.length >= 50) {
+              //               return 'โปรดระบุข้อมูลไม่เกิน 50 ตัวอักษร';
+              //             } else {
+              //               return null;
+              //             }
+              //           },
+              //           onSaved: (newValue) {
+              //             _housenumber = newValue!;
+              //           },
+              //         ),
+              //       ),
+              //       Padding(
+              //         padding: const EdgeInsets.all(5.0),
+              //         child: TextFormField(
+              //           maxLength: 50,
+              //           keyboardType: TextInputType.text,
+              //           decoration: InputDecoration(
+              //             border: OutlineInputBorder(),
+              //             hintText: 'ตรอก/ซอย',
+              //             labelText: 'ตรอก/ซอย',
+              //           ),
+              //           validator: (value) {
+              //             if (value == null || value.isEmpty) {
+              //               return 'โปรดระบุตรอก/ซอย';
+              //             } else if (value.length >= 50) {
+              //               return 'โปรดระบุข้อมูลไม่เกิน 50 ตัวอักษร';
+              //             } else {
+              //               return null;
+              //             }
+              //           },
+              //           onSaved: (newValue) {
+              //             _alley = newValue!;
+              //           },
+              //         ),
+              //       ),
+              //       Padding(
+              //         padding: const EdgeInsets.all(5.0),
+              //         child: TextFormField(
+              //           maxLength: 50,
+              //           keyboardType: TextInputType.text,
+              //           decoration: InputDecoration(
+              //             border: OutlineInputBorder(),
+              //             hintText: 'ถนน',
+              //             labelText: 'ถนน',
+              //           ),
+              //           validator: (value) {
+              //             if (value == null || value.isEmpty) {
+              //               return 'โปรดระบุถนน';
+              //             } else if (value.length >= 50) {
+              //               return 'โปรดระบุข้อมูลไม่เกิน 50 ตัวอักษร';
+              //             } else {
+              //               return null;
+              //             }
+              //           },
+              //           onSaved: (newValue) {
+              //             _road = newValue!;
+              //           },
+              //         ),
+              //       ),
+              //       Padding(
+              //         padding: const EdgeInsets.all(5.0),
+              //         child: TextFormField(
+              //           maxLength: 50,
+              //           keyboardType: TextInputType.text,
+              //           decoration: InputDecoration(
+              //             border: OutlineInputBorder(),
+              //             hintText: 'ตำบล/แขวง',
+              //             labelText: 'ตำบล/แขวง',
+              //           ),
+              //           validator: (value) {
+              //             if (value == null || value.isEmpty) {
+              //               return 'โปรดระบุตำบล/แขวง';
+              //             } else if (value.length >= 50) {
+              //               return 'โปรดระบุข้อมูลไม่เกิน 50 ตัวอักษร';
+              //             } else {
+              //               return null;
+              //             }
+              //           },
+              //           onSaved: (newValue) {
+              //             _district = newValue!;
+              //           },
+              //         ),
+              //       ),
+              //       Padding(
+              //         padding: const EdgeInsets.all(5.0),
+              //         child: TextFormField(
+              //           maxLength: 50,
+              //           keyboardType: TextInputType.text,
+              //           decoration: InputDecoration(
+              //             border: OutlineInputBorder(),
+              //             hintText: 'อำเภอ/เขต',
+              //             labelText: 'อำเภอ/เขต',
+              //           ),
+              //           validator: (value) {
+              //             if (value == null || value.isEmpty) {
+              //               return 'โปรดระบุอำเภอ/เขต';
+              //             } else if (value.length >= 50) {
+              //               return 'โปรดระบุข้อมูลไม่เกิน 50 ตัวอักษร';
+              //             } else {
+              //               return null;
+              //             }
+              //           },
+              //           onSaved: (newValue) {
+              //             _county = newValue!;
+              //           },
+              //         ),
+              //       ),
+              //       Padding(
+              //         padding: const EdgeInsets.all(5.0),
+              //         child: TextFormField(
+              //           maxLength: 50,
+              //           keyboardType: TextInputType.text,
+              //           decoration: InputDecoration(
+              //             border: OutlineInputBorder(),
+              //             hintText: 'จังหวัด',
+              //             labelText: 'จังหวัด',
+              //           ),
+              //           validator: (value) {
+              //             if (value == null || value.isEmpty) {
+              //               return 'โปรดระบุจังหวัด';
+              //             } else if (value.length >= 50) {
+              //               return 'โปรดระบุข้อมูลไม่เกิน 50 ตัวอักษร';
+              //             } else {
+              //               return null;
+              //             }
+              //           },
+              //           onSaved: (newValue) {
+              //             _province = newValue!;
+              //           },
+              //         ),
+              //       ),
+              //       Padding(
+              //         padding: const EdgeInsets.all(5.0),
+              //         child: TextFormField(
+              //           maxLength: 10,
+              //           keyboardType: TextInputType.number,
+              //           decoration: InputDecoration(
+              //             border: OutlineInputBorder(),
+              //             hintText: 'หมายเลขติดต่อ',
+              //             labelText: 'หมายเลขติดต่อ',
+              //           ),
+              //           validator: (value) {
+              //             if (value == null || value.isEmpty) {
+              //               return 'โปรดระบุหมายเลขติดต่อ';
+              //             } else if (value.length > 10) {
+              //               return 'โปรดระบุข้อมูลไม่เกิน 10 ตัวอักษร';
+              //             } else {
+              //               return null;
+              //             }
+              //           },
+              //           onSaved: (newValue) {
+              //             _tel = newValue!;
+              //           },
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
               Container(
                 margin: const EdgeInsets.all(10.0),
                 padding: const EdgeInsets.all(10.0),
@@ -765,6 +881,7 @@ class _AddCremationServicePageState extends State<AddCremationServicePage> {
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -779,7 +896,11 @@ class _AddCremationServicePageState extends State<AddCremationServicePage> {
                         /** CheckboxListTile Widget **/
                         child: CheckboxListTile(
                           title: const Text(
-                              'ได้อ่านและรับทราบข้อบังคับธนาคารอาคารสงเคราะห์ว่าด้วยการฌาปนกิจสงเคราะห์พ.ศ.2559 และที่แก้ไขเพิ่มเติม'),
+                            'ได้อ่านและรับทราบข้อบังคับธนาคารอาคารสงเคราะห์ว่าด้วยการฌาปนกิจสงเคราะห์พ.ศ.2559 และที่แก้ไขเพิ่มเติม',
+                            style: TextStyle(
+                              fontFamily: 'Sarabun',
+                            ),
+                          ),
                           //subtitle: const Text('A computer science portal for geeks.'),
                           //secondary: const Icon(Icons.code),
                           autofocus: false,
@@ -799,97 +920,97 @@ class _AddCremationServicePageState extends State<AddCremationServicePage> {
                 ),
               ),
 
-              Container(
-                margin: const EdgeInsets.all(10.0),
-                padding: const EdgeInsets.all(10.0),
-                //height: double.infinity,
-                width: 450,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(
-                    color: Colors.white,
-                  ),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 6.0,
-                      spreadRadius: 2.0,
-                      color: Colors.grey,
-                      offset: Offset(0.0, 0.0),
-                    )
-                  ],
-                ),
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      'ข้อมูลอายุของพนักงาน',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const Divider(),
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: TextFormField(
-                        maxLength: 3,
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: 'อายุของพนักงาน',
-                          labelText: 'อายุของพนักงาน',
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'โปรดระบุอายุของพนักงาน';
-                          } else if (value.length >= 3) {
-                            return 'โปรดระบุข้อมูลไม่เกิน 3 ตัวอักษร';
-                          } else {
-                            return null;
-                          }
-                        },
-                        onSaved: (newValue) {
-                          _age = newValue!;
-                        },
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          maxLength: 10,
-                          controller: _date,
-                          //keyboardType: TextInputType.text,
-                          decoration: InputDecoration(
-                            //border: OutlineInputBorder(),
-                            icon: Icon(Icons.calendar_today_rounded),
+              // Container(
+              //   margin: const EdgeInsets.all(10.0),
+              //   padding: const EdgeInsets.all(10.0),
+              //   //height: double.infinity,
+              //   width: 450,
+              //   decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.circular(5),
+              //     border: Border.all(
+              //       color: Colors.white,
+              //     ),
+              //     color: Colors.white,
+              //     boxShadow: [
+              //       BoxShadow(
+              //         blurRadius: 6.0,
+              //         spreadRadius: 2.0,
+              //         color: Colors.grey,
+              //         offset: Offset(0.0, 0.0),
+              //       )
+              //     ],
+              //   ),
+              //   child: Column(
+              //     children: <Widget>[
+              //       Text(
+              //         'ข้อมูลอายุของพนักงาน',
+              //         style: TextStyle(
+              //           fontSize: 16,
+              //           color: Color.fromARGB(255, 9, 28, 235),
+              //           fontWeight: FontWeight.bold,
+              //         ),
+              //       ),
+              //       const Divider(),
+              //       Padding(
+              //         padding: const EdgeInsets.all(5.0),
+              //         child: TextFormField(
+              //           maxLength: 3,
+              //           keyboardType: TextInputType.number,
+              //           decoration: InputDecoration(
+              //             border: OutlineInputBorder(),
+              //             hintText: 'อายุของพนักงาน',
+              //             labelText: 'อายุของพนักงาน',
+              //           ),
+              //           validator: (value) {
+              //             if (value == null || value.isEmpty) {
+              //               return 'โปรดระบุอายุของพนักงาน';
+              //             } else if (value.length >= 3) {
+              //               return 'โปรดระบุข้อมูลไม่เกิน 3 ตัวอักษร';
+              //             } else {
+              //               return null;
+              //             }
+              //           },
+              //           onSaved: (newValue) {
+              //             _age = newValue!;
+              //           },
+              //         ),
+              //       ),
+              //       Padding(
+              //         padding: const EdgeInsets.all(8.0),
+              //         child: Padding(
+              //           padding: const EdgeInsets.all(8.0),
+              //           child: TextFormField(
+              //             maxLength: 10,
+              //             controller: _date,
+              //             //keyboardType: TextInputType.text,
+              //             decoration: InputDecoration(
+              //               //border: OutlineInputBorder(),
+              //               icon: Icon(Icons.calendar_today_rounded),
 
-                            hintText: 'วันที่เกิดของพนักงาน',
-                          ),
-                          onTap: () async {
-                            DateTime? pickddate = await showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(2000),
-                                lastDate: DateTime(9999));
+              //               hintText: 'วันที่เกิดของพนักงาน',
+              //             ),
+              //             onTap: () async {
+              //               DateTime? pickddate = await showDatePicker(
+              //                   context: context,
+              //                   initialDate: DateTime.now(),
+              //                   firstDate: DateTime(2000),
+              //                   lastDate: DateTime(9999));
 
-                            if (pickddate != null) {
-                              setState(() {
-                                _date.text =
-                                    DateFormat('yyyy-MM-dd').format(pickddate);
-                                //var _date = DateFormat("dd-MM-yyyy").format(now);
-                              });
-                            }
-                          },
-                          onSaved: (newValue) => _datebirth = newValue!,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              //               if (pickddate != null) {
+              //                 setState(() {
+              //                   _date.text =
+              //                       DateFormat('dd-MM-yyyy').format(pickddate);
+              //                   //var _date = DateFormat("dd-MM-yyyy").format(now);
+              //                 });
+              //               }
+              //             },
+              //             onSaved: (newValue) => _datebirth = newValue!,
+              //           ),
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
 
               /////////////
 
@@ -921,6 +1042,7 @@ class _AddCremationServicePageState extends State<AddCremationServicePage> {
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -1004,6 +1126,7 @@ class _AddCremationServicePageState extends State<AddCremationServicePage> {
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -1020,7 +1143,11 @@ class _AddCremationServicePageState extends State<AddCremationServicePage> {
                         /** CheckboxListTile Widget **/
                         child: CheckboxListTile(
                           title: const Text(
-                              'ชำระเงินเป็นค่าสมัครเข้าเป็นสมาชิก เป็นเงิน 100 บาท'),
+                            'ชำระเงินเป็นค่าสมัครเข้าเป็นสมาชิก เป็นเงิน 100 บาท',
+                            style: TextStyle(
+                              fontFamily: 'Sarabun',
+                            ),
+                          ),
                           //subtitle: const Text('A computer science portal for geeks.'),
                           //secondary: const Icon(Icons.code),
                           autofocus: false,
@@ -1049,7 +1176,11 @@ class _AddCremationServicePageState extends State<AddCremationServicePage> {
                         /** CheckboxListTile Widget **/
                         child: CheckboxListTile(
                           title: const Text(
-                              'ชำระเงินสงเคราะห์ล่วงหน้าตามอัตราที่ทางการฌาปนกิจสงเคราะห์ ธนาคารอาคารสงเคราะห์ เรียกเก็บเป็นเงิน 300 บาท'),
+                            'ชำระเงินสงเคราะห์ล่วงหน้าตามอัตราที่ทางการฌาปนกิจสงเคราะห์ ธนาคารอาคารสงเคราะห์ เรียกเก็บเป็นเงิน 300 บาท',
+                            style: TextStyle(
+                              fontFamily: 'Sarabun',
+                            ),
+                          ),
                           //subtitle: const Text('A computer science portal for geeks.'),
                           //secondary: const Icon(Icons.code),
                           autofocus: false,
@@ -1078,7 +1209,11 @@ class _AddCremationServicePageState extends State<AddCremationServicePage> {
                         /** CheckboxListTile Widget **/
                         child: CheckboxListTile(
                           title: const Text(
-                              'ชำระเงินสงเคราะห์ศพเป็นไปตามอัตราที่ทางการฌาปนกิจสงเคราะห์ ธนาคารอาคารสงเคราะห์เรียกเก็บ'),
+                            'ชำระเงินสงเคราะห์ศพเป็นไปตามอัตราที่ทางการฌาปนกิจสงเคราะห์ ธนาคารอาคารสงเคราะห์เรียกเก็บ',
+                            style: TextStyle(
+                              fontFamily: 'Sarabun',
+                            ),
+                          ),
                           //subtitle: const Text('A computer science portal for geeks.'),
                           //secondary: const Icon(Icons.code),
                           autofocus: false,
@@ -1208,6 +1343,7 @@ Padding(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -1284,30 +1420,30 @@ Padding(
                         },
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: TextFormField(
-                        maxLength: 5,
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: 'ร้อยละ',
-                          labelText: 'ร้อยละ',
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'โปรดระบุร้อยละ';
-                          } else if (value.length == 5) {
-                            return 'โปรดระบุข้อมูล 5 ตัวอักษร';
-                          } else {
-                            return null;
-                          }
-                        },
-                        onSaved: (newValue) {
-                          _percentage = newValue!;
-                        },
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.all(5.0),
+                    //   child: TextFormField(
+                    //     maxLength: 5,
+                    //     keyboardType: TextInputType.number,
+                    //     decoration: InputDecoration(
+                    //       border: OutlineInputBorder(),
+                    //       hintText: 'ร้อยละ',
+                    //       labelText: 'ร้อยละ',
+                    //     ),
+                    //     validator: (value) {
+                    //       if (value == null || value.isEmpty) {
+                    //         return 'โปรดระบุร้อยละ';
+                    //       } else if (value.length == 5) {
+                    //         return 'โปรดระบุข้อมูล 5 ตัวอักษร';
+                    //       } else {
+                    //         return null;
+                    //       }
+                    //     },
+                    //     onSaved: (newValue) {
+                    //       _percentage = newValue!;
+                    //     },
+                    //   ),
+                    // ),
                     /*
                     Container(
                       margin: const EdgeInsets.all(10.0),
@@ -1844,6 +1980,7 @@ Padding(
                               fontSize: 16,
                               color: Color.fromARGB(255, 9, 28, 235),
                               fontWeight: FontWeight.bold,
+                              fontFamily: 'Sarabun',
                             ),
                           ),
                           const Divider(),
@@ -1895,39 +2032,95 @@ Padding(
                               fontSize: 16,
                               color: Color.fromARGB(255, 9, 28, 235),
                               fontWeight: FontWeight.bold,
+                              fontFamily: 'Sarabun',
                             ),
                           ),
                           const Divider(),
                           ElevatedButton(
-                            child: Text("เอกสารแนบ"),
+                            style:
+                                ElevatedButton.styleFrom(primary: iBlueColor),
                             onPressed: () {
                               uploadDataToFirebase();
                             },
+                            child: Text(
+                              "เอกสารแนบ",
+                              style: TextStyle(
+                                fontFamily: 'Sarabun',
+                              ),
+                            ),
                           ),
                           const Divider(),
-                          Consumer<flieCremationServiceModal>(
-                            builder: (context, value, child) {
-                              //String Carimg = '';
-                              if (value.flieCremationServiceChoice
-                                  .toString()
-                                  .isNotEmpty) {
-                                //Carimg = '${value.flieCremationServiceChoice}';
-                                return ListTile(
-                                  title: Text(_filename.toString()),
-                                  trailing: Icon(Icons.remove_red_eye),
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                View(url: _url)));
-                                  },
-                                );
-                              } else {
-                                return Text("");
-                              }
-                            },
-                          ),
+                          if (_filename == "" || _filename == null) ...[
+                            Text(""),
+                          ] else ...[
+                            ListTile(
+                              title: Text(_filename.toString()),
+                              trailing: Container(
+                                width: 70,
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                        child: IconButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    View(url: _url)));
+                                      },
+                                      icon: Icon(Icons.remove_red_eye),
+                                    )),
+                                    Expanded(
+                                        child: IconButton(
+                                      onPressed: () {
+                                        deleteflie();
+                                      },
+                                      icon: Icon(Icons.delete),
+                                    )),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ]
+                          // Consumer<flieCremationServiceModal>(
+                          //   builder: (context, value, child) {
+                          //     //String Carimg = '';
+                          //     if (value.flieCremationServiceChoice
+                          //         .toString()
+                          //         .isNotEmpty) {
+                          //       //Carimg = '${value.flieCremationServiceChoice}';
+                          //       return
+                          //                                 ListTile(
+                          //   title: Text(_filename.toString()),
+                          //   trailing: Container(
+                          //     width: 70,
+                          //     child: Row(
+                          //       children: [
+                          //         Expanded(child:IconButton(
+                          //           onPressed:() { Navigator.push(
+                          //             context,MaterialPageRoute
+                          //             (builder: (context) => View(url: _url)));},
+                          //             icon:Icon(Icons.remove_red_eye) ,) ),
+                          //         Expanded(child:IconButton(
+                          //           onPressed:() { deleteflie();},
+                          //             icon:Icon(Icons.delete) ,) ),
+                          //       ],
+                          //     ),
+                          //   ),
+                          //   // Icon(Icons.remove_red_eye),
+                          //   // onTap: () {
+                          //   //   Navigator.push(
+                          //   //       context,
+                          //   //       MaterialPageRoute(
+                          //   //           builder: (context) => View(url: _url)));
+                          //   // },
+
+                          // );
+                          //     } else {
+                          //       return Text("");
+                          //     }
+                          //   },
+                          // ),
                           //             ElevatedButton(
                           //               child: Text("เอกสารแนบ"),
                           //               onPressed: () async {
@@ -1970,20 +2163,25 @@ Padding(
                     // ),
 
                     ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: iBluebuttonColor,
-                  onPrimary: Colors.white,
-                  shadowColor: iBluebuttonColor,
-                  elevation: 3,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(32.0)),
-                  minimumSize: Size(200, 40), //////// HERE
-                ),
-                onPressed: () {
-                  AddCremationService();
-                },
-                child: Text('บันทึกข้อมูล'),
-              ),
+                      style: ElevatedButton.styleFrom(
+                        primary: iBluebuttonColor,
+                        onPrimary: Colors.white,
+                        shadowColor: iBluebuttonColor,
+                        elevation: 3,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(32.0)),
+                        minimumSize: Size(200, 40), //////// HERE
+                      ),
+                      onPressed: () {
+                        AddCremationService();
+                      },
+                      child: Text(
+                        'บันทึกข้อมูล',
+                        style: TextStyle(
+                          fontFamily: 'Sarabun',
+                        ),
+                      ),
+                    ),
 
                     //               SizedBox(
                     //   height: 10,
@@ -2049,7 +2247,16 @@ class View extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("PDF View"),
+        title: Text(
+          'รายละเอียดเอกสาร',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Sarabun',
+            color: iWhiteColor,
+          ),
+        ),
+        backgroundColor: iBlueColor,
       ),
       body: SfPdfViewer.network(
         url,
@@ -2065,6 +2272,11 @@ class flieCremationServiceModal extends ChangeNotifier {
 
   set flieCremationServiceChoice(value) {
     this._flie = value;
+    notifyListeners();
+  }
+
+  void deleteflie() {
+    this._flie = '';
     notifyListeners();
   }
 }

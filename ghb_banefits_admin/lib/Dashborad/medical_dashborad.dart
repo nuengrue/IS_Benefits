@@ -44,7 +44,7 @@ class _MedicalDashboradPageState extends State<MedicalDashboradPage> {
             int vAll = cAll.length;
             context.read<MedicalAdminProviders>().fliecountAllMedicalAdmin = vAll;
             // count  Status Request
-            var cRequest = newMedicalAdmin.where((x) => x.status == "Request");
+            var cRequest = newMedicalAdmin.where((x) => x.status == "ร้องขอ");
             int vRequest = cRequest.length;
             context.read<MedicalAdminProviders>().fliecountRequestMedicalAdmin = vRequest;
             // count  Status Approve
@@ -106,11 +106,13 @@ class _MedicalDashboradPageState extends State<MedicalDashboradPage> {
                         countnum: context.watch<MedicalAdminProviders>().fliecountAllMedicalAdmin,
                         buttonText: 'Total All',
                         indexColor:iAllColor,
+                                                url : 'Navigator.of(context).push(MaterialPageRoute(builder: (context) =>MainHomeAdminPage()));'
                       ),
                       BoxDashborad(
                         countnum: context.watch<MedicalAdminProviders>().fliecountRequestMedicalAdmin,
                         buttonText: 'Request',
                         indexColor: iRequestColor,
+                                                url : 'Navigator.of(context).push(MaterialPageRoute(builder: (context) =>MainHomeAdminPage()));'
                       ),
 
                     ],
@@ -125,11 +127,13 @@ class _MedicalDashboradPageState extends State<MedicalDashboradPage> {
                         countnum: context.watch<MedicalAdminProviders>().fliecountApproveMedicalAdmin,
                         buttonText: 'Approve',
                         indexColor:iApproveColor,
+                        url : 'Navigator.of(context).push(MaterialPageRoute(builder: (context) =>MainHomeAdminPage()));'
                       ),
                       BoxDashborad(
                         countnum: context.watch<MedicalAdminProviders>().fliecountRequestMedicalAdmin,
                         buttonText: 'Reject',
                         indexColor: iRejectColor,
+                                                url : 'Navigator.of(context).push(MaterialPageRoute(builder: (context) =>MainHomeAdminPage()));'
                       ),
 
                     ],

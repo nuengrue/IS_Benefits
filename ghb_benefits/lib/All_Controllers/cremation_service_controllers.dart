@@ -20,7 +20,12 @@ class CremationServiceController {
     onSyncController.add(false);
     return Cremations;
   }
-
+  Future<List<CremationService>> fetchCremationServiceno() async {
+    onSyncController.add(true);
+    Cremations = await servies.getCremationServiceno();
+    onSyncController.add(false);
+    return Cremations;
+  }
 /*
   void updateTodo(ChildAllowaneModel todo) async{
     servies.update(todo);

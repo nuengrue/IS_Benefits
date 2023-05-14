@@ -42,7 +42,7 @@ class _EducationDashboradPageState extends State<EducationDashboradPage> {
             int vAll = cAll.length;
             context.read<EducationAdminProviders>().fliecountAllEducationAdmin = vAll;
             // count  Status Request
-            var cRequest = newEducationAdmin.where((x) => x.status == "Request");
+            var cRequest = newEducationAdmin.where((x) => x.status == "ร้องขอ");
             int vRequest = cRequest.length;
             context.read<EducationAdminProviders>().fliecountRequestEducationAdmin = vRequest;
             // count  Status Approve
@@ -104,11 +104,13 @@ class _EducationDashboradPageState extends State<EducationDashboradPage> {
                         countnum: context.watch<EducationAdminProviders>().fliecountAllEducationAdmin,
                         buttonText: 'Total All',
                         indexColor:iAllColor,
+                                                url : 'Navigator.of(context).push(MaterialPageRoute(builder: (context) =>MainHomeAdminPage()));'
                       ),
                       BoxDashborad(
                         countnum: context.watch<EducationAdminProviders>().fliecountRequestEducationAdmin,
                         buttonText: 'Request',
                         indexColor: iRequestColor,
+                                                url : 'Navigator.of(context).push(MaterialPageRoute(builder: (context) =>MainHomeAdminPage()));'
                       ),
 
                     ],
@@ -123,11 +125,13 @@ class _EducationDashboradPageState extends State<EducationDashboradPage> {
                         countnum: context.watch<EducationAdminProviders>().fliecountApproveEducationAdmin,
                         buttonText: 'Approve',
                         indexColor:iApproveColor,
+                                                url : 'Navigator.of(context).push(MaterialPageRoute(builder: (context) =>MainHomeAdminPage()));'
                       ),
                       BoxDashborad(
                         countnum: context.watch<EducationAdminProviders>().fliecountRejectEducationAdmin,
                         buttonText: 'Reject',
                         indexColor: iRejectColor,
+                                                url : 'Navigator.of(context).push(MaterialPageRoute(builder: (context) =>MainHomeAdminPage()));'
                       ),
 
                     ],

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:ghb_banefits_admin/All_Models_Admin/education_model.dart';
 import 'package:ghb_banefits_admin/All_Page_Admin/Education/list_education_page.dart';
 import 'package:ghb_banefits_admin/All_Providers_Admin/provider_education.dart';
+import 'package:ghb_banefits_admin/color.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
@@ -29,12 +30,16 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
   late String _payamount;
   final _formKey = GlobalKey<FormState>();
   late String _paydate;
-
+  late final String _title = "แจ้งผลรายการคำขอเบิกค่ารักษาพยาบาล";
+  late String _content;
+   final String _createDate = DateFormat('dd-MM-yyyy  kk:mm').format(DateTime.now());
+  late String _id = "";
+  late String _uid;
   void ModifydataApprove() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       _Indexs = widget.Indexs.toInt();
-      _status = "Approve";
+      _status = "อนุมัติ";
       _flagread = "1";
       _payamount = _payamount;
       _paydate = DateFormat.yMd().add_jm().format(DateTime.now());
@@ -53,11 +58,26 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
         'payamount': _payamount,
         'paydate': _paydate
       });
-
+   _content = "คำขอเบิกค่ารักษาพยาบาล  เลขที่ใบเสร็จ "+  widget.Notes.receiptnumber + "ได้รับการอนุมัติจำนวน "+ widget.Notes.payamount + " บาท" ;
+     _uid = widget.Notes.email;
+          CollectionReference Notifications =
+          FirebaseFirestore.instance.collection('Notifications');
+      DocumentReference doc = await Notifications.add({
+        'no': 1,
+        'title': _title,
+        'content': _content,
+        'read': 0,
+        'createDate': _createDate,
+        'uid': _uid,
+        'id': _id
+      });
+      doc.update({
+        'id': doc.id,
+      });
       Navigator.pop(
         context,
         MaterialPageRoute(
-          builder: (context) => ListEducationAdminPage(),
+          builder: (context) => ListEducationAdminPage(Status:"ร้องขอ"),
         ),
       );
     }
@@ -65,7 +85,7 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
 
   void ModifydataReject() async {
     _Indexs = widget.Indexs.toInt();
-    _status = "Reject";
+    _status = "ปฏิเสธ";
     _flagread = "1";
     _payamount = "0";
     _paydate = DateFormat.yMd().add_jm().format(DateTime.now());
@@ -83,7 +103,7 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
     Navigator.pop(
       context,
       MaterialPageRoute(
-        builder: (context) => ListEducationAdminPage(),
+        builder: (context) => ListEducationAdminPage(Status:"ร้องขอ"),
       ),
     );
   }
@@ -94,7 +114,12 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
     // the major Material Components.
     return Scaffold(
       appBar: AppBar(
-        title: Text('รายละเอียดรายการ'),
+        title: Text('รายละเอียดคำขอช่วยเหลือการศึกษา',style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
+                            color: iWhiteColor,
+                          ),),
+      backgroundColor: iOrangeColor,
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -133,23 +158,23 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                       ),
                     ),
                     const Divider(),
-                                      Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          'เลขที่รายการ',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      Expanded(
-                        child: Text(
-                          widget.Notes.no,
-                          textAlign: TextAlign.end,
-                        ),
-                      ),
-                    ],
-                  ),
+                  //                     Row(
+                  //   children: [
+                  //     Expanded(
+                  //       child: Text(
+                  //         'เลขที่รายการ',
+                  //         textAlign: TextAlign.left,
+                  //         style: TextStyle(fontWeight: FontWeight.bold),
+                  //       ),
+                  //     ),
+                  //     Expanded(
+                  //       child: Text(
+                  //         widget.Notes.no,
+                  //         textAlign: TextAlign.end,
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                     Row(
                       children: [
                         Expanded(
@@ -691,7 +716,7 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: [
-                          if (widget.Notes.status == "Request") ...[
+                          if (widget.Notes.status == "ร้องขอ") ...[
                             Expanded(
                               child: Text(
                                 'จำนวนเงินจ่าย',
@@ -833,7 +858,7 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                 height: 10,
               ),
               Column(children: [
-                if (widget.Notes.status == "Request") ...[
+                if (widget.Notes.status == "ร้องขอ") ...[
                   Container(
                     margin: const EdgeInsets.all(2.0),
                     padding: const EdgeInsets.all(2.0),
@@ -901,21 +926,68 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
   }
 }
 
-class View extends StatelessWidget {
-  PdfViewerController? _pdfViewerController;
+class View extends StatefulWidget {
   final url;
-  View({this.url});
+  const View({this.url});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("PDF View"),
-      ),
-      body: SfPdfViewer.network(
-        url,
-        controller: _pdfViewerController,
-      ),
-    );
-  }
+  State<View> createState() => _ViewState();
+}
+
+class _ViewState extends State<View> {
+  // PdfViewerController? _pdfViewerController;
+  late final PdfViewerController _pdfViewerController;
+
+void initState() {
+  _pdfViewerController = PdfViewerController();
+  super.initState();
+}
+  @override
+Widget build(BuildContext context) {
+  return SafeArea(
+  child:Scaffold(
+body: SfPdfViewer.network(
+      widget.url,
+      controller: _pdfViewerController,
+    ),
+    appBar: AppBar(
+              title: Text('รายละเอียดเอกสาร',style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
+                            color: iWhiteColor,
+                          ),),
+      backgroundColor: iOrangeColor,
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(
+            Icons.keyboard_arrow_up,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            _pdfViewerController.previousPage();
+          },
+        ),
+        IconButton(
+          icon: Icon(
+            Icons.keyboard_arrow_down,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            _pdfViewerController.nextPage();
+          },
+        ),
+        IconButton(
+          icon: Icon(
+            Icons.zoom_in,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            _pdfViewerController.zoomLevel = 2;
+          },
+        )
+      ],
+    ),
+  ),
+  );
+}
 }

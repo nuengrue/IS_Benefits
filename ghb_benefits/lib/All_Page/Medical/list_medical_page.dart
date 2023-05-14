@@ -6,12 +6,14 @@ import 'package:ghb_benefits/All_Controllers/Medical_Controller.dart';
 import 'package:ghb_benefits/All_Models/medical_model.dart';
 import 'package:ghb_benefits/All_Page/Medical/add_medical_page.dart';
 import 'package:ghb_benefits/All_Page/Medical/detail_medical_page.dart';
+import 'package:ghb_benefits/All_Providers/provider_dashboard.dart';
 import 'package:ghb_benefits/All_Providers/provider_medical.dart';
 import 'package:ghb_benefits/All_Services/servics.dart';
 
 import 'package:ghb_benefits/color.dart';
 
 import 'package:ghb_benefits/my_drawer.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 //import 'package:flutter/widgets.dart';
@@ -43,11 +45,13 @@ class _ListMedicalPageState extends State<ListMedicalPage> {
       }
   @override
     Widget build(BuildContext context) {
+          return Consumer<MyDashboardProviders>(
+      builder: (context, value, child) {
     return Scaffold(
             appBar: AppBar(title: Text('รายการคำขอเบิกค่ารักษาพยาบาล',style: TextStyle(
                             fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: iOrangeColor,
+                            fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
+                            color: iWhiteColor,
                           ),),
       backgroundColor: iBlueColor,
       //  actions: <Widget>[
@@ -63,16 +67,16 @@ class _ListMedicalPageState extends State<ListMedicalPage> {
       //     ),
       //   ],
         ),
-                  floatingActionButton: FloatingActionButton(  
-        child: Icon(Icons.add),  
-        backgroundColor: iBlueColor,  
-        foregroundColor: Colors.white,  
-            onPressed: () {
+      //             floatingActionButton: FloatingActionButton(  
+      //   child: Icon(Icons.add),  
+      //   backgroundColor: iBlueColor,  
+      //   foregroundColor: Colors.white,  
+      //       onPressed: () {
 
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => AddMedPage()));
-            },
-      ),
+      //         Navigator.of(context).push(
+      //             MaterialPageRoute(builder: (context) => AddMedPage()));
+      //       },
+      // ),
         /*
 body:FutureBuilder<List<ChildAllowance>>(
     future: _getChildAllowance(context),
@@ -123,12 +127,43 @@ body:FutureBuilder<List<ChildAllowance>>(
               },
             ): GestureDetector(
               //onTap: (){ Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddChildAllowancePage()));},
-              child: Center(child: Text("ไม่พบรายการคำขอ",style: TextStyle(color: iBlueColor,),)));
+              child: Center(child: Text("ไม่พบรายการคำขอ",style: TextStyle(color: iBlueColor,fontFamily: 'Sarabun',),)));
           },
         ),
       ),
      
              drawer: MyDrawer(),
+               persistentFooterButtons: <Widget>[
+             if (value.SumMedicalModalChoice.toString() == '40000.0') ...[
+                   
+ Text('ท่านได้ใช้วงเงินตามสิทธิ์ครบกำหนดแล้ว: ${value.SumMedicalModalChoice.toString()} บาท ',style: TextStyle(
+                      fontSize: 15,
+                      color: iOrangeColor,
+                      fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
+                    ),),
+
+    ] else ...[
+  //  Text('ท่านได้ใช้วงเงินตามสิทธิ์ครบกำหนดแล้ว: ${value.Childage.toString()}'),
+
+         FloatingActionButton(  
+        child: Icon(Icons.add),  
+        backgroundColor: iBlueColor,  
+        foregroundColor: Colors.white,  
+            onPressed: () {
+
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => AddMedPage()));
+            },
+      ),
+    ]
+
+
+
+
+      ]
+
+      );
+ }
       );
   }
 }
@@ -141,26 +176,62 @@ body:FutureBuilder<List<ChildAllowance>>(
   
   @override
   Widget build(BuildContext context) {
+                          NumberFormat myFormat =
+                          NumberFormat.decimalPattern('en_us');
     return Padding(
       padding: const EdgeInsets.all(2.0),
 
         child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(10),
-              topLeft: Radius.circular(10),
-            )
-          ),
-          child: ListTile(
-           leading: Icon(Icons.note),
-            title: Text(notes.no),
-            subtitle: Text(notes.status),
-            trailing: Icon(Icons.arrow_forward_ios,color: Colors.black26,),
-             onTap: () {
-                  Navigator.push( context,MaterialPageRoute(builder: (context) =>DetailMedicalPage(Notes : notes)));
-                  },
-          ),
+             decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(
+                          color: Colors.white,
+                        ),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 6.0,
+                            spreadRadius: 2.0,
+                            color: Colors.grey,
+                            offset: Offset(0.0, 0.0),
+                          )
+                        ],
+                      ),
+         
+            child: ListTile(
+            //  leading: Icon(Icons.note),
+              title: Row(  children: [
+                  Expanded(child: Text('เลขที่ใบเสร็จ',
+                            // textAlign: TextAlign.left,
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),)),
+                  Expanded(child: Text(notes.idreceiptnumber, textAlign: TextAlign.end,)),
+                ],),
+              subtitle: Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(child: Text('จำนวนเงินร้องขอ',
+                                // textAlign: TextAlign.left,
+                                style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),)),
+                      Expanded(child: Text(myFormat.format(int.parse(notes.receiptamount)), textAlign: TextAlign.end,)),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(child: Text('วันที่บันทึก',
+                                // textAlign: TextAlign.left,
+                                style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),)),
+                      Expanded(child: Text(notes.savedate, textAlign: TextAlign.end,)),
+                    ],
+                  ),
+                ],
+              ),
+              trailing: Text(notes.status,style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',color: iBlueColor,),),
+               onTap: () {
+                    Navigator.push( context,MaterialPageRoute(builder: (context) =>DetailMedicalPage(Notes : notes)));
+                    },
+            ),
+          
         ),
     );
   }

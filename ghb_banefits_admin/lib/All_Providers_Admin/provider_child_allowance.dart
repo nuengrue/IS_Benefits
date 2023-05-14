@@ -24,6 +24,19 @@ class ChildAllowanceAdminProviders with ChangeNotifier {
 
   notifyListeners();
   } 
+
+   List<ChildAllowanceAdmin> _ChildAllowanceAdminListwhere  =  [];
+ List<ChildAllowanceAdmin> get ChildAllowanceAdminListwhere => this._ChildAllowanceAdminListwhere;
+
+
+
+
+ set ChildAllowanceAdminListwhere(List<ChildAllowanceAdmin> value) {
+
+  this._ChildAllowanceAdminListwhere = value;
+
+  notifyListeners();
+  } 
  
 
   int _countAllChildAllowanceAdmin = 0;
@@ -61,10 +74,10 @@ class ChildAllowanceAdminProviders with ChangeNotifier {
     
   }
 // function to update data to list of notes
-void modify(int Indexs, String status, String flagread){
+void modify(int Indexs, String status, String flagread, String remarks){
   _ChildAllowanceAdminList[Indexs].status = status ;
   _ChildAllowanceAdminList[Indexs].flagread = flagread; 
-
+  _ChildAllowanceAdminList[Indexs].remarks = remarks; 
   notifyListeners();
 
 }

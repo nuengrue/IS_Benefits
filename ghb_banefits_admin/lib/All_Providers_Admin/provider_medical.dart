@@ -2,6 +2,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:ghb_banefits_admin/All_Models_Admin/medical_model.dart';
 
+import '../All_Page_Admin/Report/Report_Child_Allowance.dart';
+
 
 
 
@@ -56,88 +58,41 @@ class MedicalAdminProviders with ChangeNotifier {
     notifyListeners();
     
   }
+
+      double _RemainRequestMedical = 0;
+  get RemainRequestMedical => this._RemainRequestMedical;
+
+  set RemainRequestMedical(value) {
+    this._RemainRequestMedical = value;
+    notifyListeners();
+    
+  }
+      double _RemainApproveMedical = 0;
+  get RemainApproveMedical => this._RemainApproveMedical;
+
+  set RemainApproveMedical(value) {
+    this._RemainApproveMedical = value;
+    notifyListeners();
+    
+  }  
+      double _RemainRejectMedical = 0;
+  get RemainRejectMedical => this._RemainRejectMedical;
+
+  set RemainRejectMedical(value) {
+    this._RemainRejectMedical = value;
+    notifyListeners();
+    
+  } 
+
 // function to update data to list of notes
-void modify(int Indexs, String status, String flagread, String payamount, String paydate){
+void modify(int Indexs, String status, String flagread, String payamount, String paydate, String remarks){
   _MedicalAdminList[Indexs].status = status ;
   _MedicalAdminList[Indexs].flagread = flagread; 
   _MedicalAdminList[Indexs].payamount = payamount;
   _MedicalAdminList[Indexs].paydate = paydate;  
-
+  _MedicalAdminList[Indexs].remarks = remarks;
   notifyListeners();
 
 }
-  //Notes List
-//  List<Medical> _medicalModel  =  [];
-//  // List<ChildAllowaneModel> _childAllowaneList  =  List.empty();
-//     late MedicalModel medicalModel;
-//      // List<ChildAllowaneModel> get data => List<ChildAllowaneModel>;
-//  //Stream<List<Childall>> get getentries => firestoreService.getdata();
-//  List<MedicalModel> get getmedicalModel{ return _medicalModel;}
 
-
-// function to add data to list of notes 
-//  void addMedical( 
-//    String no,
-//    String empcode,
-//    String name,
-//    String department,
-//    String divisionment,
-//    String numbercodemed,
-//    String savedate,
-//    String typemed,
-//    String yearmed,
-//    String hospitalname,
-//    String hospitaltype,
-//    String claimstartdate,
-//    String claimenddate,
-//    String idreceiptnumber,
-//    String receiptnumber,
-//    String tel,
-//    String namedisease,
-//    String diseasegroup,
-//    String receiptamount,
-//    String payamount,
-//    String paydate,
-//    String status,
-//    String email,
-//    String fileUrl,
-//    String filename,
-//    String flagread,
-//   String id, )
-//  {
-//    Medical medical = new Medical(   
-//    no,
-//     empcode,
-//     name,
-//     department,
-//     divisionment,
-//     numbercodemed,
-//     savedate,
-//     typemed,
-//     yearmed,
-//     hospitalname,
-//     hospitaltype,
-//     claimstartdate,
-//     claimenddate,
-//     idreceiptnumber,
-//     receiptnumber,
-//     tel,
-//     namedisease,
-//     diseasegroup,
-//     receiptamount,
-//     payamount,
-//     paydate,
-//     status,
-//     email,
-//     fileUrl,
-//     filename,
-//     flagread,
-//    id,);
-
-//    _MedicalList.add(medical);
-   
-   
-
-//     notifyListeners();
-//  }
 }

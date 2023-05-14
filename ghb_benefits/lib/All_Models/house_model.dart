@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HouseAllowance {
-  String no;
+  final int  no;
   final String empcode;
   final String name;
   final String department;
@@ -35,19 +35,20 @@ class HouseAllowance {
   final String filename;
   final String  flagread;
   String id;
+    final String   remarks;
   HouseAllowance(this.no,this.empcode, this.name, this.department, this.divisionment, this.savedate, this.startdate, 
   this.position, this.segment, this.departmentwork, this.provincework, this.positiondate, 
   this.typehouse, this.moneyhouse, this.housenumber, this.alley, this.road, this.district, this.county, this.province, this.workstatus, 
   this.payamount, this.paydate, this.status, this.email,       this.fileUrl,
        this.filename,
        this.flagread,
-       this.id,
+       this.id, this.remarks,
 );
 
   factory HouseAllowance.fromJson(Map<String, dynamic> json) {
         print(json);
     return HouseAllowance(
-      json['no'] as String,
+      json['no'] as int,
       json['empcode'] as String,
       json['name'] as String,
       json['department'] as String,
@@ -76,6 +77,7 @@ class HouseAllowance {
       json['filename'] as String,
       json['flagread'] as String,
       json['id'] as String,
+            json['remarks'] as String,
     );
   }
 
@@ -109,6 +111,7 @@ class HouseAllowance {
     'filename' : filename,    
     'flagread' : flagread,   
     'id' : id,
+        'remarks' : remarks, 
     };
   }
 

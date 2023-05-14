@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:ghb_benefits/All_Models/medical_model.dart';
+import 'package:ghb_benefits/color.dart';
 
 import 'package:ghb_benefits/pdf/pdf_api.dart';
 import 'package:ghb_benefits/pdf/view_pdf.dart';
@@ -36,7 +37,12 @@ class DetailMedicalPage extends StatelessWidget {
     // the major Material Components.
     return Scaffold(
       appBar: AppBar(
-        title: Text('รายละเอียดรายการ'),
+        title: Text('รายละเอียดคำขอเบิกค่ารักษาพยาบาล',style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
+                            color: iWhiteColor,
+                          ),),
+      backgroundColor: iBlueColor,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -69,7 +75,7 @@ class DetailMedicalPage extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -79,13 +85,13 @@ class DetailMedicalPage extends StatelessWidget {
                           child: Text(
                             'สถานะรายการ',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             Notes.status,
-                            textAlign: TextAlign.end,
+                            textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -133,13 +139,13 @@ class DetailMedicalPage extends StatelessWidget {
                         child: Text(
                           'พนักงาน',
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                         ),
                       ),
                       Expanded(
                         child: Text(
                           Notes.name,
-                          textAlign: TextAlign.end,
+                          textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                         ),
                       ),
                     ],
@@ -150,7 +156,7 @@ class DetailMedicalPage extends StatelessWidget {
                         child: Text(
                           'หน่วยงาน',
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                         ),
                       ),
                       Column(
@@ -159,11 +165,11 @@ class DetailMedicalPage extends StatelessWidget {
                         children: [
                           Text(
                             Notes.department,
-                            textAlign: TextAlign.end,
+                            textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                           Text(
                             Notes.divisionment,
-                            textAlign: TextAlign.end,
+                            textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ],
                       ),
@@ -201,7 +207,7 @@ class DetailMedicalPage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 16,
                       color: Color.fromARGB(255, 9, 28, 235),
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                     ),
                   ),
                   const Divider(),
@@ -224,36 +230,36 @@ class DetailMedicalPage extends StatelessWidget {
                     ],
                   ),
                   */
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          'ประเภทคำร้องขอ',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      Expanded(
-                        child: Text(
-                          Notes.typemed,
-                          textAlign: TextAlign.end,
-                        ),
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   children: [
+                  //     Expanded(
+                  //       child: Text(
+                  //         'ประเภทคำร้องขอ',
+                  //         textAlign: TextAlign.left,
+                  //         style: TextStyle(fontWeight: FontWeight.bold),
+                  //       ),
+                  //     ),
+                  //     Expanded(
+                  //       child: Text(
+                  //         Notes.typemed,
+                  //         textAlign: TextAlign.end,
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                   Row(
                     children: [
                       Expanded(
                         child: Text(
                           'วันที่บันทึก',
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                         ),
                       ),
                       Expanded(
                         child: Text(
                           Notes.savedate,
-                          textAlign: TextAlign.end,
+                          textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                         ),
                       ),
                     ],
@@ -264,13 +270,13 @@ class DetailMedicalPage extends StatelessWidget {
                         child: Text(
                           'วงเงินประจำปี',
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                         ),
                       ),
                       Expanded(
                         child: Text(
                           Notes.yearmed,
-                          textAlign: TextAlign.end,
+                          textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                         ),
                       ),
                     ],
@@ -307,7 +313,7 @@ class DetailMedicalPage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 16,
                       color: Color.fromARGB(255, 9, 28, 235),
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                     ),
                   ),
                   const Divider(),
@@ -317,7 +323,7 @@ class DetailMedicalPage extends StatelessWidget {
                         child: Text(
                           'ชื่อโรงพยาบาล',
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                         ),
                       ),
                       Column(
@@ -326,11 +332,11 @@ class DetailMedicalPage extends StatelessWidget {
                         children: [
                           Text(
                             Notes.hospitalname,
-                            textAlign: TextAlign.end,
+                            textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                           Text(
                             Notes.hospitaltype,
-                            textAlign: TextAlign.end,
+                            textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ],
                       ),
@@ -367,7 +373,7 @@ class DetailMedicalPage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 16,
                       color: Color.fromARGB(255, 9, 28, 235),
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                     ),
                   ),
                   const Divider(),
@@ -377,13 +383,13 @@ class DetailMedicalPage extends StatelessWidget {
                         child: Text(
                           'เลขที่ใบเสร็จ',
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                         ),
                       ),
                       Expanded(
                         child: Text(
                           Notes.idreceiptnumber,
-                          textAlign: TextAlign.end,
+                          textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                         ),
                       ),
                     ],
@@ -394,13 +400,13 @@ class DetailMedicalPage extends StatelessWidget {
                         child: Text(
                           'เล่มที่',
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                         ),
                       ),
                       Expanded(
                         child: Text(
                           Notes.receiptnumber,
-                          textAlign: TextAlign.end,
+                          textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                         ),
                       ),
                     ],
@@ -411,13 +417,13 @@ class DetailMedicalPage extends StatelessWidget {
                         child: Text(
                           'หมายเลขติดต่อกลับ',
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                         ),
                       ),
                       Expanded(
                         child: Text(
                           Notes.tel,
-                          textAlign: TextAlign.end,
+                          textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                         ),
                       ),
                     ],
@@ -428,13 +434,13 @@ class DetailMedicalPage extends StatelessWidget {
                         child: Text(
                           'วันที่เริ่มต้นการรักษา',
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                         ),
                       ),
                       Expanded(
                         child: Text(
                           Notes.claimstartdate,
-                          textAlign: TextAlign.end,
+                          textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                         ),
                       ),
                     ],
@@ -445,13 +451,13 @@ class DetailMedicalPage extends StatelessWidget {
                         child: Text(
                           'วันที่สิ้นสุดการรักษา',
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                         ),
                       ),
                       Expanded(
                         child: Text(
                           Notes.claimenddate,
-                          textAlign: TextAlign.end,
+                          textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                         ),
                       ),
                     ],
@@ -487,7 +493,7 @@ class DetailMedicalPage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 16,
                       color: Color.fromARGB(255, 9, 28, 235),
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                     ),
                   ),
                   const Divider(),
@@ -516,13 +522,13 @@ class DetailMedicalPage extends StatelessWidget {
                         child: Text(
                           'ชื่อโรค',
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                         ),
                       ),
                       Expanded(
                         child: Text(
                           Notes.namedisease,
-                          textAlign: TextAlign.end,
+                          textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                         ),
                       ),
                     ],
@@ -697,7 +703,7 @@ class DetailMedicalPage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 16,
                       color: Color.fromARGB(255, 9, 28, 235),
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                     ),
                   ),
                   const Divider(),
@@ -707,13 +713,13 @@ class DetailMedicalPage extends StatelessWidget {
                         child: Text(
                           'จำนวนเงินตามใบเสร็จ',
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                         ),
                       ),
                       Expanded(
                         child: Text(
                           Notes.receiptamount,
-                          textAlign: TextAlign.end,
+                          textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                         ),
                       ),
                     ],
@@ -724,16 +730,38 @@ class DetailMedicalPage extends StatelessWidget {
                         child: Text(
                           'จำนวนเงินจ่าย',
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                         ),
                       ),
-                      Expanded(
-                        child: Text(
+                                            if(Notes.payamount == "0") ...[
+                      
+                         Expanded(
+                                                  child: Text(''
+                          ,
+                          textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
+                        ),
+                        ),
+                        ] else ...[
+                            Expanded(
+                          child: Text(
                           Notes.payamount,
-                          textAlign: TextAlign.end,
+                          textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                         ),
-                      ),
+                        ),
+                        ]
+                        // child: Text(
+                        //   Notes.paydate,
+                        //   textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
+                        // ),
+                      
                     ],
+                      // Expanded(
+                      //   child: Text(
+                      //     Notes.payamount,
+                      //     textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
+                      //   ),
+                      // ),
+                    // ],
                   ),
                   Row(
                     children: [
@@ -741,15 +769,30 @@ class DetailMedicalPage extends StatelessWidget {
                         child: Text(
                           'วันที่จ่าย',
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                         ),
                       ),
-                      Expanded(
-                        child: Text(
+                      if(Notes.paydate == "0") ...[
+                      
+                         Expanded(
+                                                  child: Text(''
+                          ,
+                          textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
+                        ),
+                        ),
+                        ] else ...[
+                            Expanded(
+                          child: Text(
                           Notes.paydate,
-                          textAlign: TextAlign.end,
+                          textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                         ),
-                      ),
+                        ),
+                        ]
+                        // child: Text(
+                        //   Notes.paydate,
+                        //   textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
+                        // ),
+                      
                     ],
                   ),
                 ],
@@ -782,7 +825,7 @@ class DetailMedicalPage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 16,
                       color: Color.fromARGB(255, 9, 28, 235),
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                     ),
                   ),
                   const Divider(),
@@ -838,17 +881,22 @@ class View extends StatelessWidget {
   final url;
    View({this.url});
 
-  @override
+ @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("PDF View"),
+        title: Text('รายละเอียดเอกสาร',style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
+                            color: iWhiteColor,
+                          ),),
+      backgroundColor: iBlueColor,
+),
+      
+      body: SfPdfViewer.network(
+        url,
+        controller: _pdfViewerController,
       ),
-     body: SfPdfViewer.network(
-      url,
-      controller: _pdfViewerController,
-    ),
-
     );
   }
 }

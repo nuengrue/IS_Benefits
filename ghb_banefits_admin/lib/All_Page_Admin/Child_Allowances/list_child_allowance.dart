@@ -15,12 +15,19 @@ import 'package:provider/provider.dart';
 //import 'package:flutter/widgets.dart';
 
 class ListChildAllowanceAdminPage extends StatefulWidget {
+    const ListChildAllowanceAdminPage(
+      // ignore: non_constant_identifier_names
+      {super.key, required this.Status});
+
+  // Declare a field that holds the Todo.
+  final String Status;
   @override
   State<ListChildAllowanceAdminPage> createState() => _ListChildAllowanceAdminPageState();
 }
 
 class _ListChildAllowanceAdminPageState extends State<ListChildAllowanceAdminPage> {
   List<ChildAllowanceAdmin> allowances = List.empty();
+      List<ChildAllowanceAdmin> _Datalist = List.empty();
   bool isloading = false;
   late int count ;
 
@@ -54,9 +61,7 @@ class _ListChildAllowanceAdminPageState extends State<ListChildAllowanceAdminPag
             appBar: AppBar(title: Text('รายการคำขอเบิกค่าช่วยเหลือบุตร',style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            color: iOrangeColor,
-                          ),),
-      backgroundColor: iBlueColor,
+                            color: iWhiteColor,),),backgroundColor: iOrangeColor,
        actions: <Widget>[
                     
           IconButton(
@@ -88,19 +93,28 @@ body:FutureBuilder<List<ChildAllowance>>(
         padding: const EdgeInsets.all(8.0),
         child: Consumer<ChildAllowanceAdminProviders>(
           builder: (context,ChildAllowanceAdminProviders data,child){
-             //print(data.ChildAllowanceAdminList);
-//              setState(() {
-//   count = data.ChildAllowanceList.length;
+if(widget.Status.toString() == "Total All"){
+
+  _Datalist = data.ChildAllowanceAdminList;
+
+}
+else{
+
+    _Datalist = data.ChildAllowanceAdminList.where((x) => x.status == widget.Status.toString()).toList();
+}
+
+  // count = data.ChildAllowanceAdminListwhere.length;
 // });
            // return data.getChildAllowane.length !=0 ? ListView.builder(
-            return data.ChildAllowanceAdminList.length !=0 ? ListView.builder(
-              itemCount: data.ChildAllowanceAdminList.length,
+            return _Datalist.length !=0 ? ListView.builder(
+              itemCount: _Datalist.length,
               
               itemBuilder: (context,index){
               //  print(data.ChildAllowanceAdminList.length);
+                            //  final testdat = data.ChildAllowanceAdminListwhere.where((x) => x.status == widget.Status).toList();
+                            //  print(testdat);
 
-
-                return CardList(data.ChildAllowanceAdminList[index],index);
+                return CardList(_Datalist[index],index);
 
                 /*Card(
                 child: ListTile(
@@ -124,7 +138,7 @@ body:FutureBuilder<List<ChildAllowance>>(
         ),
       ),
      
-             drawer: MyDrawer(),
+            //  drawer: MyDrawer(),
       );
   }
 }
@@ -148,14 +162,40 @@ body:FutureBuilder<List<ChildAllowance>>(
               topLeft: Radius.circular(10),
             )
           ),
-          child: ListTile(
-           leading: Icon(Icons.note),
-            title: Text(notes.no),
-            subtitle: Text(notes.status),
-            trailing: Icon(Icons.arrow_forward_ios,color: Colors.black26,),
-             onTap: () {
-                  Navigator.push( context,MaterialPageRoute(builder: (context) =>DetailChildAllowanceAdminPage(Notes : notes, Indexs : index)));
-                  },
+child: Card(
+            child: ListTile(
+            //  leading: Icon(Icons.note),
+              title: Row(  children: [
+                      Expanded(child: Text('ชื่อผู้ร้องขอ',
+                                // textAlign: TextAlign.left,
+                                style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),)),
+                      Expanded(child: Text(notes.nameemp, textAlign: TextAlign.end,)),
+                ],),
+              subtitle: Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(child: Text('ชื่อบุตร',
+                                // textAlign: TextAlign.left,
+                                style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),)),
+                      Expanded(child: Text(notes.namechild, textAlign: TextAlign.end,)),
+                    ],
+                  ),                 
+                  Row(
+                    children: [
+                      Expanded(child: Text('วันที่บันทึก',
+                                // textAlign: TextAlign.left,
+                                style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),)),
+                      Expanded(child: Text(notes.savedate, textAlign: TextAlign.end,)),
+                    ],
+                  ),
+                ],
+              ),
+              trailing: Text(notes.status,style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',color: iBlueColor,),),
+               onTap: () {
+                                      Navigator.push( context,MaterialPageRoute(builder: (context) =>DetailChildAllowanceAdminPage(Notes : notes, Indexs : index)));
+                    },
+            ),
           ),
         ),
     );

@@ -8,6 +8,7 @@ import 'package:ghb_banefits_admin/All_Providers_Admin/provider_cremation.dart';
 import 'package:ghb_banefits_admin/color.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 
 //import 'package:flutter/widgets.dart';
@@ -34,7 +35,7 @@ late int _Indexs;
         if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
      _Indexs = widget.Indexs.toInt();
-     _status = "Approve";
+     _status = "อนุมัติ";
      _flagread = "1";
      _payamount = _payamount;
      _paydate = DateFormat.yMd().add_jm().format(DateTime.now());
@@ -65,7 +66,7 @@ late int _Indexs;
                     Navigator.pop(
         context,
         MaterialPageRoute(
-          builder: (context) => ListCremationServiceAdminPage(),
+          builder: (context) => ListCremationServiceAdminPage(Status:"ร้องขอ"),
         ),
       );
         }
@@ -73,7 +74,7 @@ late int _Indexs;
 
     void ModifydataReject()  async{
      _Indexs = widget.Indexs.toInt();
-     _status = "Reject";
+     _status = "ปฏิเสธ";
      _flagread = "1";
      _payamount = "0";
      _paydate = DateFormat.yMd().add_jm().format(DateTime.now());
@@ -100,16 +101,20 @@ late int _Indexs;
                     Navigator.pop(
         context,
         MaterialPageRoute(
-          builder: (context) => ListCremationServiceAdminPage(),
+          builder: (context) => ListCremationServiceAdminPage(Status:"ร้องขอ"),
         ),
       );
   } 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text('รายละเอียดรายการ'),
+        title: Text('รายละเอียดคำขอสมัครฌาปนกิจ',style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
+                            color: iWhiteColor,
+                          ),),
+      backgroundColor: iOrangeColor,
       ),
       body: SingleChildScrollView(
 
@@ -148,23 +153,23 @@ late int _Indexs;
                       ),
                     ),
                     const Divider(),
-                    Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          'เลขที่รายการ',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      Expanded(
-                        child: Text(
-                          widget.Notes.no,
-                          textAlign: TextAlign.end,
-                        ),
-                      ),
-                    ],
-                  ),
+                  //   Row(
+                  //   children: [
+                  //     Expanded(
+                  //       child: Text(
+                  //         'เลขที่รายการ',
+                  //         textAlign: TextAlign.left,
+                  //         style: TextStyle(fontWeight: FontWeight.bold),
+                  //       ),
+                  //     ),
+                  //     Expanded(
+                  //       child: Text(
+                  //         widget.Notes.no,
+                  //         textAlign: TextAlign.end,
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                       Row(
                       children: [
                         Expanded(
@@ -301,159 +306,159 @@ late int _Indexs;
 
               /////////////
               ///
-                           Container(
-                margin: const EdgeInsets.all(10.0),
-                padding: const EdgeInsets.all(10.0),
-                //height: double.infinity,
-                width: 450,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(
-                    color: Colors.white,
-                  ),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 6.0,
-                      spreadRadius: 2.0,
-                      color: Colors.grey,
-                      offset: Offset(0.0, 0.0),
-                    )
-                  ],
-                ),
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      'ข้อมูลที่อยู่ปัจจุบันของพนักงาน',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const Divider(),
-                       Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'บ้านเลขที่',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            widget.Notes.housenumber,
-                            textAlign: TextAlign.end,
-                          ),
-                        ),
-                      ],
-                    ),                 
-                     Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'ตรอก/ซอย',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            widget.Notes.alley,
-                            textAlign: TextAlign.end,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'ถนน',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            widget.Notes.road,
-                            textAlign: TextAlign.end,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'ตำบล/แขวง',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            widget.Notes.district,
-                            textAlign: TextAlign.end,
-                          ),
-                        ),
-                      ],
-                    ),  
-                     Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'อำเภอ/เขต',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            widget.Notes.county,
-                            textAlign: TextAlign.end,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'จังหวัด',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            widget.Notes.province,
-                            textAlign: TextAlign.end,
-                          ),
-                        ),
-                      ],
-                    ),  
-                                        Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'หมายเลขติดต่อ',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            widget.Notes.tel,
-                            textAlign: TextAlign.end,
-                          ),
-                        ),
-                      ],
-                    ),          
-                  ],
-                ),
-              ),
+              //              Container(
+              //   margin: const EdgeInsets.all(10.0),
+              //   padding: const EdgeInsets.all(10.0),
+              //   //height: double.infinity,
+              //   width: 450,
+              //   decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.circular(5),
+              //     border: Border.all(
+              //       color: Colors.white,
+              //     ),
+              //     color: Colors.white,
+              //     boxShadow: [
+              //       BoxShadow(
+              //         blurRadius: 6.0,
+              //         spreadRadius: 2.0,
+              //         color: Colors.grey,
+              //         offset: Offset(0.0, 0.0),
+              //       )
+              //     ],
+              //   ),
+              //   child: Column(
+              //     children: <Widget>[
+              //       Text(
+              //         'ข้อมูลที่อยู่ปัจจุบันของพนักงาน',
+              //         style: TextStyle(
+              //           fontSize: 16,
+              //           color: Color.fromARGB(255, 9, 28, 235),
+              //           fontWeight: FontWeight.bold,
+              //         ),
+              //       ),
+              //       const Divider(),
+              //          Row(
+              //         children: [
+              //           Expanded(
+              //             child: Text(
+              //               'บ้านเลขที่',
+              //               textAlign: TextAlign.left,
+              //               style: TextStyle(fontWeight: FontWeight.bold),
+              //             ),
+              //           ),
+              //           Expanded(
+              //             child: Text(
+              //               widget.Notes.housenumber,
+              //               textAlign: TextAlign.end,
+              //             ),
+              //           ),
+              //         ],
+              //       ),                 
+              //        Row(
+              //         children: [
+              //           Expanded(
+              //             child: Text(
+              //               'ตรอก/ซอย',
+              //               textAlign: TextAlign.left,
+              //               style: TextStyle(fontWeight: FontWeight.bold),
+              //             ),
+              //           ),
+              //           Expanded(
+              //             child: Text(
+              //               widget.Notes.alley,
+              //               textAlign: TextAlign.end,
+              //             ),
+              //           ),
+              //         ],
+              //       ),
+              //       Row(
+              //         children: [
+              //           Expanded(
+              //             child: Text(
+              //               'ถนน',
+              //               textAlign: TextAlign.left,
+              //               style: TextStyle(fontWeight: FontWeight.bold),
+              //             ),
+              //           ),
+              //           Expanded(
+              //             child: Text(
+              //               widget.Notes.road,
+              //               textAlign: TextAlign.end,
+              //             ),
+              //           ),
+              //         ],
+              //       ),
+              //       Row(
+              //         children: [
+              //           Expanded(
+              //             child: Text(
+              //               'ตำบล/แขวง',
+              //               textAlign: TextAlign.left,
+              //               style: TextStyle(fontWeight: FontWeight.bold),
+              //             ),
+              //           ),
+              //           Expanded(
+              //             child: Text(
+              //               widget.Notes.district,
+              //               textAlign: TextAlign.end,
+              //             ),
+              //           ),
+              //         ],
+              //       ),  
+              //        Row(
+              //         children: [
+              //           Expanded(
+              //             child: Text(
+              //               'อำเภอ/เขต',
+              //               textAlign: TextAlign.left,
+              //               style: TextStyle(fontWeight: FontWeight.bold),
+              //             ),
+              //           ),
+              //           Expanded(
+              //             child: Text(
+              //               widget.Notes.county,
+              //               textAlign: TextAlign.end,
+              //             ),
+              //           ),
+              //         ],
+              //       ),
+              //       Row(
+              //         children: [
+              //           Expanded(
+              //             child: Text(
+              //               'จังหวัด',
+              //               textAlign: TextAlign.left,
+              //               style: TextStyle(fontWeight: FontWeight.bold),
+              //             ),
+              //           ),
+              //           Expanded(
+              //             child: Text(
+              //               widget.Notes.province,
+              //               textAlign: TextAlign.end,
+              //             ),
+              //           ),
+              //         ],
+              //       ),  
+              //                           Row(
+              //         children: [
+              //           Expanded(
+              //             child: Text(
+              //               'หมายเลขติดต่อ',
+              //               textAlign: TextAlign.left,
+              //               style: TextStyle(fontWeight: FontWeight.bold),
+              //             ),
+              //           ),
+              //           Expanded(
+              //             child: Text(
+              //               widget.Notes.tel,
+              //               textAlign: TextAlign.end,
+              //             ),
+              //           ),
+              //         ],
+              //       ),          
+              //     ],
+              //   ),
+              // ),
               Container(
                 margin: const EdgeInsets.all(10.0),
                 padding: const EdgeInsets.all(10.0),
@@ -513,75 +518,75 @@ late int _Indexs;
                   ],
                 ),
               ),
-                                         Container(
-                margin: const EdgeInsets.all(10.0),
-                padding: const EdgeInsets.all(10.0),
-                //height: double.infinity,
-                width: 450,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(
-                    color: Colors.white,
-                  ),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 6.0,
-                      spreadRadius: 2.0,
-                      color: Colors.grey,
-                      offset: Offset(0.0, 0.0),
-                    )
-                  ],
-                ),
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      'ข้อมูลอายุของพนักงาน',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const Divider(),
-                       Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'อายุของพนักงาน',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            widget.Notes.age,
-                            textAlign: TextAlign.end,
-                          ),
-                        ),
-                      ],
-                    ),                 
-                     Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'วันที่เกิดของ',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            widget.Notes.datebirth,
-                            textAlign: TextAlign.end,
-                          ),
-                        ),
-                      ],
-                    ),
+              //                            Container(
+              //   margin: const EdgeInsets.all(10.0),
+              //   padding: const EdgeInsets.all(10.0),
+              //   //height: double.infinity,
+              //   width: 450,
+              //   decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.circular(5),
+              //     border: Border.all(
+              //       color: Colors.white,
+              //     ),
+              //     color: Colors.white,
+              //     boxShadow: [
+              //       BoxShadow(
+              //         blurRadius: 6.0,
+              //         spreadRadius: 2.0,
+              //         color: Colors.grey,
+              //         offset: Offset(0.0, 0.0),
+              //       )
+              //     ],
+              //   ),
+              //   child: Column(
+              //     children: <Widget>[
+              //       Text(
+              //         'ข้อมูลอายุของพนักงาน',
+              //         style: TextStyle(
+              //           fontSize: 16,
+              //           color: Color.fromARGB(255, 9, 28, 235),
+              //           fontWeight: FontWeight.bold,
+              //         ),
+              //       ),
+              //       const Divider(),
+              //          Row(
+              //         children: [
+              //           Expanded(
+              //             child: Text(
+              //               'อายุของพนักงาน',
+              //               textAlign: TextAlign.left,
+              //               style: TextStyle(fontWeight: FontWeight.bold),
+              //             ),
+              //           ),
+              //           Expanded(
+              //             child: Text(
+              //               widget.Notes.age,
+              //               textAlign: TextAlign.end,
+              //             ),
+              //           ),
+              //         ],
+              //       ),                 
+              //        Row(
+              //         children: [
+              //           Expanded(
+              //             child: Text(
+              //               'วันที่เกิดของ',
+              //               textAlign: TextAlign.left,
+              //               style: TextStyle(fontWeight: FontWeight.bold),
+              //             ),
+              //           ),
+              //           Expanded(
+              //             child: Text(
+              //               widget.Notes.datebirth,
+              //               textAlign: TextAlign.end,
+              //             ),
+              //           ),
+              //         ],
+              //       ),
                    
-                  ],
-                ),
-              ),
+              //     ],
+              //   ),
+              // ),
                                          Container(
                 margin: const EdgeInsets.all(10.0),
                 padding: const EdgeInsets.all(10.0),
@@ -837,23 +842,23 @@ late int _Indexs;
                         ),
                       ],
                     ),                 
-                     Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'ร้อยละ',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            widget.Notes.percentage,
-                            textAlign: TextAlign.end,
-                          ),
-                        ),
-                      ],
-                    ),
+                    //  Row(
+                    //   children: [
+                    //     Expanded(
+                    //       child: Text(
+                    //         'ร้อยละ',
+                    //         textAlign: TextAlign.left,
+                    //         style: TextStyle(fontWeight: FontWeight.bold),
+                    //       ),
+                    //     ),
+                    //     Expanded(
+                    //       child: Text(
+                    //         widget.Notes.percentage,
+                    //         textAlign: TextAlign.end,
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
                     Row(
                       children: [
                         Expanded(
@@ -881,7 +886,7 @@ late int _Indexs;
               ),
                 Column(
   children: [ 
-    if(widget.Notes.status == "Request")...[
+    if(widget.Notes.status == "ร้องขอ")...[
         Container(
                 margin: const EdgeInsets.all(2.0),
                 padding: const EdgeInsets.all(2.0),
@@ -966,4 +971,70 @@ late int _Indexs;
       ),
     );
   }
+}
+
+class View extends StatefulWidget {
+  final url;
+  const View({this.url});
+
+  @override
+  State<View> createState() => _ViewState();
+}
+
+class _ViewState extends State<View> {
+  // PdfViewerController? _pdfViewerController;
+  late final PdfViewerController _pdfViewerController;
+
+void initState() {
+  _pdfViewerController = PdfViewerController();
+  super.initState();
+}
+  @override
+Widget build(BuildContext context) {
+  return SafeArea(
+  child:Scaffold(
+body: SfPdfViewer.network(
+      widget.url,
+      controller: _pdfViewerController,
+    ),
+    appBar: AppBar(
+              title: Text('รายละเอียดเอกสาร',style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
+                            color: iWhiteColor,
+                          ),),
+      backgroundColor: iOrangeColor,
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(
+            Icons.keyboard_arrow_up,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            _pdfViewerController.previousPage();
+          },
+        ),
+        IconButton(
+          icon: Icon(
+            Icons.keyboard_arrow_down,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            _pdfViewerController.nextPage();
+          },
+        ),
+        IconButton(
+          icon: Icon(
+            Icons.zoom_in,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            _pdfViewerController.zoomLevel = 2;
+          },
+        )
+      ],
+    ),
+  ),
+  );
+}
 }

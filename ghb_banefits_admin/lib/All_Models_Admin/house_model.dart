@@ -1,20 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HouseAllowanceAdmin {
-  String no;
+  final int  no;
   final String empcode;
   final String name;
   final String department;
   final String divisionment;
   final String savedate;
   final String startdate;
+//
   final String position;
   final String segment;
   final String departmentwork;
   final String provincework;
   final String positiondate;
+//
   final String typehouse;
   final String moneyhouse;
+
   final String housenumber;
   final String alley;
   final String road;
@@ -22,50 +25,30 @@ class HouseAllowanceAdmin {
   final String county;
   final String province;
   final String workstatus;
-  late String payamount;
-  late String paydate;
-  String status;
+//
+  ///
+  late final String payamount;
+  late final String paydate;
+  late final String status;
   final String email;
-  final String fileUrl;
+    final String fileUrl;
   final String filename;
-  late String flagread;
+  late final String  flagread;
   String id;
-  HouseAllowanceAdmin(
-    this.no,
-    this.empcode,
-    this.name,
-    this.department,
-    this.divisionment,
-    this.savedate,
-    this.startdate,
-    this.position,
-    this.segment,
-    this.departmentwork,
-    this.provincework,
-    this.positiondate,
-    this.typehouse,
-    this.moneyhouse,
-    this.housenumber,
-    this.alley,
-    this.road,
-    this.district,
-    this.county,
-    this.province,
-    this.workstatus,
-    this.payamount,
-    this.paydate,
-    this.status,
-    this.email,
-    this.fileUrl,
-    this.filename,
-    this.flagread,
-    this.id,
-  );
+  late  String   remarks;
+  HouseAllowanceAdmin(this.no,this.empcode, this.name, this.department, this.divisionment, this.savedate, this.startdate, 
+  this.position, this.segment, this.departmentwork, this.provincework, this.positiondate, 
+  this.typehouse, this.moneyhouse, this.housenumber, this.alley, this.road, this.district, this.county, this.province, this.workstatus, 
+  this.payamount, this.paydate, this.status, this.email,       this.fileUrl,
+       this.filename,
+       this.flagread,
+       this.id, this.remarks,
+);
 
   factory HouseAllowanceAdmin.fromJson(Map<String, dynamic> json) {
-    print(json);
+        print(json);
     return HouseAllowanceAdmin(
-      json['no'] as String,
+      json['no'] as int,
       json['empcode'] as String,
       json['name'] as String,
       json['department'] as String,
@@ -94,6 +77,7 @@ class HouseAllowanceAdmin {
       json['filename'] as String,
       json['flagread'] as String,
       json['id'] as String,
+            json['remarks'] as String,
     );
   }
 
@@ -123,12 +107,14 @@ class HouseAllowanceAdmin {
       'paydate': paydate,
       'status': status,
       'email': email,
-      'fileUrl': fileUrl,
-      'filename': filename,
-      'flagread': flagread,
-      'id': id,
+          'fileUrl' : fileUrl, 
+    'filename' : filename,    
+    'flagread' : flagread,   
+    'id' : id,
+        'remarks' : remarks, 
     };
   }
+
 }
 
 class AllHouseAllowanceAdmin {

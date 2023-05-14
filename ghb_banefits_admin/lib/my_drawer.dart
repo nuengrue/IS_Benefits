@@ -1,15 +1,23 @@
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ghb_banefits_admin/All_Page_Admin/Child_Allowances/list_child_allowance.dart';
 import 'package:ghb_banefits_admin/All_Page_Admin/Cremation_Service/list_cremation_service.dart';
 import 'package:ghb_banefits_admin/All_Page_Admin/Education/list_education_page.dart';
 import 'package:ghb_banefits_admin/All_Page_Admin/House_Allowance/list_house_allowance.dart';
 import 'package:ghb_banefits_admin/All_Page_Admin/Medical/list_medical_page.dart';
+import 'package:ghb_banefits_admin/All_Page_Admin/Report/Report_Child_Allowance.dart';
+import 'package:ghb_banefits_admin/All_Page_Admin/Report/Report_Cremation_Service.dart';
+import 'package:ghb_banefits_admin/All_Page_Admin/Report/Report_Education.dart';
+import 'package:ghb_banefits_admin/All_Page_Admin/Report/Report_House_Allowance.dart';
+import 'package:ghb_banefits_admin/All_Page_Admin/Report/Report_Medical.dart';
+import 'package:ghb_banefits_admin/All_Providers_Admin/provider_master.dart';
 import 'package:ghb_banefits_admin/Dashborad/all_dashborad.dart';
-import 'package:ghb_banefits_admin/Dashborad/list_dashborad.dart';
+import 'package:ghb_banefits_admin/Dashborad/list_Reports.dart';
 import 'package:ghb_banefits_admin/color.dart';
 import 'package:ghb_banefits_admin/main_home_admin_page.dart';
 import 'package:ghb_banefits_admin/test.dart';
+import 'package:provider/provider.dart';
 
 
 //import 'package:flutter/cupertino.dart';
@@ -27,7 +35,7 @@ class MyDrawer extends StatefulWidget {
 }
 
 class _MyDrawerState extends State<MyDrawer> {
-    //final user = FirebaseAuth.instance.currentUser!;
+    final user = FirebaseAuth.instance.currentUser!;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -41,11 +49,22 @@ class _MyDrawerState extends State<MyDrawer> {
           children: [
             UserAccountsDrawerHeader(
               decoration: BoxDecoration(
-                color: iBlueColor,
+                color: iOrangeColor,
               ),
-              accountName: Text('nuengruethai.p'),
-              accountEmail: Text('nuengruethai.p@gmail.com'),
+              accountName: Consumer<filedEmployeeProviders>(
+          builder: (context, value, child) {
+            String greeting = '';
+                if(value.Empnameemp.toString().isNotEmpty)
+                    {
+                    greeting = '${value.Empnameemp}';
+                    }
+          return Text('$greeting',style: TextStyle(fontFamily: 'Sarabun',),);
+          },
+          ),
+              // Text(user.email!),
+              accountEmail: Text(user.email!,style: TextStyle(fontFamily: 'Sarabun',),),
               currentAccountPicture: CircleAvatar(
+                backgroundColor: iWhiteColor,
                   child: ClipRRect(
                 borderRadius: BorderRadius.circular(100),
                 child: Icon(Icons.person),
@@ -90,7 +109,7 @@ class _MyDrawerState extends State<MyDrawer> {
               title: const Text('ค่าช่วยเหลือค่ารักษาพยาบาล'),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => ListMedicalAdminPage()));
+                    builder: (context) => ListMedicalAdminPage(Status:"Total All")));
               },
             ),
             ListTile(
@@ -98,7 +117,7 @@ class _MyDrawerState extends State<MyDrawer> {
               title: const Text('ค่าช่วยเหลือการศึกษาบุตร'),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => ListEducationAdminPage()));
+                    builder: (context) => ListEducationAdminPage(Status:"Total All")));
               },
             ),
             ListTile(
@@ -106,7 +125,7 @@ class _MyDrawerState extends State<MyDrawer> {
               title: const Text('เงินช่วยเหลือบุตร'),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => ListChildAllowanceAdminPage()));
+                    builder: (context) => ListChildAllowanceAdminPage(Status:"Total All")));
               },
             ),
             ListTile(
@@ -114,7 +133,7 @@ class _MyDrawerState extends State<MyDrawer> {
               title: const Text('ค่าเช่าบ้านสำหรับพนักงาน'),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => ListHouseAllowanceAdminPage()));
+                    builder: (context) => ListHouseAllowanceAdminPage(Status:"Total All")));
               },
             ),
             ListTile(
@@ -122,24 +141,44 @@ class _MyDrawerState extends State<MyDrawer> {
               title: const Text('ฌาปนกิจสงเคราะห์'),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => ListCremationServiceAdminPage()));
+                    builder: (context) => ListCremationServiceAdminPage(Status:"Total All")));
               },
             ),
-            // ListTile(
-            //   leading: Icon(Icons.notifications),
-            //   title: const Text('แจ้งสถานะรายการสวัสดิการ'),
-            //   onTap: () {
-            //    // Navigator.of(context).push(MaterialPageRoute(builder: (context) => NotificationPage()));
-            //   },
-            // ),
-            //             ListTile(
-            //   leading: Icon(Icons.note),
-            //   title: const Text('รายงานสวัสดิการ'),
-            //   onTap: () {
-            //     //Navigator.of(context).push(MaterialPageRoute( builder: (context) => NotificationPage()));
-            //   },
-            // ),
-
+  //            ListTile(
+  //             leading: Icon(Icons.note),
+  //             title: const Text('รายงานค่ารักษาพยาบาล'),
+  //             onTap: () {
+  //              Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ReportMedicalPage()));
+  //             },
+  //           ),
+  //                       ListTile(
+  //             leading: Icon(Icons.note),
+  //             title: const Text('รายงานค่าช่วยเหลือการศึกษาบุตร'),
+  //             onTap: () {
+  //               Navigator.of(context).push(MaterialPageRoute( builder: (context) => const ReportEducationPage()));
+  //             },
+  //           ),
+  //  ListTile(
+  //             leading: Icon(Icons.note),
+  //             title: const Text('รายงานค่าช่วยเหลือบุตร'),
+  //             onTap: () {
+  //               Navigator.of(context).push(MaterialPageRoute( builder: (context) => const ReportChildAllowancePage()));
+  //             },
+  //           ),
+  //                                   ListTile(
+  //             leading: Icon(Icons.note),
+  //             title: const Text('รายงานค่าเช่าบ้านของพนักงาน'),
+  //             onTap: () {
+  //               Navigator.of(context).push(MaterialPageRoute( builder: (context) => const ReportHouseAllowancePage()));
+  //             },
+  //           ),
+  //  ListTile(
+  //             leading: Icon(Icons.note),
+  //             title: const Text('รายงานสมัครฌาปนกิจสงเคราะห์'),
+  //             onTap: () {
+  //               Navigator.of(context).push(MaterialPageRoute( builder: (context) => const ReportCremationServicePage()));
+  //             },
+  //           ),
           ],
         ),
       ),

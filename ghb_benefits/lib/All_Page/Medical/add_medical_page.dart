@@ -5,8 +5,12 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:ghb_benefits/All_Controllers/Medical_Controller.dart';
+import 'package:ghb_benefits/All_Controllers/master_controllers.dart';
 import 'package:ghb_benefits/All_Page/Medical/list_medical_page.dart';
+import 'package:ghb_benefits/All_Providers/provider_master.dart';
 import 'package:ghb_benefits/All_Providers/provider_medical.dart';
+import 'package:ghb_benefits/All_Services/servics.dart';
 import 'package:ghb_benefits/color.dart';
 import 'package:ghb_benefits/medical/user.dart';
 import 'package:ghb_benefits/pdf/files_page.dart';
@@ -29,6 +33,45 @@ class _AddMedPageState extends State<AddMedPage> {
     _selectedValT = _treatmentName[0];
     _selectedValType = _hotpitalNameType[0];
   }
+
+  MasterController mastecontroller = MasterController(FirebaseServices());
+
+  MedicalController controller = MedicalController(FirebaseServices());
+
+  void initState() {
+    super.initState();
+    _getMedicaladd(context);
+  }
+
+  late int _idcounts = 0;
+  void _getMedicaladd(BuildContext context) async {
+    var newEmployee = await mastecontroller.fetchEmployee();
+    context.read<filedEmployeeProviders>().Empno = newEmployee.first.no;
+    context.read<filedEmployeeProviders>().Empempcode =
+        newEmployee.first.empcode;
+    context.read<filedEmployeeProviders>().Empnameemp =
+        newEmployee.first.nameemp;
+    context.read<filedEmployeeProviders>().Empdepartment =
+        newEmployee.first.department;
+    context.read<filedEmployeeProviders>().Empdivisionment =
+        newEmployee.first.divisionment;
+    context.read<filedEmployeeProviders>().Empdate = newEmployee.first.date;
+    context.read<filedEmployeeProviders>().Empuid = newEmployee.first.uid;
+    setState(() {
+      _empcode = newEmployee.first.empcode;
+      _name = newEmployee.first.nameemp;
+      _department = newEmployee.first.department;
+      _divisionment = newEmployee.first.divisionment;
+    });
+    context.read<EmployeeProviders>().EmployeeList = newEmployee;
+
+    var newMedical = await controller.fetchMedicalno();
+
+    setState(() {
+      _idcounts = newMedical.length + 1;
+    });
+  }
+
   final List<String> _hotpitalName = [
     "โรงพยาบาลเปาโลเมโมเรียล",
     "โรงพยาบาลเปาโลเมโมเรียล โชคชัย 4",
@@ -59,11 +102,11 @@ class _AddMedPageState extends State<AddMedPage> {
   List<Medtreat> medtreatList = [];
 
   final user = FirebaseAuth.instance.currentUser!;
-  late String _no;
-  late String _empcode;
-  late String _name;
-  late String _department;
-  late String _divisionment;
+  late int _no;
+  late String _empcode = "";
+  late String _name = "";
+  late String _department = "";
+  late String _divisionment = "";
   late String _savedate;
   late String _numbercodemed;
   late String _typemed;
@@ -83,24 +126,25 @@ class _AddMedPageState extends State<AddMedPage> {
 
   late String _status;
   late String _email;
- // late List<Medtreat> _cedtreat;
+  // late List<Medtreat> _cedtreat;
   late String _url;
-  late String _filename;
+  late String _filename = "";
   late String _flagread;
   late String _id;
+  late String _remarks = "";
   final _formKey = GlobalKey<FormState>();
   TextEditingController _dates = TextEditingController();
   TextEditingController _datee = TextEditingController();
   void addMedical() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      _no = _no;
-      _empcode = "57315";
-      _name = "หนึ่งฤทัย พวงแก้ว";
-      _department = "ฝ่ายพัฒนาระบบสารสนเทศ";
-      _divisionment = "ส่วนสวัสดิการ";
-      _numbercodemed = "0";     
-      _savedate = DateFormat.yMd().add_jm().format(DateTime.now());
+      _idcounts = _idcounts;
+      _empcode = _empcode;
+      _name = _name;
+      _department = _department;
+      _divisionment = _divisionment;
+      _numbercodemed = "0";
+      _savedate = DateFormat('dd-MM-yyyy  kk:mm').format(DateTime.now());
       _typemed = "ขอเบิก";
       _yearmed = DateFormat.y().format(DateTime.now());
       _hospitalname = _selectedVal!;
@@ -111,54 +155,55 @@ class _AddMedPageState extends State<AddMedPage> {
       _receiptnumber;
       _tel;
       _namedisease = _selectedValD!;
-      _diseasegroup = "0";      
-      _receiptamount ;
+      _diseasegroup = "0";
+      _receiptamount;
       _payamount = "0";
       _paydate = "0";
-      _status = "Request";
+      _status = "ร้องขอ";
 
       _email = user.uid;
-   //   _cedtreat = medtreatList;
+      //   _cedtreat = medtreatList;
       _url = _url;
       _filename = _filename;
       _flagread = "0";
       _id = "";
+      _remarks = _remarks;
 
       Provider.of<MedicalProviders>(context, listen: false).addMedical(
-      _no,
-      _empcode,
-      _name,
-      _department,
-      _divisionment,
-      _numbercodemed,   
-      _savedate,
-      _typemed,
-      _yearmed,
-      _hospitalname,
-      _hospitaltype,
-      _claimstartdate,
-      _claimenddate,
-      _idreceiptnumber,
-      _receiptnumber,
-      _tel,
-      _namedisease,
-      _diseasegroup,     
-      _receiptamount,
-      _payamount,
-      _paydate,
-      _status,
-
-      _email,
-      _url,
-      _filename,
-      _flagread,
-      _id);
+          _idcounts,
+          _empcode,
+          _name,
+          _department,
+          _divisionment,
+          _numbercodemed,
+          _savedate,
+          _typemed,
+          _yearmed,
+          _hospitalname,
+          _hospitaltype,
+          _claimstartdate,
+          _claimenddate,
+          _idreceiptnumber,
+          _receiptnumber,
+          _tel,
+          _namedisease,
+          _diseasegroup,
+          _receiptamount,
+          _payamount,
+          _paydate,
+          _status,
+          _email,
+          _url,
+          _filename,
+          _flagread,
+          _id,
+          _remarks);
 
       //final docStatus = FirebaseFirestore.instance.collection('ChildAllowance');
       CollectionReference Medical =
           FirebaseFirestore.instance.collection('Medical');
       DocumentReference doc = await Medical.add({
-        'no': _no,
+        'no': _idcounts,
 
         'empcode': _empcode,
         'name': _name,
@@ -185,7 +230,8 @@ class _AddMedPageState extends State<AddMedPage> {
         'fileUrl': _url,
         'filename': _filename,
         'flagread': _flagread,
-        'id': _id
+        'id': _id,
+        'remarks': _remarks
         //'Medtreat': _cedtreat.map((i) => i.toMap()).toList(),
       });
       doc.update({
@@ -194,7 +240,7 @@ class _AddMedPageState extends State<AddMedPage> {
         //'id' : result,
       });
 
-      context.read<flieMedicalModal>().flieMedicalChoice = '';
+      // context.read<flieMedicalModal>().flieMedicalChoice = '';
       //Provider.of<ChildAllowaneProviders>(context,listen: false).addNotes(_Title.text, _Description.text);
       AwesomeDialog(
         context: context,
@@ -257,6 +303,14 @@ class _AddMedPageState extends State<AddMedPage> {
     // //.set({'fileUrl':url,'num' : "file FDF" + number.toString()});
   }
 
+  void deleteflie() async {
+    Provider.of<flieMedicalModal>(context, listen: false).deleteflie();
+
+    setState(() {
+      _filename = "";
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
 //     void addMedData(Medtreat medtreat) {
@@ -290,7 +344,7 @@ class _AddMedPageState extends State<AddMedPage> {
     // the major Material Components.
     return Scaffold(
       appBar: AppBar(
-        title: Text('สร้างรายการคำขอ'),
+        title: Text('สร้างคำขอค่ารักษาพยาบาล'),
         backgroundColor: iBlueColor,
       ),
       body: SingleChildScrollView(
@@ -327,36 +381,10 @@ class _AddMedPageState extends State<AddMedPage> {
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'เลขที่',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Consumer<MedicalProviders>(
-                          builder: (context, value, child) {
-                            int Counts = 0;
-                            String number_text = "";
-
-                            Counts = value.MedicalList.length + 1;
-                            _no = "400000" + Counts.toString();
-
-                            return Expanded(
-                              child: Text(
-                                _no.toString(),
-                                textAlign: TextAlign.end,
-                              ),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
                   ],
                 ),
               ),
@@ -388,6 +416,7 @@ class _AddMedPageState extends State<AddMedPage> {
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -397,13 +426,19 @@ class _AddMedPageState extends State<AddMedPage> {
                           child: Text(
                             'พนักงาน',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Sarabun',
+                            ),
                           ),
                         ),
                         Expanded(
                           child: Text(
-                            'หนึ่งฤทัย พวงแก้ว',
+                            _name,
                             textAlign: TextAlign.end,
+                            style: TextStyle(
+                              fontFamily: 'Sarabun',
+                            ),
                           ),
                         ),
                       ],
@@ -414,7 +449,10 @@ class _AddMedPageState extends State<AddMedPage> {
                           child: Text(
                             'หน่วยงาน',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Sarabun',
+                            ),
                           ),
                         ),
                         Column(
@@ -422,12 +460,18 @@ class _AddMedPageState extends State<AddMedPage> {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text(
-                              'ฝ่ายทรัพยากรบุคคล',
+                              _department,
                               textAlign: TextAlign.end,
+                              style: TextStyle(
+                                fontFamily: 'Sarabun',
+                              ),
                             ),
                             Text(
-                              'ส่วนสวัสดิการ',
+                              _divisionment,
                               textAlign: TextAlign.end,
+                              style: TextStyle(
+                                fontFamily: 'Sarabun',
+                              ),
                             ),
                           ],
                         ),
@@ -466,39 +510,47 @@ class _AddMedPageState extends State<AddMedPage> {
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'ประเภทคำร้องขอ',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            'ขอเบิก',
-                            textAlign: TextAlign.end,
-                          ),
-                        ),
-                      ],
-                    ),
+                    // Row(
+                    //   children: [
+                    //     Expanded(
+                    //       child: Text(
+                    //         'ประเภทคำร้องขอ',
+                    //         textAlign: TextAlign.left,
+                    //         style: TextStyle(fontWeight: FontWeight.bold),
+                    //       ),
+                    //     ),
+                    //     Expanded(
+                    //       child: Text(
+                    //         'ขอเบิก',
+                    //         textAlign: TextAlign.end,
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
                     Row(
                       children: [
                         Expanded(
                           child: Text(
                             'วันที่บันทึก',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Sarabun',
+                            ),
                           ),
                         ),
                         Expanded(
                           child: Text(
-                            DateFormat.yMd().format(DateTime.now()),
+                            DateFormat('dd-MM-yyyy  kk:mm')
+                                .format(DateTime.now()),
                             textAlign: TextAlign.end,
+                            style: TextStyle(
+                              fontFamily: 'Sarabun',
+                            ),
                           ),
                         ),
                       ],
@@ -509,13 +561,19 @@ class _AddMedPageState extends State<AddMedPage> {
                           child: Text(
                             'วงเงินประจำปี',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Sarabun',
+                            ),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             DateFormat.y().format(DateTime.now()),
                             textAlign: TextAlign.end,
+                            style: TextStyle(
+                              fontFamily: 'Sarabun',
+                            ),
                           ),
                         ),
                       ],
@@ -553,6 +611,7 @@ class _AddMedPageState extends State<AddMedPage> {
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -635,6 +694,7 @@ class _AddMedPageState extends State<AddMedPage> {
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -644,7 +704,12 @@ class _AddMedPageState extends State<AddMedPage> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(2.0),
-                          child: Text('เลขที่ใบเสร็จ'),
+                          child: Text(
+                            'เลขที่ใบเสร็จ',
+                            style: TextStyle(
+                              fontFamily: 'Sarabun',
+                            ),
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -666,7 +731,12 @@ class _AddMedPageState extends State<AddMedPage> {
                         ),
                         Padding(
                           padding: const EdgeInsets.all(2.0),
-                          child: Text('เล่มที่'),
+                          child: Text(
+                            'เล่มที่',
+                            style: TextStyle(
+                              fontFamily: 'Sarabun',
+                            ),
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -684,7 +754,12 @@ class _AddMedPageState extends State<AddMedPage> {
                         ),
                         Padding(
                           padding: const EdgeInsets.all(2.0),
-                          child: Text('หมายเลขติดต่อกลับ'),
+                          child: Text(
+                            'หมายเลขติดต่อกลับ',
+                            style: TextStyle(
+                              fontFamily: 'Sarabun',
+                            ),
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -721,7 +796,7 @@ class _AddMedPageState extends State<AddMedPage> {
 
                               if (pickddate != null) {
                                 setState(() {
-                                  _dates.text = DateFormat('yyyy-MM-dd')
+                                  _dates.text = DateFormat('dd-MM-yyyy')
                                       .format(pickddate);
                                   //var _date = DateFormat("dd-MM-yyyy").format(now);
                                 });
@@ -751,7 +826,7 @@ class _AddMedPageState extends State<AddMedPage> {
 
                               if (pickddate != null) {
                                 setState(() {
-                                  _datee.text = DateFormat('yyyy-MM-dd')
+                                  _datee.text = DateFormat('dd-MM-yyyy')
                                       .format(pickddate);
                                   //var _date = DateFormat("dd-MM-yyyy").format(now);
                                 });
@@ -833,6 +908,7 @@ class _AddMedPageState extends State<AddMedPage> {
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -842,7 +918,10 @@ class _AddMedPageState extends State<AddMedPage> {
                           child: Text(
                             'โรค',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Sarabun',
+                            ),
                           ),
                         ),
                       ],
@@ -1076,6 +1155,7 @@ class _AddMedPageState extends State<AddMedPage> {
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -1087,7 +1167,12 @@ class _AddMedPageState extends State<AddMedPage> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(2.0),
-                          child: Text('จำนวนเงินตามใบเสร็จ'),
+                          child: Text(
+                            'จำนวนเงินตามใบเสร็จ',
+                            style: TextStyle(
+                              fontFamily: 'Sarabun',
+                            ),
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -1140,35 +1225,92 @@ class _AddMedPageState extends State<AddMedPage> {
                         fontSize: 16,
                         color: iBlueColor,
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
                     ElevatedButton(
-                      child: Text("เอกสารแนบ"),
+                      style: ElevatedButton.styleFrom(primary: iBlueColor),
                       onPressed: () {
                         uploadDataToFirebase();
                       },
+                      child: Text(
+                        "เอกสารแนบ",
+                        style: TextStyle(
+                          fontFamily: 'Sarabun',
+                        ),
+                      ),
                     ),
                     const Divider(),
-                    Consumer<flieMedicalModal>(
-                      builder: (context, value, child) {
-                        if (value.flieMedicalChoice.toString().isNotEmpty) {
-                          //Carimg = '${value.flieChildAllowanceChoice}';
-                          return ListTile(
-                            title: Text(_filename.toString()),
-                            trailing: Icon(Icons.remove_red_eye),
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => View(url: _url)));
-                            },
-                          );
-                        } else {
-                          return Text("");
-                        }
-                      },
-                    ),
+                    if (_filename == "" || _filename == null) ...[
+                      Text(""),
+                    ] else ...[
+                      ListTile(
+                        title: Text(_filename.toString()),
+                        trailing: Container(
+                          width: 70,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                  child: IconButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              View(url: _url)));
+                                },
+                                icon: Icon(Icons.remove_red_eye),
+                              )),
+                              Expanded(
+                                  child: IconButton(
+                                onPressed: () {
+                                  deleteflie();
+                                },
+                                icon: Icon(Icons.delete),
+                              )),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ]
+                    // Consumer<flieMedicalModal>(
+                    //   builder: (context, value, child) {
+                    //     if (value.flieMedicalChoice.toString().isNotEmpty) {
+                    //       //Carimg = '${value.flieChildAllowanceChoice}';
+                    //         return
+
+                    //       ListTile(
+                    //         title: Text(_filename.toString()),
+                    //         trailing: Container(
+                    //           width: 70,
+                    //           child: Row(
+                    //             children: [
+                    //               Expanded(child:IconButton(
+                    //                 onPressed:() { Navigator.push(
+                    //                   context,MaterialPageRoute
+                    //                   (builder: (context) => View(url: _url)));},
+                    //                   icon:Icon(Icons.remove_red_eye) ,) ),
+                    //               Expanded(child:IconButton(
+                    //                 onPressed:() { deleteflie();},
+                    //                   icon:Icon(Icons.delete) ,) ),
+                    //             ],
+                    //           ),
+                    //         ),
+                    //         // Icon(Icons.remove_red_eye),
+                    //         // onTap: () {
+                    //         //   Navigator.push(
+                    //         //       context,
+                    //         //       MaterialPageRoute(
+                    //         //           builder: (context) => View(url: _url)));
+                    //         // },
+
+                    //       );
+                    //     } else {
+                    //       return Text("");
+                    //     }
+                    //   },
+                    // ),
                     //             ElevatedButton(
                     //               child: Text("เอกสารแนบ"),
                     //               onPressed: () async {
@@ -1202,7 +1344,7 @@ class _AddMedPageState extends State<AddMedPage> {
               SizedBox(
                 height: 10,
               ),
-                            ElevatedButton(
+              ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   primary: iBluebuttonColor,
                   onPrimary: Colors.white,
@@ -1215,7 +1357,12 @@ class _AddMedPageState extends State<AddMedPage> {
                 onPressed: () {
                   addMedical();
                 },
-                child: Text('บันทึกข้อมูล'),
+                child: Text(
+                  'บันทึกข้อมูล',
+                  style: TextStyle(
+                    fontFamily: 'Sarabun',
+                  ),
+                ),
               ),
               // ElevatedButton(
               //   child: Text("บันทึกข้อมูล"),
@@ -1289,7 +1436,16 @@ class View extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("PDF View"),
+        title: Text(
+          'รายละเอียดเอกสาร',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Sarabun',
+            color: iWhiteColor,
+          ),
+        ),
+        backgroundColor: iBlueColor,
       ),
       body: SfPdfViewer.network(
         url,
@@ -1305,6 +1461,11 @@ class flieMedicalModal extends ChangeNotifier {
 
   set flieMedicalChoice(value) {
     this._flie = value;
+    notifyListeners();
+  }
+
+  void deleteflie() {
+    this._flie = '';
     notifyListeners();
   }
 }

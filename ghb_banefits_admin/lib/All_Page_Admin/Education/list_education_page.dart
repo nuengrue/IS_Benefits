@@ -9,18 +9,26 @@ import 'package:ghb_banefits_admin/All_Services_Admin/servics.dart';
 import 'package:ghb_banefits_admin/color.dart';
 import 'package:ghb_banefits_admin/main_home_admin_page.dart';
 import 'package:ghb_banefits_admin/my_drawer.dart';
+import 'package:intl/intl.dart';
 
 import 'package:provider/provider.dart';
 
 //import 'package:flutter/widgets.dart';
 
 class ListEducationAdminPage extends StatefulWidget {
+    const ListEducationAdminPage(
+      // ignore: non_constant_identifier_names
+      {super.key, required this.Status});
+
+  // Declare a field that holds the Todo.
+  final String Status;
   @override
   State<ListEducationAdminPage> createState() => _ListEducationAdminPageState();
 }
 
 class _ListEducationAdminPageState extends State<ListEducationAdminPage> {
   List<EducationAdmin> educations = List.empty();
+  List<EducationAdmin> _Datalist = List.empty();
   bool isloading = false;
   late int count;
 
@@ -47,10 +55,7 @@ class _ListEducationAdminPageState extends State<ListEducationAdminPage> {
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
-            color: iOrangeColor,
-          ),
-        ),
-        backgroundColor: iBlueColor,
+            color: iWhiteColor,),),backgroundColor: iOrangeColor,
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.home),
@@ -67,11 +72,28 @@ class _ListEducationAdminPageState extends State<ListEducationAdminPage> {
         child: Consumer<EducationAdminProviders>(
           builder: (context, EducationAdminProviders data, child) {
             // return data.getChildAllowane.length !=0 ? ListView.builder(
-            return data.EducationAdminList.length != 0
-                ? ListView.builder(
-                    itemCount: data.EducationAdminList.length,
-                    itemBuilder: (context, index) {
-                      return CardList(data.EducationAdminList[index], index);
+if(widget.Status.toString() == "Total All"){
+
+  _Datalist = data.EducationAdminList;
+
+}
+else{
+
+    _Datalist = data.EducationAdminList.where((x) => x.status == widget.Status.toString()).toList();
+}
+
+  // count = data.ChildAllowanceAdminListwhere.length;
+// });
+           // return data.getChildAllowane.length !=0 ? ListView.builder(
+            return _Datalist.length !=0 ? ListView.builder(
+              itemCount: _Datalist.length,
+              
+              itemBuilder: (context,index){
+              //  print(data.ChildAllowanceAdminList.length);
+                            //  final testdat = data.ChildAllowanceAdminListwhere.where((x) => x.status == widget.Status).toList();
+                            //  print(testdat);
+
+                return CardList(_Datalist[index],index);
                     },
                   )
                 : GestureDetector(
@@ -89,7 +111,7 @@ class _ListEducationAdminPageState extends State<ListEducationAdminPage> {
           },
         ),
       ),
-      drawer: MyDrawer(),
+      // drawer: MyDrawer(),
     );
   }
 }
@@ -100,6 +122,8 @@ class CardList extends StatelessWidget {
   CardList(this.notes, this.index);
   @override
   Widget build(BuildContext context) {
+                                  NumberFormat myFormat =
+                          NumberFormat.decimalPattern('en_us');
     return Padding(
       padding: const EdgeInsets.all(2.0),
       child: Container(
@@ -109,22 +133,60 @@ class CardList extends StatelessWidget {
               bottomLeft: Radius.circular(10),
               topLeft: Radius.circular(10),
             )),
-        child: ListTile(
-          leading: Icon(Icons.note),
-          title: Text(notes.no),
-          subtitle: Text(notes.status),
-          trailing: Icon(
-            Icons.arrow_forward_ios,
-            color: Colors.black26,
-          ),
-          onTap: () {
-            Navigator.push(
-                context,
+  child: Card(
+            child: ListTile(
+            //  leading: Icon(Icons.note),
+              title: Row(  children: [
+                  Expanded(child: Text('ชื่อผู้ร้องขอ',
+                            // textAlign: TextAlign.left,
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),)),
+                  Expanded(child: Text(notes.name, textAlign: TextAlign.end,)),
+                ],),
+              subtitle: Column(
+                children: [
+                  Row(
+                    children: [
+                  Expanded(child: Text('เลขที่ใบเสร็จ',
+                            // textAlign: TextAlign.left,
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),)),
+                  Expanded(child: Text(notes.receiptnumber, textAlign: TextAlign.end,)),
+                    ],
+                  ),                        
+                  Row(
+                    children: [
+                      Expanded(child: Text('ชื่อบุตร',
+                                // textAlign: TextAlign.left,
+                                style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),)),
+                      Expanded(child: Text(notes.namechild, textAlign: TextAlign.end,)),
+                    ],
+                  ),                 
+                  Row(
+                    children: [
+                      Expanded(child: Text('จำนวนเงินร้องขอ',
+                                // textAlign: TextAlign.left,
+                                style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),)),
+                      Expanded(child: Text(myFormat.format(int.parse(notes.amountreceipt)), textAlign: TextAlign.end,)),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(child: Text('วันที่บันทึก',
+                                // textAlign: TextAlign.left,
+                                style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),)),
+                      Expanded(child: Text(notes.savedate, textAlign: TextAlign.end,)),
+                    ],
+                  ),
+                ],
+              ),
+              trailing: Text(notes.status,style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',color: iBlueColor,),),
+               onTap: () {
+                    Navigator.push(                context,
                 MaterialPageRoute(
                     builder: (context) =>
                         DetailEducationAdminPage(Notes: notes, Indexs: index)));
-          },
-        ),
+                    },
+            ),
+          ),
       ),
     );
   }

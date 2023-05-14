@@ -13,6 +13,20 @@ class ChildAllowanceProviders with ChangeNotifier {
 
       
 
+ List<ChildAllowance> _ChildAllowanceListno  =  [];
+ List<ChildAllowance> get ChildAllowanceListno => this._ChildAllowanceListno;
+
+
+
+
+ set ChildAllowanceListno(List<ChildAllowance> value) {
+
+  this._ChildAllowanceListno = value;
+
+  notifyListeners();
+  } 
+ 
+
  List<ChildAllowance> _ChildAllowanceList  =  [];
  List<ChildAllowance> get ChildAllowanceList => this._ChildAllowanceList;
 
@@ -29,13 +43,11 @@ class ChildAllowanceProviders with ChangeNotifier {
 
 
 
-
-
  
 
 // function to add data to list of notes 
  void addChildAllowane( 
-   String no,
+   int no,
    String empcode,
    String nameemp,
    String department,
@@ -52,6 +64,7 @@ class ChildAllowanceProviders with ChangeNotifier {
    String filename, 
    String read, 
    String id, 
+   String remarks, 
 )
 
  {
@@ -72,7 +85,8 @@ class ChildAllowanceProviders with ChangeNotifier {
     fileUrl,
     filename,
     read,
-    id,);
+    id,
+    remarks,);
 
 
    _ChildAllowanceList.add(ChildAllowane);

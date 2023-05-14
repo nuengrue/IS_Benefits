@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:ghb_benefits/All_Controllers/child_allowance_controllers.dart';
 import 'package:ghb_benefits/All_Controllers/master_controllers.dart';
 import 'package:ghb_benefits/All_Models/child_model.dart';
 import 'package:ghb_benefits/All_Models/employee_model.dart';
@@ -31,9 +32,13 @@ class AddChildAllowancePage extends StatefulWidget {
 class _AddChildAllowancePageState extends State<AddChildAllowancePage> {
   MasterController mastecontroller = MasterController(FirebaseServices());
 
+  ChildAllowanceController controller =
+      ChildAllowanceController(FirebaseServices());
+
   void initState() {
     super.initState();
     _getMaster(context);
+    _getChildAllowanceadd(context);
   }
 
   void _getMaster(BuildContext context) async {
@@ -41,15 +46,39 @@ class _AddChildAllowancePageState extends State<AddChildAllowancePage> {
     context.read<EmployeeProviders>().EmployeeList = newEmployee;
     var newChilder = await mastecontroller.fetchChilder();
     context.read<ChilderProviders>().ChilderList = newChilder;
-   List<String>  childName = [];
+    List<String> childName = [];
     for (var doc in newChilder) {
       childName.add(doc.namechild);
     }
-    List<String>  sumamounteducation = childName;
+    List<String> sumamounteducation = childName;
     context.read<ChilderProviders>().childnamerList = sumamounteducation;
 
+    context.read<filedEmployeeProviders>().Empno = newEmployee.first.no;
+    context.read<filedEmployeeProviders>().Empempcode =
+        newEmployee.first.empcode;
+    context.read<filedEmployeeProviders>().Empnameemp =
+        newEmployee.first.nameemp;
+    context.read<filedEmployeeProviders>().Empdepartment =
+        newEmployee.first.department;
+    context.read<filedEmployeeProviders>().Empdivisionment =
+        newEmployee.first.divisionment;
+    context.read<filedEmployeeProviders>().Empdate = newEmployee.first.date;
+    context.read<filedEmployeeProviders>().Empuid = newEmployee.first.uid;
 
-    //print(sumamounteducation);
+    setState(() {
+      _empcode = newEmployee.first.empcode;
+      _nameemp = newEmployee.first.nameemp;
+      _department = newEmployee.first.department;
+      _divisionment = newEmployee.first.divisionment;
+    });
+  }
+
+  late int _idcounts = 0;
+  void _getChildAllowanceadd(BuildContext context) async {
+    var newAllowance = await controller.fetchChildAllowanceno();
+    setState(() {
+      _idcounts = newAllowance.length + 1;
+    });
   }
 
   _AddChildAllowancePageState() {
@@ -66,9 +95,9 @@ class _AddChildAllowancePageState extends State<AddChildAllowancePage> {
     "ทดสอบ คนที่1",
     "ทดสอบ คนที่2",
     "ทดสอบ คนที่3",
-    "ทดสอบ คนที่4"    
+    "ทดสอบ คนที่4"
   ];
-List<String> _childNames = [];
+  List<String> _childNames = [];
   // late  List<String> _childName =[];
   String? _selectedVal = "";
   final _childpartner = [
@@ -97,10 +126,10 @@ List<String> _childNames = [];
   final user = FirebaseAuth.instance.currentUser!;
 
   late String _no;
-  late String _empcode;
-  late String _nameemp;
-  late String _department;
-  late String _divisionment;
+  late String _empcode = "";
+  late String _nameemp = "";
+  late String _department = "";
+  late String _divisionment = "";
   late String _savedate;
   late String _namechild;
   late String _namepartner;
@@ -110,19 +139,21 @@ List<String> _childNames = [];
   late String _status;
   late String _email;
   late String _url;
-  late String _filename;
+  late String _filename = "";
   late String _flagread;
   late String _id;
+  late String _remarks = "";
 
   void AddChildAllowance() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      _no = _no;
-      _empcode = "57315";
-      _nameemp = "หนึ่งฤทัย พวงแก้ว";
-      _department = "ฝ่ายพัฒนาระบบสารสนเทศ";
-      _divisionment = "ส่วนสวัสดิการ";
-      _savedate = DateFormat.yMd().add_jm().format(DateTime.now());
+      _idcounts = _idcounts;
+      _empcode = _empcode;
+      _nameemp = _nameemp;
+      _department = _department;
+      _divisionment = _divisionment;
+      _savedate = DateFormat('dd-MM-yyyy  kk:mm').format(DateTime.now());
+      // _savedate = DateFormat.yMd().add_Hm().format(DateTime.now());
       _namechild = _selectedVal!;
       _namepartner;
       _officetner;
@@ -132,17 +163,18 @@ List<String> _childNames = [];
       } else {
         _submaritalstatus = _selectedstatuspartner!;
       }
-      _status = "Request";
+      _status = "ร้องขอ";
       //print(_status);
       _email = user.uid;
       _url = _url;
       _filename = _filename;
       _flagread = "0";
       _id = "";
+      _remarks = _remarks;
 
       Provider.of<ChildAllowanceProviders>(context, listen: false)
           .addChildAllowane(
-              _no,
+              _idcounts,
               _empcode,
               _nameemp,
               _department,
@@ -158,12 +190,13 @@ List<String> _childNames = [];
               _url,
               _filename,
               _flagread,
-              _id);
+              _id,
+              _remarks);
 
       CollectionReference ChildAllowance =
           FirebaseFirestore.instance.collection('ChildAllowance');
       DocumentReference doc = await ChildAllowance.add({
-        'no': _no,
+        'no': _idcounts,
         'empcode': _empcode,
         'nameemp': _nameemp,
         'department': _department,
@@ -179,13 +212,14 @@ List<String> _childNames = [];
         'fileUrl': _url,
         'filename': _filename,
         'flagread': _flagread,
-        'id': _id
+        'id': _id,
+        'remarks': _remarks
       });
       doc.update({
         'id': doc.id,
       });
 
-      context.read<flieChildAllowanceModal>().flieChildAllowanceChoice = '';
+      // context.read<flieChildAllowanceModal>().flieChildAllowanceChoice = '';
 
       AwesomeDialog(
         context: context,
@@ -209,6 +243,7 @@ List<String> _childNames = [];
       //     builder: (context) => ListChildAllowancePage(),
       //   ),
       // );
+      // context.read<flieChildAllowanceModal>().flieChildAllowanceChoice = '';
     }
   }
 
@@ -245,20 +280,36 @@ List<String> _childNames = [];
     // //.set({'fileUrl':url,'num' : "file FDF" + number.toString()});
   }
 
-void deleteflie()async{
-  Provider.of<flieChildAllowanceModal>(context, listen: false)
-          .deleteflie();
-}
+  void deleteflie() async {
+    Provider.of<flieChildAllowanceModal>(context, listen: false).deleteflie();
+    setState(() {
+      _filename = "";
+
+      // _url = url;
+      // print(_url);
+    });
+    // _filename = "";
+    print(_filename);
+    // _url = "";
+  }
+
   @override
   Widget build(BuildContext context) {
     // Scaffold is a layout for
-    return Consumer<ChilderProviders>(
-      builder: (context, value, child) {
-                              _childNames = value.childnamerList.toList();
+
     // the major Material Components.
     return Scaffold(
       appBar: AppBar(
-        title: Text('เพิ่มรายการ'),
+        title: Text(
+          'สร้างรายการคำขอเบิกค่าช่วยเหลือบุตร',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Sarabun',
+            color: iWhiteColor,
+          ),
+        ),
+        backgroundColor: iBlueColor,
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -294,36 +345,37 @@ void deleteflie()async{
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'เลขที่',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Consumer<ChildAllowanceProviders>(
-                          builder: (context, value, child) {
-                            int Counts = 0;
-                            String number_text = "";
+                    // Row(
+                    //   children: [
+                    //     Expanded(
+                    //       child: Text(
+                    //         'เลขที่',
+                    //         textAlign: TextAlign.left,
+                    //         style: TextStyle(fontWeight: FontWeight.bold),
+                    //       ),
+                    //     ),
+                    //     Consumer<ChildAllowanceProviders>(
+                    //       builder: (context, value, child) {
+                    //         int Counts = 0;
+                    //         String number_text = "";
 
-                            Counts = value.ChildAllowanceList.length + 1;
-                            _no = "100000" + Counts.toString();
+                    //         Counts = value.ChildAllowanceList.length + 1;
+                    //         _no = "100000" + Counts.toString();
 
-                            return Expanded(
-                              child: Text(
-                                _no.toString(),
-                                textAlign: TextAlign.end,
-                              ),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
+                    //         return Expanded(
+                    //           child: Text(
+                    //             _no.toString(),
+                    //             textAlign: TextAlign.end,
+                    //           ),
+                    //         );
+                    //       },
+                    //     ),
+                    //   ],
+                    // ),
                   ],
                 ),
               ),
@@ -356,6 +408,7 @@ void deleteflie()async{
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -365,7 +418,10 @@ void deleteflie()async{
                           child: Text(
                             'พนักงาน',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Sarabun',
+                            ),
                           ),
                         ),
                         Expanded(
@@ -378,8 +434,11 @@ void deleteflie()async{
                           // );
                           // },),
                           child: Text(
-                            'หนึ่งฤทัย พวงแก้ว',
+                            _nameemp,
                             textAlign: TextAlign.end,
+                            style: TextStyle(
+                              fontFamily: 'Sarabun',
+                            ),
                           ),
                         ),
                       ],
@@ -390,7 +449,10 @@ void deleteflie()async{
                           child: Text(
                             'หน่วยงาน',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Sarabun',
+                            ),
                           ),
                         ),
                         Column(
@@ -398,12 +460,18 @@ void deleteflie()async{
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text(
-                              'ฝ่ายทรัพยากรบุคคล',
+                              _department,
                               textAlign: TextAlign.end,
+                              style: TextStyle(
+                                fontFamily: 'Sarabun',
+                              ),
                             ),
                             Text(
-                              'ส่วนสวัสดิการ',
+                              _divisionment,
                               textAlign: TextAlign.end,
+                              style: TextStyle(
+                                fontFamily: 'Sarabun',
+                              ),
                             ),
                           ],
                         ),
@@ -415,13 +483,20 @@ void deleteflie()async{
                           child: Text(
                             'วันที่บันทึก',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Sarabun',
+                            ),
                           ),
                         ),
                         Expanded(
                           child: Text(
-                            DateFormat.yMd().format(DateTime.now()),
+                            DateFormat('dd-MM-yyyy  kk:mm')
+                                .format(DateTime.now()),
                             textAlign: TextAlign.end,
+                            style: TextStyle(
+                              fontFamily: 'Sarabun',
+                            ),
                           ),
                         ),
                       ],
@@ -461,6 +536,7 @@ void deleteflie()async{
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -473,9 +549,11 @@ void deleteflie()async{
                               'บุตรของพนักงาน',
                               textAlign: TextAlign.left,
                               style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
+                                fontSize: 14,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Sarabun',
+                              ),
                             ),
                           ),
                           Expanded(
@@ -488,10 +566,7 @@ void deleteflie()async{
                     ),
 //              if (value.ChilderList.isNotEmpty) ...[
 
-
-                   
 //  Text('ท่านได้ใช้วงเงินตามสิทธิ์ครบกำหนดแล้ว:'),
-
 
 // // Step 1.
 
@@ -520,18 +595,13 @@ void deleteflie()async{
 // //   },
 // // ),
 
-
-         
-
 //     ] else ...[
 //      Text('ท่านได้ใช้วงเงินตามสิทธิ์ครบกำหนดแล้ว: ไม่มี'),
-
 
 //     ]
                     // var clients = context.read<ChilderProviders>().ChilderList.toList();
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-
                       child: DropdownButtonFormField(
                         // value: _selectedVal,
                         value: _selectedVal,
@@ -544,12 +614,10 @@ void deleteflie()async{
                         onChanged: (val) {
                           setState(() {
                             _selectedVal = val as String;
-                            
                           });
                         },
                       ),
                     ),
-
                   ],
                 ),
               ),
@@ -665,9 +733,11 @@ void deleteflie()async{
                               'สถานะ',
                               textAlign: TextAlign.left,
                               style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
+                                fontSize: 14,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Sarabun',
+                              ),
                             ),
                           ),
                           Expanded(
@@ -770,55 +840,144 @@ void deleteflie()async{
                         fontSize: 16,
                         color: iBlueColor,
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
                     ElevatedButton(
-                      child: Text("เอกสารแนบ"),
+                      style: ElevatedButton.styleFrom(primary: iBlueColor),
                       onPressed: () {
                         uploadDataToFirebase();
                       },
+                      child: Text(
+                        "เอกสารแนบ",
+                        style: TextStyle(
+                          fontFamily: 'Sarabun',
+                        ),
+                      ),
                     ),
-                    const Divider(),
-                    Consumer<flieChildAllowanceModal>(
-                      builder: (context, value, child) {
-                        if (value.flieChildAllowanceChoice
-                            .toString()
-                            .isNotEmpty) {
-                          //Carimg = '${value.flieChildAllowanceChoice}';
-                          return 
-                          
-                          ListTile(
-                            title: Text(_filename.toString()),
-                            trailing: Container(
-                              width: 70,
-                              child: Row(
-                                children: [
-                                  Expanded(child:IconButton(
-                                    onPressed:() { Navigator.push(
-                                      context,MaterialPageRoute
-                                      (builder: (context) => View(url: _url)));},
-                                      icon:Icon(Icons.remove_red_eye) ,) ),
-                                  Expanded(child:IconButton(
-                                    onPressed:() { deleteflie();},
-                                      icon:Icon(Icons.delete) ,) ),
-                                ],
-                              ),
-                            )
-                            // Icon(Icons.remove_red_eye),
-                            // onTap: () {
-                            //   Navigator.push(
-                            //       context,
-                            //       MaterialPageRoute(
-                            //           builder: (context) => View(url: _url)));
-                            // },
+                    // ElevatedButton(
+                    //   style: ElevatedButton.styleFrom(
+                    //  backgroundColor: Colors.red, foregroundColor: iWhiteColor),
+                    //   child: Text("เอกสารแนบ",style: TextStyle(fontFamily: 'Sarabun',),),
 
-                          );
-                        } else {
-                          return Text("");
-                        }
-                      },
-                    ),
+                    //   onPressed: () {
+                    //     uploadDataToFirebase();
+                    //   },
+                    // ),
+                    const Divider(),
+                    if (_filename == "" || _filename == null) ...[
+                      Text(""),
+                    ] else ...[
+                      ListTile(
+                        title: Text(_filename.toString()),
+                        trailing: Container(
+                          width: 70,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                  child: IconButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              View(url: _url)));
+                                },
+                                icon: Icon(Icons.remove_red_eye),
+                              )),
+                              Expanded(
+                                  child: IconButton(
+                                onPressed: () {
+                                  deleteflie();
+                                },
+                                icon: Icon(Icons.delete),
+                              )),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ]
+                    // if (_filename == ) {
+                    //   return ListTile(
+                    //     title: Text(_filename.toString()),
+                    //     trailing: Container(
+                    //       width: 70,
+                    //       child: Row(
+                    //         children: [
+                    //           Expanded(
+                    //               child: IconButton(
+                    //             onPressed: () {
+                    //               Navigator.push(
+                    //                   context,
+                    //                   MaterialPageRoute(
+                    //                       builder: (context) =>
+                    //                           View(url: _url)));
+                    //             },
+                    //             icon: Icon(Icons.remove_red_eye),
+                    //           )),
+                    //           Expanded(
+                    //               child: IconButton(
+                    //             onPressed: () {
+                    //               deleteflie();
+                    //             },
+                    //             icon: Icon(Icons.delete),
+                    //           )),
+                    //         ],
+                    //       ),
+                    //     ),
+
+                    //   );
+                    // } else {
+                    //   return Text("");
+                    // },
+
+                    // Consumer<flieChildAllowanceModal>(
+                    //   builder: (context, value, child) {
+                    //     if (value.flieChildAllowanceChoice
+                    //         .toString()
+                    //         .isNotEmpty) {
+                    //       //Carimg = '${value.flieChildAllowanceChoice}';
+                    //       return ListTile(
+                    //         title: Text(_filename.toString()),
+                    //         trailing: Container(
+                    //           width: 70,
+                    //           child: Row(
+                    //             children: [
+                    //               Expanded(
+                    //                   child: IconButton(
+                    //                 onPressed: () {
+                    //                   Navigator.push(
+                    //                       context,
+                    //                       MaterialPageRoute(
+                    //                           builder: (context) =>
+                    //                               View(url: _url)));
+                    //                 },
+                    //                 icon: Icon(Icons.remove_red_eye),
+                    //               )),
+                    //               Expanded(
+                    //                   child: IconButton(
+                    //                 onPressed: () {
+                    //                   deleteflie();
+                    //                 },
+                    //                 icon: Icon(Icons.delete),
+                    //               )),
+                    //             ],
+                    //           ),
+                    //         ),
+                    //         // Icon(Icons.remove_red_eye),
+                    //         // onTap: () {
+                    //         //   Navigator.push(
+                    //         //       context,
+                    //         //       MaterialPageRoute(
+                    //         //           builder: (context) => View(url: _url)));
+                    //         // },
+                    //       );
+                    //     } else {
+                    //       return Text("");
+                    //     }
+                    //   },
+                    // ),
                   ],
                 ),
               ),
@@ -838,7 +997,12 @@ void deleteflie()async{
                 onPressed: () {
                   AddChildAllowance();
                 },
-                child: Text('บันทึกข้อมูล'),
+                child: Text(
+                  'บันทึกข้อมูล',
+                  style: TextStyle(
+                    fontFamily: 'Sarabun',
+                  ),
+                ),
               ),
 
               // ElevatedButton(
@@ -878,9 +1042,6 @@ void deleteflie()async{
         ),
       ),
     );
-    }
-      );
-  
   }
 
   void openFiles(context, List<PlatformFile> files) =>
@@ -904,7 +1065,16 @@ class View extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("PDF View"),
+        title: Text(
+          'รายละเอียดเอกสาร',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Sarabun',
+            color: iWhiteColor,
+          ),
+        ),
+        backgroundColor: iBlueColor,
       ),
       body: SfPdfViewer.network(
         url,
@@ -923,10 +1093,8 @@ class flieChildAllowanceModal extends ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteflie(){
+  void deleteflie() {
     this._flie = '';
-   notifyListeners();
-
-
-}
+    notifyListeners();
+  }
 }

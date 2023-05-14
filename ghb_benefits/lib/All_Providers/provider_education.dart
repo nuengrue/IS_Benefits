@@ -46,7 +46,7 @@ class EducationProviders with ChangeNotifier {
 
 // function to add data to list of notes
   void addEducation(
-    String no,
+    int no,
     String empcode,
     String name,
     String department,
@@ -83,6 +83,7 @@ class EducationProviders with ChangeNotifier {
    String filename, 
    String read, 
    String id,
+      String remarks, 
   ) {
     Education education = new Education(
       no,
@@ -123,7 +124,7 @@ class EducationProviders with ChangeNotifier {
     filename,
     read,
     id,
-    );
+    remarks,);
 
     _EducationeList.add(education);
 

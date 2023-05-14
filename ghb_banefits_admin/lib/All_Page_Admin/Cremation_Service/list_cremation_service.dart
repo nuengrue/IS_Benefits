@@ -15,12 +15,19 @@ import 'package:provider/provider.dart';
 //import 'package:flutter/widgets.dart';
 
 class ListCremationServiceAdminPage extends StatefulWidget {
+    const ListCremationServiceAdminPage(
+      // ignore: non_constant_identifier_names
+      {super.key, required this.Status});
+
+  // Declare a field that holds the Todo.
+  final String Status;
   @override
   State<ListCremationServiceAdminPage> createState() => _ListCremationServiceAdminPageState();
 }
 
 class _ListCremationServiceAdminPageState extends State<ListCremationServiceAdminPage> {
   List<CremationServiceAdmin> Cremations = List.empty();
+      List<CremationServiceAdmin> _Datalist = List.empty();
   bool isloading = false;
   late int count ;
 
@@ -44,9 +51,7 @@ class _ListCremationServiceAdminPageState extends State<ListCremationServiceAdmi
             appBar: AppBar(title: Text('รายการคำขอสมัครฌาปนกิจ',style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            color: iOrangeColor,
-                          ),),
-      backgroundColor: iBlueColor,
+                            color: iWhiteColor,),),backgroundColor: iOrangeColor,
        actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.home),
@@ -62,12 +67,26 @@ class _ListCremationServiceAdminPageState extends State<ListCremationServiceAdmi
         padding: const EdgeInsets.all(8.0),
         child: Consumer<CremationServiceAdminProviders>(
           builder: (context,CremationServiceAdminProviders data,child){
-           // return data.getChildAllowane.length !=0 ? ListView.builder(
-            return data.CremationServiceAdminList.length !=0 ? ListView.builder(
-              itemCount: data.CremationServiceAdminList.length,
-              itemBuilder: (context,index){
+   if(widget.Status.toString() == "Total All"){
 
-                return CardList(data.CremationServiceAdminList[index],index);
+  _Datalist = data.CremationServiceAdminList;
+
+}
+else{
+
+    _Datalist = data.CremationServiceAdminList.where((x) => x.status == widget.Status.toString()).toList();
+} 
+           // return data.getChildAllowane.length !=0 ? ListView.builder(
+            return _Datalist.length !=0 ? ListView.builder(
+              itemCount: _Datalist.length,
+              
+              itemBuilder: (context,index){
+              //  print(data.ChildAllowanceAdminList.length);
+                            //  final testdat = data.ChildAllowanceAdminListwhere.where((x) => x.status == widget.Status).toList();
+                            //  print(testdat);
+
+                return CardList(_Datalist[index],index);
+              
                 /*Card(
                 child: ListTile(
                   title: Text(data.getChildAllowane[index].no),
@@ -90,7 +109,7 @@ class _ListCremationServiceAdminPageState extends State<ListCremationServiceAdmi
           },
         ),
       ),
-             drawer: MyDrawer(),
+            //  drawer: MyDrawer(),
       );
   }
 }
@@ -112,14 +131,48 @@ class _ListCremationServiceAdminPageState extends State<ListCremationServiceAdmi
               topLeft: Radius.circular(10),
             )
           ),
-          child: ListTile(
-           leading: Icon(Icons.note),
-            title: Text(notes.no),
-            subtitle: Text(notes.status),
-            trailing: Icon(Icons.arrow_forward_ios,color: Colors.black26,),
-             onTap: () {
+                 child: Card(
+            child: ListTile(
+            //  leading: Icon(Icons.note),
+              title: Row(  children: [
+                  Expanded(child: Text('ผู้ร้องขอ',
+                            // textAlign: TextAlign.left,
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),)),
+                  Expanded(child: Text(notes.name, textAlign: TextAlign.end,)),
+                ],),
+              subtitle: Column(
+                children: [
+                   Row(
+                    children: [
+                  Expanded(child: Text('ผู้จัดการศพ',
+                            // textAlign: TextAlign.left,
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),)),
+                  Expanded(child: Text(notes.managername, textAlign: TextAlign.end,)),
+                    ],
+                  ),                     
+                  Row(
+                    children: [
+                      Expanded(child: Text('ความสัมพนธ์',
+                                // textAlign: TextAlign.left,
+                                style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),)),
+                      Expanded(child: Text(notes.relationship, textAlign: TextAlign.end,)),
+                    ],
+                  ),                 
+                  Row(
+                    children: [
+                      Expanded(child: Text('วันที่บันทึก',
+                                // textAlign: TextAlign.left,
+                                style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),)),
+                      Expanded(child: Text(notes.savedate, textAlign: TextAlign.end,)),
+                    ],
+                  ),
+                ],
+              ),
+              trailing: Text(notes.status,style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',color: iBlueColor,),),
+               onTap: () {
                   Navigator.push( context,MaterialPageRoute(builder: (context) =>DetailCremationServiceAdminPage(Notes : notes ,Indexs: index)));
-                  },
+                    },
+            ),
           ),
         ),
     );

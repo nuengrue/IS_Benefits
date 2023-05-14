@@ -7,18 +7,22 @@ class BoxDashborad extends StatelessWidget {
   final int countnum;
   final String buttonText;
   final Color indexColor ;
+  final String url;
+
 
 
   //final String buttonText;
   const BoxDashborad({Key? key,
   required this.countnum,
   required this.buttonText, 
-  required this.indexColor
+  required this.indexColor,
+  required this.url
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      
           children: [
              Text(buttonText,
             style: TextStyle(
@@ -28,11 +32,11 @@ class BoxDashborad extends StatelessWidget {
             ),
             ),
             SizedBox(height: 12),
-          //  InkWell(
-          //   onTap: () {
-          //     Navigator.pushNamed(context, index);
-          //   },
-              // child: 
+           InkWell(
+            onTap: () {
+              url;
+            },
+              child: 
               Container(
                 height: 80,
                 width: 150,
@@ -59,7 +63,7 @@ class BoxDashborad extends StatelessWidget {
                   //Image.asset(iconImagePath),
                 ),
               ),
-            // ),
+            ),
             //             SizedBox(height: 12),
             // //text
             // Text(buttonText,

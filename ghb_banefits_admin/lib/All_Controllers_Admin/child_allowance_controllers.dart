@@ -21,7 +21,6 @@ class ChildAllowanceAdminController {
     return allowances;
   }
 
-  fetchChildAllowanceAdmid() {}
 
 /*
   void updateTodo(ChildAllowaneModel todo) async{

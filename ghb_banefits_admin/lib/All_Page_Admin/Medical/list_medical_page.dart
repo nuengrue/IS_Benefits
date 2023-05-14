@@ -10,18 +10,25 @@ import 'package:ghb_banefits_admin/All_Services_Admin/servics.dart';
 import 'package:ghb_banefits_admin/color.dart';
 import 'package:ghb_banefits_admin/main_home_admin_page.dart';
 import 'package:ghb_banefits_admin/my_drawer.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 //import 'package:flutter/widgets.dart';
 
 
 class ListMedicalAdminPage extends StatefulWidget {
+    const ListMedicalAdminPage(
+      // ignore: non_constant_identifier_names
+      {super.key, required this.Status});
+        // Declare a field that holds the Todo.
+final  String Status;
   @override
   State<ListMedicalAdminPage> createState() => _ListMedicalAdminPageState();
 }
 
 class _ListMedicalAdminPageState extends State<ListMedicalAdminPage> {
     List<MedicalAdmin> medicals = List.empty();
+        List<MedicalAdmin> _Datalist = List.empty();
   bool isloading = false;
   late int count ;
 
@@ -45,9 +52,7 @@ class _ListMedicalAdminPageState extends State<ListMedicalAdminPage> {
             appBar: AppBar(title: Text('รายการคำขอเบิกค่ารักษาพยาบาล',style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            color: iOrangeColor,
-                          ),),
-      backgroundColor: iBlueColor,
+                            color: iWhiteColor,),),backgroundColor: iOrangeColor,
        actions: <Widget>[
                     
          IconButton(
@@ -79,20 +84,28 @@ body:FutureBuilder<List<ChildAllowance>>(
         padding: const EdgeInsets.all(8.0),
         child: Consumer<MedicalAdminProviders>(
           builder: (context,MedicalAdminProviders data,child){
-             print(data.MedicalAdminList);
-//              setState(() {
-//   count = data.ChildAllowanceList.length;
+if(widget.Status.toString() == "Total All"  ||widget.Status.toString() == ""){
+
+  _Datalist = data.MedicalAdminList;
+
+}
+else{
+
+    _Datalist = data.MedicalAdminList.where((x) => x.status == widget.Status.toString()).toList();
+}
+
+  // count = data.ChildAllowanceAdminListwhere.length;
 // });
            // return data.getChildAllowane.length !=0 ? ListView.builder(
-            return data.MedicalAdminList.length !=0 ? ListView.builder(
-              itemCount: data.MedicalAdminList.length,
+            return _Datalist.length !=0 ? ListView.builder(
+              itemCount: _Datalist.length,
               
               itemBuilder: (context,index){
-                //print(data.MedicalAdminList.length);
+              //  print(data.ChildAllowanceAdminList.length);
+                            //  final testdat = data.ChildAllowanceAdminListwhere.where((x) => x.status == widget.Status).toList();
+                            //  print(testdat);
 
-
-                return CardList(data.MedicalAdminList[index],index);
-
+                return CardList(_Datalist[index],index);
                 /*Card(
                 child: ListTile(
                   title: Text(data.getChildAllowane[index].no),
@@ -115,7 +128,7 @@ body:FutureBuilder<List<ChildAllowance>>(
         ),
       ),
      
-             drawer: MyDrawer(),
+            //  drawer: MyDrawer(),
       );
   }
 }
@@ -128,6 +141,8 @@ body:FutureBuilder<List<ChildAllowance>>(
   
   @override
   Widget build(BuildContext context) {
+                              NumberFormat myFormat =
+                          NumberFormat.decimalPattern('en_us');
     return Padding(
       padding: const EdgeInsets.all(2.0),
 
@@ -139,14 +154,49 @@ body:FutureBuilder<List<ChildAllowance>>(
               topLeft: Radius.circular(10),
             )
           ),
-          child: ListTile(
-           leading: Icon(Icons.note),
-            title: Text(notes.no),
-            subtitle: Text(notes.status),
-            trailing: Icon(Icons.arrow_forward_ios,color: Colors.black26,),
-             onTap: () {
-                  Navigator.push( context,MaterialPageRoute(builder: (context) =>DetailMedicalAdminPage(Notes : notes, Indexs : index)));
-                  },
+                   child: Card(
+            child: ListTile(
+            //  leading: Icon(Icons.note),
+              title: Row(  children: [
+                  Expanded(child: Text('ชื่อผู้ร้องขอ',
+                            // textAlign: TextAlign.left,
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),)),
+                  Expanded(child: Text(notes.name, textAlign: TextAlign.end,)),
+                ],),
+              subtitle: Column(
+                children: [
+                  Row(
+                    children: [
+                  Expanded(child: Text('เลขที่ใบเสร็จ',
+                            // textAlign: TextAlign.left,
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),)),
+                  Expanded(child: Text(notes.idreceiptnumber, textAlign: TextAlign.end,)),
+                    ],
+                  ),
+
+                  Row(
+                    children: [
+                      Expanded(child: Text('จำนวนเงินร้องขอ',
+                                // textAlign: TextAlign.left,
+                                style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),)),
+                      Expanded(child: Text(myFormat.format(int.parse(notes.receiptamount)), textAlign: TextAlign.end,)),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(child: Text('วันที่บันทึก',
+                                // textAlign: TextAlign.left,
+                                style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),)),
+                      Expanded(child: Text(notes.savedate, textAlign: TextAlign.end,)),
+                    ],
+                  ),
+                ],
+              ),
+              trailing: Text(notes.status,style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',color: iBlueColor,),),
+               onTap: () {
+                                      Navigator.push( context,MaterialPageRoute(builder: (context) =>DetailMedicalAdminPage(Notes : notes, Indexs : index)));
+                    },
+            ),
           ),
         ),
     );

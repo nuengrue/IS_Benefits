@@ -12,8 +12,10 @@ import 'package:ghb_benefits/All_Providers/provider_dashboard.dart';
 import 'package:ghb_benefits/All_Providers/provider_medical.dart';
 import 'package:ghb_benefits/All_Providers/provider_notifications.dart';
 import 'package:ghb_benefits/All_Services/servics.dart';
+import 'package:ghb_benefits/Notification/detail_notifications_page.dart';
 
 import 'package:ghb_benefits/color.dart';
+import 'package:ghb_benefits/main_home_page.dart';
 
 import 'package:ghb_benefits/my_drawer.dart';
 import 'package:intl/intl.dart';
@@ -51,12 +53,41 @@ class _NotificationsPageState extends State<NotificationsPage> {
           return Consumer<NotificationsProviders>(
       builder: (context, value, child) {
     return Scaffold(
-            appBar: AppBar(title: Text('รายการแจ้งเตือน',style: TextStyle(
+            appBar: AppBar(
+              leading: IconButton(
+                  
+                        
+                         icon: Icon(Icons.arrow_back),
+                          
+                        color: iWhiteColor,
+                        onPressed: () {
+                            // FirebaseAuth.instance.signOut();
+                            Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => MainHomePage()));
+                        },
+                      ),
+              title: Text('รายการแจ้งเตือน',style: TextStyle(
                             fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                             color: iWhiteColor,
                           ),),
-      backgroundColor: iBlueColor,
+      backgroundColor: iBlueColor,  actions: [
+        
+  
+                // IconButton(
+                  
+                        
+                //          icon: Icon(Icons.back_hand_rounded),
+                          
+                //         color: iWhiteColor,
+                //         onPressed: () {
+                //             // FirebaseAuth.instance.signOut();
+                //             Navigator.of(context).push(MaterialPageRoute(
+                //     builder: (context) => MainHomePage()));
+                //         },
+                //       ),
+
+      ],
         ),
             body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -74,7 +105,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
               },
             ): GestureDetector(
               //onTap: (){ Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddChildAllowancePage()));},
-              child: Center(child: Text("ไม่พบรายการคำขอ",style: TextStyle(color: iBlueColor,),)));
+              child: Center(child: Text("ไม่พบรายการคำขอ",style: TextStyle(color: iBlueColor,fontFamily: 'Sarabun',),)));
           },
         ),
       ),
@@ -96,29 +127,41 @@ class _NotificationsPageState extends State<NotificationsPage> {
   Widget build(BuildContext context) {
                           NumberFormat myFormat =
                           NumberFormat.decimalPattern('en_us');
-    return Padding(
+
+        if (notes.read == 0)  {
+            return Padding(
       padding: const EdgeInsets.all(2.0),
 
         child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(10),
-              topLeft: Radius.circular(10),
-            )
-          ),
-          child: Card(
+             decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(
+                          color: Colors.white,
+                        ),
+                        color: iRequestColor,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 6.0,
+                            spreadRadius: 2.0,
+                            color: Colors.grey,
+                            offset: Offset(0.0, 0.0),
+                          )
+                        ],
+                      ),
+          
             child: ListTile(
-            leading: Icon(Icons.notifications),
+              tileColor: iAllColor,
+            // leading: Icon(Icons.notifications),
               title: Column(  children: [
                                     Row(
                     children: [
-                      Expanded(child: Text(notes.createDate,)),
+                      Expanded(child: Text(notes.createDate,style: TextStyle(fontFamily: 'Sarabun',),)),
                     ],
                   ),
-                                                      Row(
+                  
+                  Row(
                     children: [
-                      Expanded(child: Text(notes.title,)),
+                      Expanded(child: Text(notes.title,style: TextStyle(fontFamily: 'Sarabun',),)),
                     ],
                   ),
                 ],
@@ -129,19 +172,121 @@ class _NotificationsPageState extends State<NotificationsPage> {
                 children: [
                   Row(
                     children: [
-                      Expanded(child: Text(notes.content,)),
+                      Expanded(child: Text(notes.content.substring(0, 35) + "...",style: TextStyle(fontFamily: 'Sarabun',),)),
                     ],
                   ),
                 ],
               ),
               trailing: Icon(Icons.arrow_forward_ios,color: Colors.black26,),
                onTap: () {
-                    // Navigator.push( context,MaterialPageRoute(builder: (context) =>DetailMedicalPage(Notes : notes)));
+                    Navigator.push( context,MaterialPageRoute(builder: (context) =>DetailNotifacationsPage(Notes : notes, Indexs : index)));
                     },
             ),
-          ),
+          
         ),
     );
+        } else {
+           return Padding(
+      padding: const EdgeInsets.all(2.0),
+
+             child: Container(
+             decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(
+                          color: Colors.white,
+                        ),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 6.0,
+                            spreadRadius: 2.0,
+                            color: Colors.grey,
+                            offset: Offset(0.0, 0.0),
+                          )
+                        ],
+                      ),
+          
+            child: ListTile(
+            // leading: Icon(Icons.notifications),
+              title: Column(  children: [
+                                    Row(
+                    children: [
+                      Expanded(child: Text(notes.createDate,style: TextStyle(fontFamily: 'Sarabun',),)),
+                    ],
+                  ),
+                                                      Row(
+                    children: [
+                      Expanded(child: Text(notes.title,style: TextStyle(fontFamily: 'Sarabun',),)),
+                    ],
+                  ),
+                ],
+                
+                
+                ),
+              subtitle: Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(child: Text(notes.content.substring(0, 35) + "...",style: TextStyle(fontFamily: 'Sarabun',),)),
+                    ],
+                  ),
+                ],
+              ),
+              trailing: Icon(Icons.arrow_forward_ios,color: Colors.black26,),
+               onTap: () {
+                     Navigator.push( context,MaterialPageRoute(builder: (context) =>DetailNotifacationsPage(Notes : notes, Indexs : index)));
+                    },
+            ),
+          
+        ),
+    );
+        }                
+    // return Padding(
+    //   padding: const EdgeInsets.all(2.0),
+
+    //     child: Container(
+    //       decoration: BoxDecoration(
+    //         color: Colors.white,
+    //         borderRadius: BorderRadius.only(
+    //           bottomLeft: Radius.circular(10),
+    //           topLeft: Radius.circular(10),
+    //         )
+    //       ),
+    //       child: Card(
+    //         child: ListTile(
+    //         // leading: Icon(Icons.notifications),
+    //           title: Column(  children: [
+    //                                 Row(
+    //                 children: [
+    //                   Expanded(child: Text(notes.createDate,style: TextStyle(fontFamily: 'Sarabun',),)),
+    //                 ],
+    //               ),
+    //                                                   Row(
+    //                 children: [
+    //                   Expanded(child: Text(notes.title,style: TextStyle(fontFamily: 'Sarabun',),)),
+    //                 ],
+    //               ),
+    //             ],
+                
+                
+    //             ),
+    //           subtitle: Column(
+    //             children: [
+    //               Row(
+    //                 children: [
+    //                   Expanded(child: Text(notes.content.substring(0, 35) + "...",style: TextStyle(fontFamily: 'Sarabun',),)),
+    //                 ],
+    //               ),
+    //             ],
+    //           ),
+    //           trailing: Icon(Icons.arrow_forward_ios,color: Colors.black26,),
+    //            onTap: () {
+    //                 // Navigator.push( context,MaterialPageRoute(builder: (context) =>DetailMedicalPage(Notes : notes)));
+    //                 },
+    //         ),
+    //       ),
+    //     ),
+    // );
   }
 }
 //   Widget build(BuildContext context) {

@@ -10,6 +10,7 @@ import 'package:ghb_benefits/All_Services/servics.dart';
 
 import 'package:ghb_benefits/color.dart';
 import 'package:ghb_benefits/my_drawer.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 //import 'package:flutter/widgets.dart';
@@ -54,7 +55,8 @@ class _ListChildAllowancePageState extends State<ListChildAllowancePage> {
             appBar: AppBar(title: Text('รายการคำขอเบิกค่าช่วยเหลือบุตร',style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            color: iOrangeColor,
+                            fontFamily: 'Sarabun',
+                            color: iWhiteColor,
                           ),),
       backgroundColor: iBlueColor,
        actions: <Widget>[
@@ -130,12 +132,12 @@ body:FutureBuilder<List<ChildAllowance>>(
               },
             ): GestureDetector(
               //onTap: (){ Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddChildAllowancePage()));},
-              child: Center(child: Text("ไม่พบรายการคำขอ",style: TextStyle(color: iBlueColor,),)));
+              child: Center(child: Text("ไม่พบรายการคำขอ",style: TextStyle(fontFamily: 'Sarabun',color: iBlueColor,),)));
           },
         ),
       ),
      
-             drawer: MyDrawer(),
+            drawer: MyDrawer(),
       );
   }
 }
@@ -148,26 +150,70 @@ body:FutureBuilder<List<ChildAllowance>>(
   
   @override
   Widget build(BuildContext context) {
+                                  NumberFormat myFormat =
+                          NumberFormat.decimalPattern('en_us');
     return Padding(
       padding: const EdgeInsets.all(2.0),
 
         child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(10),
-              topLeft: Radius.circular(10),
-            )
-          ),
-          child: ListTile(
-           leading: Icon(Icons.note),
-            title: Text(notes.no),
-            subtitle: Text(notes.status),
-            trailing: Icon(Icons.arrow_forward_ios,color: Colors.black26,),
-             onTap: () {
-                  Navigator.push( context,MaterialPageRoute(builder: (context) =>DetailChildAllowancePage(Notes : notes)));
-                  },
-          ),
+             decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(
+                          color: Colors.white,
+                        ),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 6.0,
+                            spreadRadius: 2.0,
+                            color: Colors.grey,
+                            offset: Offset(0.0, 0.0),
+                          )
+                        ],
+                      ),
+          
+            child: ListTile(
+            //  leading: Icon(Icons.note),
+              title: Row(  children: [
+                      Expanded(child: Text('ชื่อบุตร',
+                                // textAlign: TextAlign.left,
+                                style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),)),
+                      Expanded(child: Text(notes.namechild, textAlign: TextAlign.end,)),
+                ],),
+              subtitle: Column(
+                children: [
+                  // Row(
+                  //   children: [
+                  //     Expanded(child: Text('ชื่อบุตร',
+                  //               // textAlign: TextAlign.left,
+                  //               style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),)),
+                  //     Expanded(child: Text(notes.namechild, textAlign: TextAlign.end,)),
+                  //   ],
+                  // ),                 
+                  // Row(
+                  //   children: [
+                  //     Expanded(child: Text('จำนวนเงินร้องขอ',
+                  //               // textAlign: TextAlign.left,
+                  //               style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),)),
+                  //     Expanded(child: Text(myFormat.format(int.parse(notes.amountreceipt)), textAlign: TextAlign.end,)),
+                  //   ],
+                  // ),
+                  Row(
+                    children: [
+                      Expanded(child: Text('วันที่บันทึก',
+                                // textAlign: TextAlign.left,
+                                style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),)),
+                      Expanded(child: Text(notes.savedate, textAlign: TextAlign.end,)),
+                    ],
+                  ),
+                ],
+              ),
+              trailing: Text(notes.status,style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',color: iBlueColor,),),
+               onTap: () {
+                    Navigator.push( context,MaterialPageRoute(builder: (context) =>DetailChildAllowancePage(Notes : notes)));
+                    },
+            ),
+          
         ),
     );
   }

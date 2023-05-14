@@ -21,6 +21,12 @@ class MedicalController {
     return medicals;
   }
 
+  Future<List<Medical>> fetchMedicalno() async {
+    onSyncController.add(true);
+    medicals = await servies.getMedicalno();
+    onSyncController.add(false);
+    return medicals;
+  }
     Future<List<Medical>> fetchMedicalDashboard() async {
     onSyncController.add(true);
     medicals = await servies.getMedicalDashboard();

@@ -1,14 +1,18 @@
+import 'dart:developer';
+
 import 'package:badges/badges.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:ghb_benefits/All_Controllers/Education_Controller.dart';
 import 'package:ghb_benefits/All_Controllers/Medical_Controller.dart';
+import 'package:ghb_benefits/All_Controllers/Notifications_controllers.dart';
 import 'package:ghb_benefits/All_Controllers/master_controllers.dart';
 import 'package:ghb_benefits/All_Providers/provider_dashboard.dart';
 import 'package:ghb_benefits/All_Providers/provider_education.dart';
 import 'package:ghb_benefits/All_Providers/provider_master.dart';
 import 'package:ghb_benefits/All_Providers/provider_medical.dart';
+import 'package:ghb_benefits/All_Providers/provider_notifications.dart';
 import 'package:ghb_benefits/All_Services/servics.dart';
 import 'package:ghb_benefits/Notification/notifications_page.dart';
 import 'package:ghb_benefits/color.dart';
@@ -33,10 +37,12 @@ class _MainHomePageState extends State<MainHomePage> {
  double sMedical = 0;
  double Achild = 3;
  double schild = 0;
+ int    Countnotishow = 0; 
 
   MedicalController medicalcontroller = MedicalController(FirebaseServices());
   EducationController educationcontroller = EducationController(FirebaseServices());
   MasterController mastecontroller = MasterController(FirebaseServices());
+  NotificationsController controller = NotificationsController(FirebaseServices());
 
   void initState() {
     super.initState();
@@ -46,7 +52,7 @@ class _MainHomePageState extends State<MainHomePage> {
   void _getDashboard(BuildContext context) async {
     // Duration(seconds: 5);
         var newMedicalDashboard = await medicalcontroller.fetchMedical();
-       print(newMedicalDashboard.length);
+      //  print(newMedicalDashboard.length);
     if(newMedicalDashboard.length > 0){
     // get data  MedicalDashboard
     //var newMedicalDashboard = await medicalcontroller.fetchMedical();
@@ -57,7 +63,7 @@ class _MainHomePageState extends State<MainHomePage> {
       medical.add(a);
     }
     var sumamountmedical = medical.reduce((a, b) => a + b);
-        print(sumamountmedical);
+        // print(sumamountmedical);
     var RemainMedical = AMedical - sumamountmedical;
     print(RemainMedical);
     context.read<MyDashboardProviders>().SumMedicalModalChoice = sumamountmedical;
@@ -78,7 +84,7 @@ class _MainHomePageState extends State<MainHomePage> {
       education.add(a);
     }
     var sumamounteducation = education.reduce((a, b) => a + b);
-    print(sumamounteducation);
+    // print(sumamounteducation);
     var RemainEducation = AMedical - sumamounteducation;
     context.read<MyDashboardProviders>().SumEducationModalChoice = sumamounteducation;
     context.read<MyDashboardProviders>().RemainEducationModalChoice = RemainEducation;
@@ -105,7 +111,21 @@ class _MainHomePageState extends State<MainHomePage> {
       // print(context.read<filedEmployeeProviders>().Empnameemp);
     var newChilder = await mastecontroller.fetchChilder();
     context.read<ChilderProviders>().ChilderList = newChilder;
-    print(newChilder);
+    // print(newChilder);
+
+                var newNotification = await controller.fetchNotifications();
+                var countshow = newNotification.where((x) => x.read == 0);
+  //               setState(() {
+  // Countnotishow = countshow.length;                
+  //               });
+                // print(Countnotishow);
+//                 int vRequests = countshow.length;
+//                 print(vRequests);
+//  context.read<NotificationsProviders>().countnoti = vRequests;
+          context.read<NotificationsProviders>().NotificationsList = newNotification;
+       context.read<NotificationsProviders>().countnoti =  context.read<NotificationsProviders>().NotificationsList.where((x) => x.read == 0).length ;
+
+                               print(context.watch<NotificationsProviders>().countnoti.toString());
   }
 
   @override
@@ -114,15 +134,18 @@ class _MainHomePageState extends State<MainHomePage> {
     return Scaffold(
       appBar: AppBar(title: Text('GHB Welfare',textAlign: TextAlign.center,style: TextStyle(
                             fontSize: 28,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                             color: iWhiteColor,
                           ),),
       backgroundColor: iBlueColor,
       
       actions: [
-                IconButton(
+        
+        if(context.watch<NotificationsProviders>().countnoti > 0)...[
+          
+         IconButton(
                   
-                        icon: Badge(badgeContent: Text('3'),
+                        icon: Badge(badgeContent: Text(context.watch<NotificationsProviders>().countnoti.toString()),
                           child: Icon(Icons.notifications)
                           ),
                         color: iWhiteColor,
@@ -132,7 +155,7 @@ class _MainHomePageState extends State<MainHomePage> {
                     builder: (context) => NotificationsPage()));
                         },
                       ),
-        IconButton(
+                              IconButton(
                         icon: Icon(Icons.logout),
                         color: iWhiteColor,
                         onPressed: () {
@@ -141,11 +164,48 @@ class _MainHomePageState extends State<MainHomePage> {
                     builder: (context) => MainSwitchPage()));
                         },
                       ),
+        ]
+                      else ...[
+         IconButton(
+                  
+                        icon:  Icon(Icons.notifications),
+                          
+                        color: iWhiteColor,
+                        onPressed: () {
+                            // FirebaseAuth.instance.signOut();
+                            Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => NotificationsPage()));
+                        },
+                      ),
+                              IconButton(
+                        icon: Icon(Icons.logout),
+                        color: iWhiteColor,
+                        onPressed: () {
+                            FirebaseAuth.instance.signOut();
+                            Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => MainSwitchPage()));
+                        },
+                      ),
+                        
+
+                      ]
+                // IconButton(
+                  
+                //         icon: Badge(badgeContent: Text(''),
+                //           child: Icon(Icons.notifications)
+                //           ),
+                //         color: iWhiteColor,
+                //         onPressed: () {
+                //             // FirebaseAuth.instance.signOut();
+                //             Navigator.of(context).push(MaterialPageRoute(
+                //     builder: (context) => NotificationsPage()));
+                //         },
+                //       ),
+
       ],),
 
 
       body: SingleChildScrollView(
-
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -162,7 +222,7 @@ class _MainHomePageState extends State<MainHomePage> {
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: iBlueColor,
+                            color: iBlueColor,fontFamily: 'Sarabun',
                           ),
                         ),
                         Text(
@@ -175,8 +235,9 @@ class _MainHomePageState extends State<MainHomePage> {
                                           .Empnameemp
                                           .toString(),
                           
-                          style: TextStyle(fontSize: 18, color:iBlueColor),
+                          style: TextStyle(fontSize: 18, color:iBlueColor,fontFamily: 'Sarabun',),
                         ),
+
                       ],
                     ),
                    
@@ -193,7 +254,7 @@ class _MainHomePageState extends State<MainHomePage> {
                   textAlign: TextAlign.left,
                   style: TextStyle(
                       fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       color: iBlueColor),
                 ),
               ),
@@ -325,7 +386,7 @@ class _MainHomePageState extends State<MainHomePage> {
                                       'เงินที่ใช้ได้',
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                          fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                                     ),
                                   ),
                                   Expanded(
@@ -338,7 +399,7 @@ class _MainHomePageState extends State<MainHomePage> {
                                       style: TextStyle(
                                         fontSize: 18,
                                         color: Colors.blue,
-                                        fontWeight: FontWeight.bold,
+                                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                                       ),
                                     ),
                                   ),
@@ -351,7 +412,7 @@ class _MainHomePageState extends State<MainHomePage> {
                                       'เงินที่ใช้ไป',
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                          fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                                     ),
                                   ),
                                   Expanded(
@@ -364,7 +425,7 @@ class _MainHomePageState extends State<MainHomePage> {
                                       style: TextStyle(
                                         fontSize: 18,
                                         color: Colors.green,
-                                        fontWeight: FontWeight.bold,
+                                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                                       ),
                                     ),
                                   ),
@@ -377,7 +438,7 @@ class _MainHomePageState extends State<MainHomePage> {
                                       'วงเงินตามสิทธิ',
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                          fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                                     ),
                                   ),
                                   Expanded(
@@ -387,7 +448,7 @@ class _MainHomePageState extends State<MainHomePage> {
                                       style: TextStyle(
                                         fontSize: 18,
                                         color: Colors.black,
-                                        fontWeight: FontWeight.bold,
+                                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                                       ),
                                     ),
                                   ),
@@ -427,7 +488,7 @@ class _MainHomePageState extends State<MainHomePage> {
                             style: TextStyle(
                               fontSize: 16,
                               color: Color.fromARGB(255, 9, 28, 235),
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                             ),
                           ),
                           const Divider(),
@@ -508,7 +569,7 @@ class _MainHomePageState extends State<MainHomePage> {
                                       'เงินที่ใช้ได้',
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                          fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                                     ),
                                   ),
                                   Expanded(
@@ -521,7 +582,7 @@ class _MainHomePageState extends State<MainHomePage> {
                                       style: TextStyle(
                                         fontSize: 18,
                                         color: Colors.blue,
-                                        fontWeight: FontWeight.bold,
+                                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                                       ),
                                     ),
                                   ),
@@ -534,7 +595,7 @@ class _MainHomePageState extends State<MainHomePage> {
                                       'เงินที่ใช้ไป',
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                          fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                                     ),
                                   ),
                                   Expanded(
@@ -547,7 +608,7 @@ class _MainHomePageState extends State<MainHomePage> {
                                       style: TextStyle(
                                         fontSize: 18,
                                         color: Colors.green,
-                                        fontWeight: FontWeight.bold,
+                                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                                       ),
                                     ),
                                   ),
@@ -560,7 +621,7 @@ class _MainHomePageState extends State<MainHomePage> {
                                       'วงเงินตามสิทธิ',
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                          fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                                     ),
                                   ),
                                   Expanded(
@@ -570,7 +631,7 @@ class _MainHomePageState extends State<MainHomePage> {
                                       style: TextStyle(
                                         fontSize: 18,
                                         color: Colors.black,
-                                        fontWeight: FontWeight.bold,
+                                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                                       ),
                                     ),
                                   ),
@@ -581,187 +642,188 @@ class _MainHomePageState extends State<MainHomePage> {
                         ],
                       ),
                     ),
-                       Container(
-                      margin: const EdgeInsets.all(5.0),
-                      padding: const EdgeInsets.all(5.0),
-                      //height: double.infinity,
-                      width: 400,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(
-                          color: Colors.white,
-                        ),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 6.0,
-                            spreadRadius: 2.0,
-                            color: Colors.grey,
-                            offset: Offset(0.0, 0.0),
-                          )
-                        ],
-                      ),
-                      child: Column(
-                        children: <Widget>[
-                          Text(
-                            'เงินช่วยเหลือบุตร',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Color.fromARGB(255, 9, 28, 235),
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const Divider(),
-                           SizedBox(
-                            height: 70,
-                            child: PieChart(
-                              PieChartData(
-                                startDegreeOffset: 20,
-                                sections: [
-                                  //
-                                                                     if (context.watch<MyDashboardProviders>()
-                                          .RemainEducationModalChoice != 0.0) ...[
-                                  if(context.watch<MyDashboardProviders>()
-                                          .RemainEducationModalChoice == 0.0) ...[
-                                  PieChartSectionData(
-                                    color: Colors.blue,
-                                   value:  
-                                  //  39960,
-                                   context
-                                          .watch<MyDashboardProviders>()
-                                          .RemainEducationModalChoice,
-                                    showTitle: false,
-                                    radius: 10,
-                                  ),
-                                  PieChartSectionData(
-                                    color: Colors.green,
-                                    value: 
-                                    // 40,
-                                    context
-                                          .watch<MyDashboardProviders>()
-                                          .SumEducationModalChoice,
-                                    showTitle: false,
-                                    radius: 10,
-                                  ),
+                    // Text(context.watch<NotificationsProviders>().countnoti.toString())
+              //          Container(
+              //         margin: const EdgeInsets.all(5.0),
+              //         padding: const EdgeInsets.all(5.0),
+              //         //height: double.infinity,
+              //         width: 400,
+              //         decoration: BoxDecoration(
+              //           borderRadius: BorderRadius.circular(5),
+              //           border: Border.all(
+              //             color: Colors.white,
+              //           ),
+              //           color: Colors.white,
+              //           boxShadow: [
+              //             BoxShadow(
+              //               blurRadius: 6.0,
+              //               spreadRadius: 2.0,
+              //               color: Colors.grey,
+              //               offset: Offset(0.0, 0.0),
+              //             )
+              //           ],
+              //         ),
+              //         child: Column(
+              //           children: <Widget>[
+              //             Text(
+              //               'เงินช่วยเหลือบุตร',
+              //               style: TextStyle(
+              //                 fontSize: 16,
+              //                 color: Color.fromARGB(255, 9, 28, 235),
+              //                 fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
+              //               ),
+              //             ),
+              //             const Divider(),
+              //              SizedBox(
+              //               height: 70,
+              //               child: PieChart(
+              //                 PieChartData(
+              //                   startDegreeOffset: 20,
+              //                   sections: [
+              //                     //
+              //                                                        if (context.watch<MyDashboardProviders>()
+              //                             .RemainEducationModalChoice != 0.0) ...[
+              //                     if(context.watch<MyDashboardProviders>()
+              //                             .RemainEducationModalChoice == 0.0) ...[
+              //                     PieChartSectionData(
+              //                       color: Colors.blue,
+              //                      value:  
+              //                     //  39960,
+              //                      context
+              //                             .watch<MyDashboardProviders>()
+              //                             .RemainEducationModalChoice,
+              //                       showTitle: false,
+              //                       radius: 10,
+              //                     ),
+              //                     PieChartSectionData(
+              //                       color: Colors.green,
+              //                       value: 
+              //                       // 40,
+              //                       context
+              //                             .watch<MyDashboardProviders>()
+              //                             .SumEducationModalChoice,
+              //                       showTitle: false,
+              //                       radius: 10,
+              //                     ),
 
-                                          ]
-                                  else ...[
-                                  PieChartSectionData(
-                                    color: Colors.blue,
-                                   value:  
-                                   39960,
+              //                             ]
+              //                     else ...[
+              //                     PieChartSectionData(
+              //                       color: Colors.blue,
+              //                      value:  
+              //                      39960,
                                    
-                                    showTitle: false,
-                                    radius: 10,
-                                  ),
-                                  PieChartSectionData(
-                                    color: Colors.green,
-                                    value: 40,
-                                    showTitle: false,
-                                    radius: 10,
-                                  ),
+              //                       showTitle: false,
+              //                       radius: 10,
+              //                     ),
+              //                     PieChartSectionData(
+              //                       color: Colors.green,
+              //                       value: 40,
+              //                       showTitle: false,
+              //                       radius: 10,
+              //                     ),
 
-                                  ]
-                                   ] 
+              //                     ]
+              //                      ] 
                                    
-                                   else ...[
-                   PieChartSectionData(
-                                    color: Colors.blue,
-                                    value:  context
-                                          .watch<MyDashboardProviders>()
-                                          .RemainEducationModalChoice,
-                                    showTitle: false,
-                                    radius: 10,
-                                  ),
-              ]
-                                ], //
-                              ),
-                            ),
-                          ),
-                          const Divider(),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      'จำนวนบุตรที่ขอเบิกได้',
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      context
-                                          .watch<MyDashboardProviders>()
-                                          .RemainEducationModalChoice
-                                          .toString(),
-                                      textAlign: TextAlign.end,
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        color: Colors.blue,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      'จำนวนบุตรที่ขอเบิก',
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                           context
-                                          .watch<MyDashboardProviders>()
-                                          .SumEducationModalChoice
-                                          .toString(),
-                                      textAlign: TextAlign.end,
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        color: Colors.green,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      'จำนวนบุตรตามสิทธิ์',
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      AMedical.toString(),
-                                      textAlign: TextAlign.end,
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
+              //                      else ...[
+              //      PieChartSectionData(
+              //                       color: Colors.blue,
+              //                       value:  context
+              //                             .watch<MyDashboardProviders>()
+              //                             .RemainEducationModalChoice,
+              //                       showTitle: false,
+              //                       radius: 10,
+              //                     ),
+              // ]
+              //                   ], //
+              //                 ),
+              //               ),
+              //             ),
+              //             const Divider(),
+              //             Column(
+              //               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //               children: [
+              //                 Row(
+              //                   children: [
+              //                     Expanded(
+              //                       child: Text(
+              //                         'จำนวนบุตรที่ขอเบิกได้',
+              //                         textAlign: TextAlign.left,
+              //                         style: TextStyle(
+              //                             fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
+              //                       ),
+              //                     ),
+              //                     Expanded(
+              //                       child: Text(
+              //                         context
+              //                             .watch<MyDashboardProviders>()
+              //                             .RemainEducationModalChoice
+              //                             .toString(),
+              //                         textAlign: TextAlign.end,
+              //                         style: TextStyle(
+              //                           fontSize: 18,
+              //                           color: Colors.blue,
+              //                           fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
+              //                         ),
+              //                       ),
+              //                     ),
+              //                   ],
+              //                 ),
+              //                 Row(
+              //                   children: [
+              //                     Expanded(
+              //                       child: Text(
+              //                         'จำนวนบุตรที่ขอเบิก',
+              //                         textAlign: TextAlign.left,
+              //                         style: TextStyle(
+              //                             fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
+              //                       ),
+              //                     ),
+              //                     Expanded(
+              //                       child: Text(
+              //                              context
+              //                             .watch<MyDashboardProviders>()
+              //                             .SumEducationModalChoice
+              //                             .toString(),
+              //                         textAlign: TextAlign.end,
+              //                         style: TextStyle(
+              //                           fontSize: 18,
+              //                           color: Colors.green,
+              //                           fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
+              //                         ),
+              //                       ),
+              //                     ),
+              //                   ],
+              //                 ),
+              //                 Row(
+              //                   children: [
+              //                     Expanded(
+              //                       child: Text(
+              //                         'จำนวนบุตรตามสิทธิ์',
+              //                         textAlign: TextAlign.left,
+              //                         style: TextStyle(
+              //                             fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
+              //                       ),
+              //                     ),
+              //                     Expanded(
+              //                       child: Text(
+              //                         AMedical.toString(),
+              //                         textAlign: TextAlign.end,
+              //                         style: TextStyle(
+              //                           fontSize: 18,
+              //                           color: Colors.black,
+              //                           fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
+              //                         ),
+              //                       ),
+              //                     ),
+              //                   ],
+              //                 ),
+              //               ],
+              //             ),
+                    //     ],
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

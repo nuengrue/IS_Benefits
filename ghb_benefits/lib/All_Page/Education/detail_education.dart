@@ -3,6 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:ghb_benefits/All_Models/education_model.dart';
+import 'package:ghb_benefits/color.dart';
 
 import 'package:ghb_benefits/pdf/pdf_api.dart';
 import 'package:ghb_benefits/pdf/view_pdf.dart';
@@ -22,7 +23,12 @@ class DetailEducationPage extends StatelessWidget {
     // the major Material Components.
     return Scaffold(
       appBar: AppBar(
-        title: Text('รายละเอียดรายการ'),
+        title: Text('รายละเอียดคำขอค่าช่วยเหลือการศึกษาบุตร',style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
+                            color: iWhiteColor,
+                          ),),
+      backgroundColor: iBlueColor,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -55,7 +61,7 @@ class DetailEducationPage extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -65,13 +71,13 @@ class DetailEducationPage extends StatelessWidget {
                           child: Text(
                             'สถานะรายการ',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             Notes.status,
-                            textAlign: TextAlign.end,
+                            textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -109,7 +115,7 @@ class DetailEducationPage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 16,
                       color: Color.fromARGB(255, 9, 28, 235),
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                     ),
                   ),
                   const Divider(),
@@ -119,13 +125,13 @@ class DetailEducationPage extends StatelessWidget {
                         child: Text(
                           'พนักงาน',
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                         ),
                       ),
                       Expanded(
                         child: Text(
                           Notes.name,
-                          textAlign: TextAlign.end,
+                          textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                         ),
                       ),
                     ],
@@ -136,7 +142,7 @@ class DetailEducationPage extends StatelessWidget {
                         child: Text(
                           'หน่วยงาน',
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                         ),
                       ),
                       Column(
@@ -145,11 +151,11 @@ class DetailEducationPage extends StatelessWidget {
                         children: [
                           Text(
                             Notes.department,
-                            textAlign: TextAlign.end,
+                            textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                           Text(
                             Notes.divisionment,
-                            textAlign: TextAlign.end,
+                            textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ],
                       ),
@@ -187,7 +193,7 @@ class DetailEducationPage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 16,
                       color: Color.fromARGB(255, 9, 28, 235),
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                     ),
                   ),
                   const Divider(),
@@ -210,36 +216,36 @@ class DetailEducationPage extends StatelessWidget {
                     ],
                   ),
                   */
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          'ประเภทคำร้องขอ',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      Expanded(
-                        child: Text(
-                          Notes.typeedu,
-                          textAlign: TextAlign.end,
-                        ),
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   children: [
+                  //     Expanded(
+                  //       child: Text(
+                  //         'ประเภทคำร้องขอ',
+                  //         textAlign: TextAlign.left,
+                  //         style: TextStyle(fontWeight: FontWeight.bold),
+                  //       ),
+                  //     ),
+                  //     Expanded(
+                  //       child: Text(
+                  //         Notes.typeedu,
+                  //         textAlign: TextAlign.end,
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                   Row(
                     children: [
                       Expanded(
                         child: Text(
                           'วันที่บันทึก',
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                         ),
                       ),
                       Expanded(
                         child: Text(
                           Notes.savedate,
-                          textAlign: TextAlign.end,
+                          textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                         ),
                       ),
                     ],
@@ -250,13 +256,13 @@ class DetailEducationPage extends StatelessWidget {
                         child: Text(
                           'วงเงินประจำปี',
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                         ),
                       ),
                       Expanded(
                         child: Text(
                           Notes.yearedu,
-                          textAlign: TextAlign.end,
+                          textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                         ),
                       ),
                     ],
@@ -291,7 +297,7 @@ class DetailEducationPage extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -301,13 +307,13 @@ class DetailEducationPage extends StatelessWidget {
                           child: Text(
                             'บุตรของพนักงาน',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             Notes.namechild,
-                            textAlign: TextAlign.end,
+                            textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -345,7 +351,7 @@ class DetailEducationPage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 16,
                       color: Color.fromARGB(255, 9, 28, 235),
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                     ),
                   ),
                   const Divider(),
@@ -355,13 +361,13 @@ class DetailEducationPage extends StatelessWidget {
                           child: Text(
                             'ปีการศึกษา',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             Notes.year,
-                            textAlign: TextAlign.end,
+                            textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -372,13 +378,13 @@ class DetailEducationPage extends StatelessWidget {
                           child: Text(
                             'ภาคเรียน',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             Notes.term,
-                            textAlign: TextAlign.end,
+                            textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -389,7 +395,7 @@ class DetailEducationPage extends StatelessWidget {
                         child: Text(
                           'ชื่อสถานศึกษา',
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                         ),
                       ),
                       Column(
@@ -398,11 +404,11 @@ class DetailEducationPage extends StatelessWidget {
                         children: [
                           Text(
                             Notes.school,
-                            textAlign: TextAlign.end,
+                            textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                           Text(
                             Notes.schooltype,
-                            textAlign: TextAlign.end,
+                            textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ],
                       ),
@@ -414,13 +420,13 @@ class DetailEducationPage extends StatelessWidget {
                           child: Text(
                             'ระดับการศึกษา',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             Notes.educationlevel,
-                            textAlign: TextAlign.end,
+                            textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -431,13 +437,13 @@ class DetailEducationPage extends StatelessWidget {
                           child: Text(
                             'ระดับชั้น',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             Notes.level,
-                            textAlign: TextAlign.end,
+                            textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -473,7 +479,7 @@ class DetailEducationPage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 16,
                       color: Color.fromARGB(255, 9, 28, 235),
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                     ),
                   ),
                   const Divider(),
@@ -483,13 +489,13 @@ class DetailEducationPage extends StatelessWidget {
                         child: Text(
                           'เลขที่ใบเสร็จ',
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                         ),
                       ),
                       Expanded(
                         child: Text(
                           Notes.receiptnumber,
-                          textAlign: TextAlign.end,
+                          textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                         ),
                       ),
                     ],
@@ -500,13 +506,13 @@ class DetailEducationPage extends StatelessWidget {
                         child: Text(
                           'เล่มที่',
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                         ),
                       ),
                       Expanded(
                         child: Text(
                           Notes.volume,
-                          textAlign: TextAlign.end,
+                          textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                         ),
                       ),
                     ],
@@ -517,13 +523,13 @@ class DetailEducationPage extends StatelessWidget {
                         child: Text(
                           'หมายเลขติดต่อกลับ',
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                         ),
                       ),
                       Expanded(
                         child: Text(
                           Notes.tel,
-                          textAlign: TextAlign.end,
+                          textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                         ),
                       ),
                     ],
@@ -534,13 +540,13 @@ class DetailEducationPage extends StatelessWidget {
                         child: Text(
                           'วันที่ใบเสร็จ',
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                         ),
                       ),
                       Expanded(
                         child: Text(
                           Notes.receiptdate,
-                          textAlign: TextAlign.end,
+                          textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                         ),
                       ),
                     ],
@@ -578,7 +584,7 @@ class DetailEducationPage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 16,
                       color: Color.fromARGB(255, 9, 28, 235),
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                     ),
                   ),
                   const Divider(),
@@ -588,13 +594,15 @@ class DetailEducationPage extends StatelessWidget {
                         child: Text(
                           'จำนวนเงินตามใบเสร็จ',
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                         ),
                       ),
+
+                      
                       Expanded(
                         child: Text(
                           Notes.amountreceipt,
-                          textAlign: TextAlign.end,
+                          textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                         ),
                       ),
                     ],
@@ -605,15 +613,32 @@ class DetailEducationPage extends StatelessWidget {
                         child: Text(
                           'จำนวนเงินจ่าย',
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                         ),
                       ),
-                      Expanded(
-                        child: Text(
+
+                                            if(Notes.payamount == "0") ...[
+                      
+                         Expanded(
+                                                  child: Text(''
+                          ,
+                          textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
+                        ),
+                        ),
+                        ] else ...[
+                            Expanded(
+                          child: Text(
                           Notes.payamount,
-                          textAlign: TextAlign.end,
+                          textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                         ),
-                      ),
+                        ),
+                        ]
+                      // Expanded(
+                      //   child: Text(
+                      //     Notes.payamount,
+                      //     textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
+                      //   ),
+                      // ),
                     ],
                   ),
                   Row(
@@ -622,15 +647,32 @@ class DetailEducationPage extends StatelessWidget {
                         child: Text(
                           'วันที่จ่าย',
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                         ),
                       ),
-                      Expanded(
-                        child: Text(
+                      if(Notes.paydate == "0") ...[
+                      
+                         Expanded(
+                                                  child: Text(''
+                          ,
+                          textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
+                        ),
+                        ),
+                        ] else ...[
+                            Expanded(
+                          child: Text(
                           Notes.paydate,
-                          textAlign: TextAlign.end,
+                          textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                         ),
-                      ),
+                        ),
+                        ]
+
+                      // Expanded(
+                      //   child: Text(
+                      //     Notes.paydate,
+                      //     textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ],
@@ -663,7 +705,7 @@ class DetailEducationPage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 16,
                       color: Color.fromARGB(255, 9, 28, 235),
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                     ),
                   ),
                   const Divider(),
@@ -723,17 +765,22 @@ class View extends StatelessWidget {
   final url;
    View({this.url});
 
-  @override
+ @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("PDF View"),
+        title: Text('รายละเอียดเอกสาร',style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
+                            color: iWhiteColor,
+                          ),),
+      backgroundColor: iBlueColor,
+),
+      
+      body: SfPdfViewer.network(
+        url,
+        controller: _pdfViewerController,
       ),
-     body: SfPdfViewer.network(
-      url,
-      controller: _pdfViewerController,
-    ),
-
     );
   }
 }

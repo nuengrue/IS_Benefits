@@ -18,6 +18,12 @@ class ChildAllowanceController {
     onSyncController.add(false);
     return allowances;
   }
+    Future<List<ChildAllowance>> fetchChildAllowanceno() async {
+    onSyncController.add(true);
+    allowances = await servies.getChildAllowanceno();
+    onSyncController.add(false);
+    return allowances;
+  }
 
 /*
   void updateTodo(ChildAllowaneModel todo) async{

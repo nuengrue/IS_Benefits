@@ -19,6 +19,13 @@ class HouseAllowanceController {
     return houses;
   }
 
+    Future<List<HouseAllowance>> fetchHouseAllowanceno() async {
+    onSyncController.add(true);
+    houses = await servies.getHouseAllowancenon();
+    onSyncController.add(false);
+    return houses;
+  }
+
 /*
   void updateTodo(ChildAllowaneModel todo) async{
     servies.update(todo);

@@ -30,7 +30,7 @@ class MedicalProviders with ChangeNotifier {
 
 // function to add data to list of notes 
  void addMedical( 
-   String no,
+   int no,
    String empcode,
    String name,
    String department,
@@ -56,7 +56,8 @@ class MedicalProviders with ChangeNotifier {
    String fileUrl,
    String filename,
    String flagread,
-  String id, )
+  String id, 
+     String remarks, )
  {
    Medical medical = new Medical(   
    no,
@@ -85,7 +86,7 @@ class MedicalProviders with ChangeNotifier {
     fileUrl,
     filename,
     flagread,
-   id,);
+   id,    remarks,);
 
    _MedicalList.add(medical);
    

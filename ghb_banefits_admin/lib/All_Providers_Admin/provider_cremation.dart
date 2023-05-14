@@ -22,6 +22,21 @@ class CremationServiceAdminProviders with ChangeNotifier {
   notifyListeners();
   } 
 
+   List<CremationServiceAdmin> _cremationserviceAdminListwhere  =  [];
+ // List<ChildAllowaneModel> _childAllowaneList  =  List.empty();
+    //late CremationService cremationServiceModels;
+    
+ List<CremationServiceAdmin> get CremationServiceAdminListwhere => this._cremationserviceAdminListwhere;
+
+ set CremationServiceAdminListwhere(List<CremationServiceAdmin> value) {
+
+  this._cremationserviceAdminListwhere = value;
+
+  notifyListeners();
+  } 
+
+  
+
   int _countAllCremationServiceAdmin = 0;
   get fliecountAllCremationServiceAdmin => this._countAllCremationServiceAdmin;
 

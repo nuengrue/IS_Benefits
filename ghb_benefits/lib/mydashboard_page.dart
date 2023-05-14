@@ -25,6 +25,7 @@ class _MyDashboardPageState extends State<MyDashboardPage> {
 
   void initState() {
     super.initState();
+    
     _getDashboard(context);
   }
 
@@ -67,7 +68,7 @@ class _MyDashboardPageState extends State<MyDashboardPage> {
           style: TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.bold,
-            color: iOrangeColor,
+            color: iWhiteColor,
           ),
         ),
         backgroundColor: iBlueColor,
@@ -128,7 +129,7 @@ class _MyDashboardPageState extends State<MyDashboardPage> {
                             style: TextStyle(
                               fontSize: 16,
                               color: Color.fromARGB(255, 9, 28, 235),
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                             ),
                           ),
                           const Divider(),
@@ -170,7 +171,7 @@ class _MyDashboardPageState extends State<MyDashboardPage> {
                                       'เงินที่ใช้ได้',
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                          fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                                     ),
                                   ),
                                   Expanded(
@@ -183,7 +184,7 @@ class _MyDashboardPageState extends State<MyDashboardPage> {
                                       style: TextStyle(
                                         fontSize: 18,
                                         color: Colors.blue,
-                                        fontWeight: FontWeight.bold,
+                                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                                       ),
                                     ),
                                   ),
@@ -196,7 +197,7 @@ class _MyDashboardPageState extends State<MyDashboardPage> {
                                       'เงินที่ใช้ไป',
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                          fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                                     ),
                                   ),
                                   Expanded(
@@ -209,7 +210,7 @@ class _MyDashboardPageState extends State<MyDashboardPage> {
                                       style: TextStyle(
                                         fontSize: 18,
                                         color: Colors.green,
-                                        fontWeight: FontWeight.bold,
+                                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                                       ),
                                     ),
                                   ),
@@ -222,7 +223,7 @@ class _MyDashboardPageState extends State<MyDashboardPage> {
                                       'วงเงินตามสิทธิ',
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                          fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                                     ),
                                   ),
                                   Expanded(
@@ -232,7 +233,7 @@ class _MyDashboardPageState extends State<MyDashboardPage> {
                                       style: TextStyle(
                                         fontSize: 18,
                                         color: Colors.black,
-                                        fontWeight: FontWeight.bold,
+                                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                                       ),
                                     ),
                                   ),
@@ -272,7 +273,7 @@ class _MyDashboardPageState extends State<MyDashboardPage> {
                             style: TextStyle(
                               fontSize: 16,
                               color: Color.fromARGB(255, 9, 28, 235),
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                             ),
                           ),
                           const Divider(),
@@ -314,7 +315,7 @@ class _MyDashboardPageState extends State<MyDashboardPage> {
                                       'เงินที่ใช้ได้',
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                          fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                                     ),
                                   ),
                                   Expanded(
@@ -327,7 +328,7 @@ class _MyDashboardPageState extends State<MyDashboardPage> {
                                       style: TextStyle(
                                         fontSize: 18,
                                         color: Colors.blue,
-                                        fontWeight: FontWeight.bold,
+                                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                                       ),
                                     ),
                                   ),
@@ -353,7 +354,7 @@ class _MyDashboardPageState extends State<MyDashboardPage> {
                                       style: TextStyle(
                                         fontSize: 18,
                                         color: Colors.green,
-                                        fontWeight: FontWeight.bold,
+                                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                                       ),
                                     ),
                                   ),
@@ -366,7 +367,7 @@ class _MyDashboardPageState extends State<MyDashboardPage> {
                                       'วงเงินตามสิทธิ',
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                          fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                                     ),
                                   ),
                                   Expanded(
@@ -376,7 +377,7 @@ class _MyDashboardPageState extends State<MyDashboardPage> {
                                       style: TextStyle(
                                         fontSize: 18,
                                         color: Colors.black,
-                                        fontWeight: FontWeight.bold,
+                                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                                       ),
                                     ),
                                   ),

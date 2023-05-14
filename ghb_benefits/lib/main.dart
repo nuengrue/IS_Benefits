@@ -4,12 +4,14 @@ import 'package:ghb_benefits/All_Page/Child_Allowances/add_child_allowance.dart'
 import 'package:ghb_benefits/All_Providers/provider_child_allowance.dart';
 import 'package:ghb_benefits/All_Providers/provider_dashboard.dart';
 import 'package:ghb_benefits/All_Providers/provider_master.dart';
+import 'package:ghb_benefits/All_Providers/provider_notifications.dart';
 import 'package:ghb_benefits/child_allowance/viewtestb.dart';
 import 'package:ghb_benefits/All_Page/Cremation_Service/add_cremation_service.dart';
 import 'package:ghb_benefits/All_Page/Cremation_Service/list_cremation_service.dart';
 import 'package:ghb_benefits/All_Providers/provider_cremation.dart';
 import 'package:ghb_benefits/All_Page/House_Allowance/add_house_allowance.dart';
 import 'package:ghb_benefits/All_Providers/provider_house.dart';
+import 'package:ghb_benefits/color.dart';
 
 import 'package:ghb_benefits/login/main_switch_page.dart';
 import 'package:ghb_benefits/All_Page/Medical/add_medical_page.dart';
@@ -57,7 +59,7 @@ void main() async {
       ChangeNotifierProvider(create: (context) => EmployeeProviders()),
       ChangeNotifierProvider(create: (context) => ChilderProviders()),      
       ChangeNotifierProvider(create: (context) => filedEmployeeProviders()),      
-      // ChangeNotifierProvider(create: (context) => filedCountchildProviders()),      
+      ChangeNotifierProvider(create: (context) => NotificationsProviders()),      
     ],
     child: MyApp(),
   ));
@@ -71,6 +73,9 @@ void main() async {
       return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: MainSwitchPage(),
+                theme: ThemeData(
+            primaryColor: Color.fromARGB(255, 9, 28, 235),
+            ),
 /*
 title: 'BELL',
 home: NavBar(),
@@ -78,11 +83,11 @@ home: NavBar(),
            routes: {
           '/1': (context) => UploadFiles(),
           '/2': (context) => ListCremationServicePage(),
-          '/3': (context) => VPage(),
-          '/4': (context) => VPage(),
+          '/3': (context) => ListCremationServicePage(),
+          '/4': (context) => ListCremationServicePage(),
           '/5': (context) => AddHouseAllowancePage(),
-          '/6': (context) => VPage(),
-          '/7': (context) => VPage(),  
+          '/6': (context) => ListCremationServicePage(),
+          '/7': (context) => ListCremationServicePage(),  
         //  '/7': (context) => SubDetailStatusPage(),
         //  '/8': (context) => UpdateStatusAdminPage(),
         //  '/9': (context) => DetailProfliePage(),

@@ -6,8 +6,12 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:ghb_benefits/All_Controllers/House_controllers.dart';
+import 'package:ghb_benefits/All_Controllers/master_controllers.dart';
 import 'package:ghb_benefits/All_Page/House_Allowance/list_house_allowance.dart';
 import 'package:ghb_benefits/All_Providers/provider_house.dart';
+import 'package:ghb_benefits/All_Providers/provider_master.dart';
+import 'package:ghb_benefits/All_Services/servics.dart';
 import 'package:ghb_benefits/color.dart';
 
 
@@ -30,6 +34,46 @@ class _AddHouseAllowancePageState extends State<AddHouseAllowancePage> {
     _selectedpartner = _childpartner[0];
     _selectedstatuspartner = _childstatuspartner[0];
   }
+
+   MasterController mastecontroller = MasterController(FirebaseServices()); 
+   HouseAllowanceController controller =
+      HouseAllowanceController(FirebaseServices());
+      
+
+      void initState() {
+        super.initState();
+        _getHouseAllowanceeadd(context);
+      }
+  late  int _idcounts = 0;
+   void   _getHouseAllowanceeadd(BuildContext context) async {
+      var newEmployee = await mastecontroller.fetchEmployee();
+
+         context.read<filedEmployeeProviders>().Empno = newEmployee.first.no;
+     context.read<filedEmployeeProviders>().Empempcode = newEmployee.first.empcode;
+     context.read<filedEmployeeProviders>().Empnameemp = newEmployee.first.nameemp;
+     context.read<filedEmployeeProviders>().Empdepartment = newEmployee.first.department;
+     context.read<filedEmployeeProviders>().Empdivisionment = newEmployee.first.divisionment;
+     context.read<filedEmployeeProviders>().Empdate = newEmployee.first.date;   
+     context.read<filedEmployeeProviders>().Empuid = newEmployee.first.uid;    
+
+
+    setState(() {
+      _empcode = newEmployee.first.empcode;
+      _name = newEmployee.first.nameemp;
+      _department = newEmployee.first.department;
+      _divisionment = newEmployee.first.divisionment;
+      _startdate =  newEmployee.first.date;
+      
+    });
+    context.read<EmployeeProviders>().EmployeeList = newEmployee;
+            var newhouse = await controller.fetchHouseAllowance();
+
+                                setState(() {
+             _idcounts = newhouse.length + 1;
+            });
+      }
+
+
 
   final _childName = ["เลือกประเภทการเช่าบ้าน", "เช่าบ้าน", "เช่าซื้อ"];
   String? _selectedVal = "";
@@ -54,13 +98,13 @@ class _AddHouseAllowancePageState extends State<AddHouseAllowancePage> {
   }
 
   final user = FirebaseAuth.instance.currentUser!;
-  late String _no;
-  late String _empcode;
-  late String _name;
-  late String _department;
-  late String _divisionment;
+  late int _no;
+  late String _empcode = "";
+  late String _name = "";
+  late String _department = "";
+  late String _divisionment = "";
   late String _savedate;
-  late String _startdate;
+  late String _startdate = "";
   late String _position;
   late String _segment;
   late String _departmentwork;
@@ -80,19 +124,20 @@ class _AddHouseAllowancePageState extends State<AddHouseAllowancePage> {
   late String _status;
   late String _email;
   late String _url;
-  late String _filename;
+  late String _filename = "";
   late String _flagread;
   late String _id;
+    late String _remarks = "";
   void AddHouseAllowance() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      _no = _no;
-      _empcode = "57315";
-      _name = "หนึ่งฤทัย พวงแก้ว";
-      _department = "ฝ่ายพัฒนาระบบสารสนเทศ";
-      _divisionment = "ส่วนสวัสดิการ";
-      _savedate = DateFormat.yMd().add_jm().format(DateTime.now());
-      _startdate;
+      _no = _idcounts;
+      _empcode = _empcode;
+      _name = _name;
+      _department = _department;
+      _divisionment = _divisionment;
+      _savedate = DateFormat('dd-MM-yyyy  kk:mm').format(DateTime.now());
+      _startdate =_startdate;
       _position;
       _segment;
       _departmentwork;
@@ -109,16 +154,17 @@ class _AddHouseAllowancePageState extends State<AddHouseAllowancePage> {
       _workstatus  = _selectedpartner!;
       _payamount= "0";
       _paydate= "";    
-      _status = "Request";
+      _status = "ร้องขอ";
       _email = user.uid;
       _url = _url;
       _filename = _filename;
       _flagread = "0";
       _id = "";
+            _remarks = _remarks;
 
       Provider.of<HouseAllowanceProviders>(context, listen: false)
       .addHouseAllowance(
-      _no,
+      _idcounts,
       _empcode,
       _name,
       _department,
@@ -146,13 +192,13 @@ class _AddHouseAllowancePageState extends State<AddHouseAllowancePage> {
                     _url,
               _filename,
               _flagread,
-              _id);
-
+              _id,         
+                   _remarks);
       //final docStatus = FirebaseFirestore.instance.collection('ChildAllowance');
       CollectionReference HouseAllowance =
           FirebaseFirestore.instance.collection('HouseAllowance');
       DocumentReference doc = await HouseAllowance.add({
-        'no': _no,
+        'no': _idcounts,
         'empcode': _empcode,
         'name': _name,
         'department': _department,
@@ -180,7 +226,8 @@ class _AddHouseAllowancePageState extends State<AddHouseAllowancePage> {
                 'fileUrl': _url,
         'filename': _filename,
         'flagread': _flagread,
-        'id': _id
+        'id': _id,
+                 'remarks': _remarks
       });
       doc.update({
         'id': doc.id,
@@ -189,7 +236,7 @@ class _AddHouseAllowancePageState extends State<AddHouseAllowancePage> {
       });
 
       //Provider.of<ChildAllowaneProviders>(context,listen: false).addNotes(_Title.text, _Description.text);
-    context.read<flieHouseAllowanceModal>().flieHouseAllowanceChoice = '';
+    // context.read<flieHouseAllowanceModal>().flieHouseAllowanceChoice = '';
       //Navigator.of(context).pop();
       AwesomeDialog(
         context: context,
@@ -251,14 +298,26 @@ class _AddHouseAllowancePageState extends State<AddHouseAllowancePage> {
     // .set({'fileUrl':url,'num' : "file FDF" + filename.toString()});
     // //.set({'fileUrl':url,'num' : "file FDF" + number.toString()});
   }
+void deleteflie()async{
+  Provider.of<flieHouseAllowanceModal>(context, listen: false)
+          .deleteflie();
 
+    setState(() {
+      _filename  = "";
+    });
+}
   @override
   Widget build(BuildContext context) {
     // Scaffold is a layout for
     // the major Material Components.
     return Scaffold(
       appBar: AppBar(
-        title: Text('เพิ่มรายการ'),
+      title: Text('สร้างคำขอค่าเช่าบ้านของพนักงาน',style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
+                            color: iWhiteColor,
+                          ),),
+      backgroundColor: iBlueColor,
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -293,37 +352,37 @@ class _AddHouseAllowancePageState extends State<AddHouseAllowancePage> {
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
-                      Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'เลขที่',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Consumer<HouseAllowanceProviders>(
-                          builder: (context, value, child) {
-                            int Counts = 0;
-                            String number_text = "";
+                    //   Row(
+                    //   children: [
+                    //     Expanded(
+                    //       child: Text(
+                    //         'เลขที่',
+                    //         textAlign: TextAlign.left,
+                    //         style: TextStyle(fontWeight: FontWeight.bold),
+                    //       ),
+                    //     ),
+                    //     Consumer<HouseAllowanceProviders>(
+                    //       builder: (context, value, child) {
+                    //         int Counts = 0;
+                    //         String number_text = "";
 
-                            Counts = value.HouseAllowanceList.length + 1;
-                            _no = "300000" + Counts.toString();
+                    //         Counts = value.HouseAllowanceList.length + 1;
+                    //         _no = "300000" + Counts.toString();
 
-                            return Expanded(
-                              child: Text(
-                                _no.toString(),
-                                textAlign: TextAlign.end,
-                              ),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
+                    //         return Expanded(
+                    //           child: Text(
+                    //             _no.toString(),
+                    //             textAlign: TextAlign.end,
+                    //           ),
+                    //         );
+                    //       },
+                    //     ),
+                    //   ],
+                    // ),
                   ],
                 ),
               ),
@@ -354,7 +413,7 @@ class _AddHouseAllowancePageState extends State<AddHouseAllowancePage> {
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -364,13 +423,13 @@ class _AddHouseAllowancePageState extends State<AddHouseAllowancePage> {
                           child: Text(
                             'พนักงาน',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
-                            'หนึ่งฤทัย พวงแก้ว',
-                            textAlign: TextAlign.end,
+                            _name,
+                            textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -381,7 +440,7 @@ class _AddHouseAllowancePageState extends State<AddHouseAllowancePage> {
                           child: Text(
                             'หน่วยงาน',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Column(
@@ -389,12 +448,12 @@ class _AddHouseAllowancePageState extends State<AddHouseAllowancePage> {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text(
-                              'ฝ่ายทรัพยากรบุคคล',
-                              textAlign: TextAlign.end,
+                              _department,
+                              textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                             ),
                             Text(
-                              'ส่วนสวัสดิการ',
-                              textAlign: TextAlign.end,
+                              _divisionment,
+                              textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                             ),
                           ],
                         ),
@@ -406,45 +465,61 @@ class _AddHouseAllowancePageState extends State<AddHouseAllowancePage> {
                           child: Text(
                             'วันที่บันทึก',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
-                            DateFormat.yMd().add_jm().format(DateTime.now()),
+                            DateFormat('dd-MM-yyyy  kk:mm').format(DateTime.now()),
                             textAlign: TextAlign.end,
                           ),
                         ),
                       ],
                     ),
-
-               TextFormField(
-                            maxLength: 10,
-                            controller: _dates,
-                            //keyboardType: TextInputType.text,
-                            decoration: InputDecoration(
-                              //border: OutlineInputBorder(),
-                              icon: Icon(Icons.calendar_today_rounded),
-
-                              hintText: 'วันที่เข้างาน',
-                            ),
-                            onTap: () async {
-                              DateTime? pickddate = await showDatePicker(
-                                  context: context,
-                                  initialDate: DateTime.now(),
-                                  firstDate: DateTime(2000),
-                                  lastDate: DateTime(9999));
-
-                              if (pickddate != null) {
-                                setState(() {
-                                  _dates.text = DateFormat('yyyy-MM-dd')
-                                      .format(pickddate);
-                                  //var _date = DateFormat("dd-MM-yyyy").format(now);
-                                });
-                              }
-                            },
-                            onSaved: (newValue) => _startdate = newValue!,
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'วันที่เข้างาน',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            _startdate,
+                            textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
+                          ),
+                        ),
+                      ],
+                    ),
+              //  TextFormField(
+              //               maxLength: 10,
+              //               controller: _dates,
+              //               //keyboardType: TextInputType.text,
+              //               decoration: InputDecoration(
+              //                 //border: OutlineInputBorder(),
+              //                 icon: Icon(Icons.calendar_today_rounded),
+
+              //                 hintText: 'วันที่เข้างาน',
+              //               ),
+              //               onTap: () async {
+              //                 DateTime? pickddate = await showDatePicker(
+              //                     context: context,
+              //                     initialDate: DateTime.now(),
+              //                     firstDate: DateTime(2000),
+              //                     lastDate: DateTime(9999));
+
+              //                 if (pickddate != null) {
+              //                   setState(() {
+              //                     _dates.text = DateFormat('dd-MM-yyyy')
+              //                         .format(pickddate);
+              //                     //var _date = DateFormat("dd-MM-yyyy").format(now);
+              //                   });
+              //                 }
+              //               },
+              //               onSaved: (newValue) => _startdate = newValue!,
+              //             ),
                     
                  
                   ],
@@ -479,7 +554,7 @@ class _AddHouseAllowancePageState extends State<AddHouseAllowancePage> {
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -601,7 +676,7 @@ class _AddHouseAllowancePageState extends State<AddHouseAllowancePage> {
                           if (pickddate != null) {
                             setState(() {
                               _date.text =
-                                  DateFormat('yyyy-MM-dd').format(pickddate);
+                                  DateFormat('dd-MM-yyyy').format(pickddate);
                               //var _date = DateFormat("dd-MM-yyyy").format(now);
                             });
                           }
@@ -640,7 +715,7 @@ class _AddHouseAllowancePageState extends State<AddHouseAllowancePage> {
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -655,7 +730,7 @@ class _AddHouseAllowancePageState extends State<AddHouseAllowancePage> {
                               style: TextStyle(
                                   fontSize: 14,
                                   color: Colors.black,
-                                  fontWeight: FontWeight.bold),
+                                  fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                             ),
                           ),
                           Expanded(
@@ -861,7 +936,7 @@ class _AddHouseAllowancePageState extends State<AddHouseAllowancePage> {
                             style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.black,
-                                fontWeight: FontWeight.bold),
+                                fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ],
                       ),
@@ -917,39 +992,90 @@ class _AddHouseAllowancePageState extends State<AddHouseAllowancePage> {
                       style: TextStyle(
                         fontSize: 16,
                         color: iBlueColor,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
-                     ElevatedButton(
-                      child: Text("เอกสารแนบ"),
-                      onPressed: () {
-                        uploadDataToFirebase();
-                      },
-                    ),
+                    ElevatedButton(
+                style: ElevatedButton.styleFrom(primary:iBlueColor),
+                onPressed: () {uploadDataToFirebase();},
+                child: Text("เอกสารแนบ",style: TextStyle(fontFamily: 'Sarabun',),),
+                
+                ),
                     const Divider(),
-                    Consumer<flieHouseAllowanceModal>(
-                      builder: (context, value, child) {
 
-                        if (value.flieHouseAllowanceChoice
-                                  .toString()
-                                  .isNotEmpty) {
-                          //Carimg = '${value.flieChildAllowanceChoice}';
-                          return ListTile(
-                            title: Text(_filename.toString()),
-                            trailing: Icon(Icons.remove_red_eye),
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => View(url: _url)));
-                            },
-                          );
-                        } else {
-                          return Text("");
-                        }
-                      },
-                    ),
+                                        if (_filename == "" || _filename == null) ...[
+                      Text(""),
+                    ] else ...[
+                      ListTile(
+                        title: Text(_filename.toString()),
+                        trailing: Container(
+                          width: 70,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                  child: IconButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              View(url: _url)));
+                                },
+                                icon: Icon(Icons.remove_red_eye),
+                              )),
+                              Expanded(
+                                  child: IconButton(
+                                onPressed: () {
+                                  deleteflie();
+                                },
+                                icon: Icon(Icons.delete),
+                              )),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ]
+                    // Consumer<flieHouseAllowanceModal>(
+                    //   builder: (context, value, child) {
+
+                    //     if (value.flieHouseAllowanceChoice
+                    //               .toString()
+                    //               .isNotEmpty) {
+                    //       //Carimg = '${value.flieChildAllowanceChoice}';
+                    //                           return 
+                          
+                    //       ListTile(
+                    //         title: Text(_filename.toString()),
+                    //         trailing: Container(
+                    //           width: 70,
+                    //           child: Row(
+                    //             children: [
+                    //               Expanded(child:IconButton(
+                    //                 onPressed:() { Navigator.push(
+                    //                   context,MaterialPageRoute
+                    //                   (builder: (context) => View(url: _url)));},
+                    //                   icon:Icon(Icons.remove_red_eye) ,) ),
+                    //               Expanded(child:IconButton(
+                    //                 onPressed:() { deleteflie();},
+                    //                   icon:Icon(Icons.delete) ,) ),
+                    //             ],
+                    //           ),
+                    //         ),
+                    //         // Icon(Icons.remove_red_eye),
+                    //         // onTap: () {
+                    //         //   Navigator.push(
+                    //         //       context,
+                    //         //       MaterialPageRoute(
+                    //         //           builder: (context) => View(url: _url)));
+                    //         // },
+
+                    //       );
+                    //     } else {
+                    //       return Text("");
+                    //     }
+                    //   },
+                    // ),
               //       ElevatedButton(
               //         child: Text("เอกสารแนบ"),
               //         onPressed: () async {
@@ -996,7 +1122,7 @@ class _AddHouseAllowancePageState extends State<AddHouseAllowancePage> {
                 onPressed: () {
                   AddHouseAllowance();
                 },
-                child: Text('บันทึกข้อมูล'),
+                child: Text('บันทึกข้อมูล',style: TextStyle(fontFamily: 'Sarabun',),),
               ),
               //               ElevatedButton(
               //   child: Text("บันทึกข้อมูล"),
@@ -1059,8 +1185,14 @@ class View extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("PDF View"),
-      ),
+        title: Text('รายละเอียดเอกสาร',style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
+                            color: iWhiteColor,
+                          ),),
+      backgroundColor: iBlueColor,
+),
+      
       body: SfPdfViewer.network(
         url,
         controller: _pdfViewerController,
@@ -1077,4 +1209,10 @@ class flieHouseAllowanceModal extends ChangeNotifier {
     this._flie = value;
     notifyListeners();
   }
+    void deleteflie(){
+    this._flie = '';
+   notifyListeners();
+
+
+}
 }

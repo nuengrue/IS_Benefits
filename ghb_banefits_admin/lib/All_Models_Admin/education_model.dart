@@ -1,70 +1,78 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class EducationAdmin {
-  String no;
+   int  no;
   final String empcode;
   final String name;
   final String department;
   final String divisionment;
-
+//
   final String typeedu;
   final String yearedu;
   final String savedate;
+//
+
   final String namechild;
 
+//
   final String level;
   final String school;
   final String year;
   final String term;
   final String educationlevel;
   final String schooltype;
+//
   final String receiptnumber;
   final String volume;
   final String tel;
   final String receiptdate;
+  //
   final String amountreceipt;
-  late String payamount;
-  late String paydate;
-  String status;
+
+  ///
+  late final String payamount;
+  late final String paydate;
+  late final String status;
   final String email;
-  final String fileUrl;
+    final String fileUrl;
   final String filename;
-  late String flagread;
+  late final String  flagread;
   String id;
+  late  String   remarks;
   EducationAdmin(
-    this.no,
-    this.empcode,
-    this.name,
-    this.department,
-    this.divisionment,
-    this.typeedu,
-    this.yearedu,
-    this.savedate,
-    this.namechild,
-    this.level,
-    this.school,
-    this.year,
-    this.term,
-    this.educationlevel,
-    this.schooltype,
-    this.receiptnumber,
-    this.volume,
-    this.tel,
-    this.receiptdate,
-    this.amountreceipt,
-    this.payamount,
-    this.paydate,
-    this.status,
-    this.email,
-    this.fileUrl,
-    this.filename,
-    this.flagread,
-    this.id,
-  );
+      this.no,
+      this.empcode,
+      this.name,
+      this.department,
+      this.divisionment,
+      this.typeedu,
+      this.yearedu,
+      this.savedate,
+      this.namechild,
+      this.level,
+      this.school,
+      this.year,
+      this.term,
+      this.educationlevel,
+      this.schooltype,
+      this.receiptnumber,
+      this.volume,
+      this.tel,
+      this.receiptdate,
+      this.amountreceipt,
+      this.payamount,
+      this.paydate,
+      this.status,
+      this.email,
+       this.fileUrl,
+       this.filename,
+       this.flagread,
+       this.id,
+       this.remarks,);
 
   factory EducationAdmin.fromJson(Map<String, dynamic> json) {
     return EducationAdmin(
-      json['no'] as String,
+      json['no'] as int,
       json['empcode'] as String,
       json['name'] as String,
       json['department'] as String,
@@ -92,6 +100,7 @@ class EducationAdmin {
       json['filename'] as String,
       json['flagread'] as String,
       json['id'] as String,
+            json['remarks'] as String,
     );
   }
 
@@ -121,10 +130,11 @@ class EducationAdmin {
       'paydate': paydate,
       'status': status,
       'email': email,
-      'fileUrl': fileUrl,
-      'filename': filename,
-      'flagread': flagread,
-      'id': id,
+          'fileUrl' : fileUrl, 
+    'filename' : filename,    
+    'flagread' : flagread,   
+    'id' : id, 
+        'remarks' : remarks, 
     };
   }
 }

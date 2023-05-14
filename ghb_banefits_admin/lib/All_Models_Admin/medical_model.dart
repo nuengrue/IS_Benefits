@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MedicalAdmin {
-  final String no;
+  final int  no;
   final String empcode;
   final String name;
   final String department;
@@ -26,8 +26,9 @@ class MedicalAdmin {
   final String email;
   final String fileUrl;
   final String filename;
-  late String flagread;
+  late  String flagread;
   String id;
+  late  String   remarks;
   //final List<Medtreat> cedtreat;
   MedicalAdmin(
   this.no,
@@ -56,7 +57,8 @@ class MedicalAdmin {
   this.fileUrl,
   this.filename,
   this.flagread,
-  this.id
+  this.id,
+         this.remarks,
   );
 
   Map<String, dynamic> toMap() {
@@ -88,6 +90,7 @@ class MedicalAdmin {
       'filename': filename,
       'flagread': flagread,
       'id': id,
+      'remarks' : remarks,     
       //'cedtreat': cedtreat.map((i) => i.toMap()).toList(),
     };
   }
@@ -95,7 +98,7 @@ class MedicalAdmin {
   factory MedicalAdmin.fromJson(Map<String, dynamic> json) {
     print(json);
     return MedicalAdmin(
-      json['no'] as String,
+      json['no'] as int,
       json['empcode'] as String,
       json['name'] as String,
       json['department'] as String,
@@ -122,29 +125,10 @@ class MedicalAdmin {
       json['filename'] as String,
       json['flagread'] as String,
       json['id'] as String,
+            json['remarks'] as String,
       //map['cedtreat'],
     );
   }
-
-/*
-  factory Childall.fromJson(Map<String, dynamic> json) {
-    return Childall(
-      no: json['no'],
-      empcode: json['empcode'],
-      nameemp: json['nameemp'],
-      department: json['department'],
-      divisionment: json['divisionment'],
-      savedate: json['savedate'],
-      namechild: json['namechild'],
-      namepartner: json['no'],
-      officetner: json['officetner'],
-      maritalstatus: json['maritalstatus'],
-      submaritalstatus: json['submaritalstatus'],
-      status: json['status'],
-      email: json['email']
-    );
-  }
-  */
 
 }
 

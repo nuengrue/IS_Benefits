@@ -9,6 +9,7 @@ class NotificationsAdmin {
   final String createDate;
   final String uid; 
   String id;
+  final  String   remarks;
   NotificationsAdmin(
        this.no,
        this.title,
@@ -16,7 +17,8 @@ class NotificationsAdmin {
        this.read,
        this.createDate,
        this.uid,
-       this.id,);
+       this.id,
+       this.remarks,);
 
 factory NotificationsAdmin.fromJson(Map<String, dynamic> json) {
     print(json);
@@ -28,6 +30,7 @@ factory NotificationsAdmin.fromJson(Map<String, dynamic> json) {
       json['createDate'] as String,
       json['uid'] as String,
       json['id'] as String,
+      json['remarks'] as String,
     );
   }
 
@@ -41,6 +44,7 @@ factory NotificationsAdmin.fromJson(Map<String, dynamic> json) {
     'createDate' : createDate,
     'uid' : uid,        
     'id' : id, 
+    'remarks' : remarks, 
   };
 }
 

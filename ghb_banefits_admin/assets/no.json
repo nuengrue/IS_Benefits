@@ -1,0 +1,15 @@
+[
+    {
+    "empcode": 1,
+    "id": 1,
+    "typemodule": 1,
+    "title": "ค่ารักษาพยาบาล",
+    "status": "ตรวจสอบ"
+}
+    ,{ "empcode": 1,
+    "id": 1,
+    "typemodule": 2, 
+    "title": "ค่าช่วยเหลือการศึกษา",
+    "status": "ตรวจสอบ"}
+    ] 
+   

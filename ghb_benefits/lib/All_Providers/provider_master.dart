@@ -82,7 +82,14 @@ class filedEmployeeProviders with ChangeNotifier {
     notifyListeners();
     
   }
+          String _Empidcard = "";
+  get Empidcard => this._Empidcard;
 
+  set Empidcard(value) {
+    this._Empidcard = value;
+    notifyListeners();
+    
+  }
 }
 class ChilderProviders with ChangeNotifier {
   MasterController controller = MasterController(FirebaseServices());

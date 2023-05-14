@@ -11,5 +11,12 @@ const iAllColor = Color(0xFFB3E5FC);
 const iRequestColor =  Color(0xFFFFE0B2);
 const iApproveColor = Color(0xFFC8E6C9);
 const iRejectColor = Color(0xFFF8BBD0);
-
+const id1Color = Color(0xFFFFEBEE);
+const id2Color = Color(0xFFF3E5F5);
+const id3Color = Color(0xFFFBE9E7);
+const id4Color = Color(0xFFFFF8E1);
+const id5Color = Color(0xFFF1F8E9);
+const id6Color = Color(0xFF69F0AE);
+const id7Color = Color(0xFFEEFF41);
+const id8Color = Color(0xFFFF5252);
 //const iRedColor = Color(0xFFF33612);

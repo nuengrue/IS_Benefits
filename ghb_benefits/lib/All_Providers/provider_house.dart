@@ -48,7 +48,7 @@ class HouseAllowanceProviders with ChangeNotifier {
 
 // function to add data to list of notes 
  void addHouseAllowance( 
-  String no,
+  int no,
    String empcode,
    String name,
    String department,
@@ -80,7 +80,8 @@ class HouseAllowanceProviders with ChangeNotifier {
       String fileUrl, 
    String filename, 
    String read, 
-   String id, )
+   String id, 
+      String remarks, )
  {
    HouseAllowance houseAllowance = new HouseAllowance(
     no,
@@ -111,7 +112,8 @@ class HouseAllowanceProviders with ChangeNotifier {
     fileUrl,
     filename,
     read,
-    id,);
+    id,
+    remarks,);
 
    _houseAllowanceList.add(houseAllowance);
 

@@ -5,11 +5,13 @@ import 'package:ghb_benefits/All_Page/Cremation_Service/list_cremation_service.d
 import 'package:ghb_benefits/All_Page/Education/list_education_page.dart';
 import 'package:ghb_benefits/All_Page/House_Allowance/list_house_allowance.dart';
 import 'package:ghb_benefits/All_Page/Medical/list_medical_page.dart';
+import 'package:ghb_benefits/All_Providers/provider_master.dart';
 
 import 'package:ghb_benefits/color.dart';
 
 import 'package:ghb_benefits/main_home_page.dart';
 import 'package:ghb_benefits/mydashboard_page.dart';
+import 'package:provider/provider.dart';
 
 //import 'package:flutter/cupertino.dart';
 
@@ -42,8 +44,18 @@ class _MyDrawerState extends State<MyDrawer> {
               decoration: BoxDecoration(
                 color: iBlueColor,
               ),
-              accountName: Text(user.email!),
-              accountEmail: Text(user.email!),
+              accountName: Consumer<filedEmployeeProviders>(
+          builder: (context, value, child) {
+            String greeting = '';
+                if(value.Empnameemp.toString().isNotEmpty)
+                    {
+                    greeting = '${value.Empnameemp}';
+                    }
+          return Text('$greeting',style: TextStyle(fontFamily: 'Sarabun',),);
+          },
+          ),
+              // Text(user.email!),
+              accountEmail: Text(user.email!,style: TextStyle(fontFamily: 'Sarabun',),),
               currentAccountPicture: CircleAvatar(
                   child: ClipRRect(
                 borderRadius: BorderRadius.circular(100),
@@ -70,7 +82,7 @@ class _MyDrawerState extends State<MyDrawer> {
       */
             ListTile(
               leading: Icon(Icons.home),
-              title: const Text('หน้าหลัก'),
+              title: const Text('หน้าหลัก',style: TextStyle(fontFamily: 'Sarabun',),),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => MainHomePage()));
@@ -86,7 +98,7 @@ class _MyDrawerState extends State<MyDrawer> {
             // ),
             ListTile(
               leading: Icon(Icons.medical_information),
-              title: const Text('ค่าช่วยเหลือค่ารักษาพยาบาล'),
+              title: const Text('ค่าช่วยเหลือค่ารักษาพยาบาล',style: TextStyle(fontFamily: 'Sarabun',),),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => ListMedicalPage()));
@@ -94,7 +106,7 @@ class _MyDrawerState extends State<MyDrawer> {
             ),
             ListTile(
               leading: Icon(Icons.cast_for_education),
-              title: const Text('ค่าช่วยเหลือการศึกษาบุตร'),
+              title: const Text('ค่าช่วยเหลือการศึกษาบุตร',style: TextStyle(fontFamily: 'Sarabun',),),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => ListEducationPage()));
@@ -102,7 +114,7 @@ class _MyDrawerState extends State<MyDrawer> {
             ),
             ListTile(
               leading: Icon(Icons.money),
-              title: const Text('เงินช่วยเหลือบุตร'),
+              title: const Text('เงินช่วยเหลือบุตร',style: TextStyle(fontFamily: 'Sarabun',),),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => ListChildAllowancePage()));
@@ -110,7 +122,7 @@ class _MyDrawerState extends State<MyDrawer> {
             ),
             ListTile(
               leading: Icon(Icons.home_repair_service),
-              title: const Text('ค่าเช่าบ้านสำหรับพนักงาน'),
+              title: const Text('ค่าเช่าบ้านสำหรับพนักงาน',style: TextStyle(fontFamily: 'Sarabun',),),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => ListHouseAllowanceePage()));
@@ -118,7 +130,7 @@ class _MyDrawerState extends State<MyDrawer> {
             ),
             ListTile(
               leading: Icon(Icons.cyclone),
-              title: const Text('ฌาปนกิจสงเคราะห์'),
+              title: const Text('สมัครฌาปนกิจสงเคราะห์',style: TextStyle(fontFamily: 'Sarabun',),),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => ListCremationServicePage()));

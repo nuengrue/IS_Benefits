@@ -18,7 +18,12 @@ class EducationController {
     onSyncController.add(false);
     return educations;
   }
-
+ Future<List<Education>> fetchEducationno() async {
+    onSyncController.add(true);
+    educations = await servies.getEducationno();
+    onSyncController.add(false);
+    return educations;
+  }
     Future<List<Education>> fetchEducationDashboard() async {
     onSyncController.add(true);
     educations = await servies.getEducationDashboard();

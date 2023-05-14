@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:ghb_benefits/All_Models/child_allowane_model.dart';
+import 'package:ghb_benefits/color.dart';
 
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
@@ -12,12 +13,19 @@ class DetailChildAllowancePage extends StatelessWidget {
 
   // Declare a field that holds the Todo.
   final ChildAllowance Notes;
+  
+  get iWhiteColor => null;
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('รายละเอียดรายการ'),
+         title: Text('รายละเอียดคำขอเบิกค่าช่วยเหลือบุตร',style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
+                            color: iWhiteColor,
+                          ),),
+      backgroundColor: iBlueColor,
       ),
       body: SingleChildScrollView(
 
@@ -52,7 +60,7 @@ class DetailChildAllowancePage extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -62,13 +70,13 @@ class DetailChildAllowancePage extends StatelessWidget {
                           child: Text(
                             'สถานะรายการ',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             Notes.status,
-                            textAlign: TextAlign.end,
+                            textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -103,7 +111,7 @@ class DetailChildAllowancePage extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -113,13 +121,13 @@ class DetailChildAllowancePage extends StatelessWidget {
                           child: Text(
                             'พนักงาน',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             Notes.nameemp,
-                            textAlign: TextAlign.end,
+                            textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -130,7 +138,7 @@ class DetailChildAllowancePage extends StatelessWidget {
                           child: Text(
                             'หน่วยงาน',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Column(
@@ -139,11 +147,11 @@ class DetailChildAllowancePage extends StatelessWidget {
                           children: [
                             Text(
                               Notes.department,
-                              textAlign: TextAlign.end,
+                              textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                             ),
                             Text(
                               Notes.divisionment,
-                              textAlign: TextAlign.end,
+                              textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                             ),
                           ],
                         ),
@@ -155,13 +163,13 @@ class DetailChildAllowancePage extends StatelessWidget {
                           child: Text(
                             'วันที่บันทึก',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             Notes.savedate,
-                            textAlign: TextAlign.end,
+                            textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -201,7 +209,7 @@ class DetailChildAllowancePage extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -211,13 +219,13 @@ class DetailChildAllowancePage extends StatelessWidget {
                           child: Text(
                             'บุตรของพนักงาน',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             Notes.namechild,
-                            textAlign: TextAlign.end,
+                            textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -255,7 +263,7 @@ class DetailChildAllowancePage extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -265,13 +273,13 @@ class DetailChildAllowancePage extends StatelessWidget {
                           child: Text(
                             'ชื่อ-นามสกุลของคู่มสมรส',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             Notes.namepartner,
-                            textAlign: TextAlign.end,
+                            textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -282,7 +290,7 @@ class DetailChildAllowancePage extends StatelessWidget {
                           child: Text(
                             'สถานะการสมรส',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Column(
@@ -291,11 +299,11 @@ class DetailChildAllowancePage extends StatelessWidget {
                           children: [
                             Text(
                               Notes.maritalstatus,
-                              textAlign: TextAlign.end,
+                              textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                             ),
                             Text(
                               Notes.submaritalstatus,
-                              textAlign: TextAlign.end,
+                              textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
                             ),
   
                           ],
@@ -334,7 +342,7 @@ class DetailChildAllowancePage extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -376,17 +384,22 @@ class View extends StatelessWidget {
   final url;
    View({this.url});
 
-  @override
+ @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("PDF View"),
+        title: Text('รายละเอียดเอกสาร',style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
+                            color: iWhiteColor,
+                          ),),
+      backgroundColor: iBlueColor,
+),
+      
+      body: SfPdfViewer.network(
+        url,
+        controller: _pdfViewerController,
       ),
-     body: SfPdfViewer.network(
-      url,
-      controller: _pdfViewerController,
-    ),
-
     );
   }
 }

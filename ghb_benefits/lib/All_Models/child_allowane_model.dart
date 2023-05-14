@@ -2,7 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChildAllowance {
-  String no;
+  final int  no;
   final String empcode;
   final String nameemp;
   final String department;
@@ -19,6 +19,7 @@ class ChildAllowance {
   final String filename;
   final String  flagread;
   String id;
+  final String   remarks;
   ChildAllowance(
        this.no,
        this.empcode,
@@ -36,12 +37,13 @@ class ChildAllowance {
        this.fileUrl,
        this.filename,
        this.flagread,
-       this.id,);
+       this.id,
+       this.remarks,);
 
 factory ChildAllowance.fromJson(Map<String, dynamic> json) {
     print(json);
     return ChildAllowance(
-      json['no'] as String,
+      json['no'] as int,
       json['empcode'] as String,
       json['nameemp'] as String,
       json['department'] as String,
@@ -58,6 +60,7 @@ factory ChildAllowance.fromJson(Map<String, dynamic> json) {
       json['filename'] as String,
       json['flagread'] as String,
       json['id'] as String,
+      json['remarks'] as String,
     );
   }
 
@@ -80,6 +83,8 @@ factory ChildAllowance.fromJson(Map<String, dynamic> json) {
     'filename' : filename,    
     'flagread' : flagread,   
     'id' : id, 
+    'remarks' : remarks, 
+
   };
 }
 

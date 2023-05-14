@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Medical {
-  final String no;
+  final int  no;
   final String empcode;
   final String name;
   final String department;
@@ -28,6 +28,7 @@ class Medical {
   final String filename;
   final String flagread;
   String id;
+    final String   remarks;
   //final List<Medtreat> cedtreat;
   Medical(
   this.no,
@@ -56,7 +57,8 @@ class Medical {
   this.fileUrl,
   this.filename,
   this.flagread,
-  this.id
+  this.id,
+         this.remarks,
   );
 
   Map<String, dynamic> toMap() {
@@ -88,6 +90,7 @@ class Medical {
       'filename': filename,
       'flagread': flagread,
       'id': id,
+      'remarks' : remarks,     
       //'cedtreat': cedtreat.map((i) => i.toMap()).toList(),
     };
   }
@@ -95,7 +98,7 @@ class Medical {
   factory Medical.fromJson(Map<String, dynamic> json) {
     print(json);
     return Medical(
-      json['no'] as String,
+      json['no'] as int,
       json['empcode'] as String,
       json['name'] as String,
       json['department'] as String,
@@ -122,6 +125,7 @@ class Medical {
       json['filename'] as String,
       json['flagread'] as String,
       json['id'] as String,
+            json['remarks'] as String,
       //map['cedtreat'],
     );
   }

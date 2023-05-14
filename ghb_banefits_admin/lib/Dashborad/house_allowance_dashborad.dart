@@ -43,7 +43,7 @@ class _HouseAllowanceDashboradPageState extends State<HouseAllowanceDashboradPag
             int vAll = cAll.length;
             context.read<HouseAllowanceAdminProviders>().fliecountAllHouseAllowanceAdmin = vAll;
             // count  Status Request
-            var cRequest = newHouseAllowanceAdmin.where((x) => x.status == "Request");
+            var cRequest = newHouseAllowanceAdmin.where((x) => x.status == "ร้องขอ");
             int vRequest = cRequest.length;
             context.read<HouseAllowanceAdminProviders>().fliecountRequestHouseAllowanceAdmin = vRequest;
             // count  Status Approve
@@ -105,11 +105,13 @@ class _HouseAllowanceDashboradPageState extends State<HouseAllowanceDashboradPag
                         countnum: context.watch<HouseAllowanceAdminProviders>().fliecountAllHouseAllowanceAdmin,
                         buttonText: 'Total All',
                         indexColor:iAllColor,
+                                                url : 'Navigator.of(context).push(MaterialPageRoute(builder: (context) =>MainHomeAdminPage()));'
                       ),
                       BoxDashborad(
                         countnum: context.watch<HouseAllowanceAdminProviders>().fliecountRequestHouseAllowanceAdmin,
                         buttonText: 'Request',
                         indexColor: iRequestColor,
+                                                url : 'Navigator.of(context).push(MaterialPageRoute(builder: (context) =>MainHomeAdminPage()));'
                       ),
 
                     ],
@@ -124,11 +126,13 @@ class _HouseAllowanceDashboradPageState extends State<HouseAllowanceDashboradPag
                         countnum: context.watch<HouseAllowanceAdminProviders>().fliecountApproveHouseAllowanceAdmin,
                         buttonText: 'Approve',
                         indexColor:iApproveColor,
+                                                url : 'Navigator.of(context).push(MaterialPageRoute(builder: (context) =>MainHomeAdminPage()));'
                       ),
                       BoxDashborad(
                         countnum: context.watch<HouseAllowanceAdminProviders>().fliecountRejectHouseAllowanceAdmin,
                         buttonText: 'Reject',
                         indexColor: iRejectColor,
+                                                url : 'Navigator.of(context).push(MaterialPageRoute(builder: (context) =>MainHomeAdminPage()));'
                       ),
 
                     ],

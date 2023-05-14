@@ -64,11 +64,11 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           SizedBox(height: 15),
                 Text(
-                          'GHB Benefits',
+                          'GHB Welfare',
                           style: TextStyle(
                             fontSize: 52,
                             fontWeight: FontWeight.bold,
-                            color: iBlueColor,
+                            color: iBlueColor,fontFamily: 'Sarabun',
                           ),
                         ),
               // username
@@ -130,7 +130,7 @@ class _LoginPageState extends State<LoginPage> {
                             'เข้าสู่ระบบ',
                             style: TextStyle(
                               color: iWhiteColor,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                               fontSize: 18
                             ),
                           ),

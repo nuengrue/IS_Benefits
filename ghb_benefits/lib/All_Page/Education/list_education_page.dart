@@ -7,6 +7,7 @@ import 'package:ghb_benefits/All_Providers/provider_dashboard.dart';
 import 'package:ghb_benefits/All_Providers/provider_education.dart';
 import 'package:ghb_benefits/All_Services/servics.dart';
 import 'package:ghb_benefits/color.dart';
+import 'package:intl/intl.dart';
 
 import 'package:provider/provider.dart';
 import 'add_education_page.dart';
@@ -76,10 +77,10 @@ setState(() {
     return Consumer<MyDashboardProviders>(
       builder: (context, value, child) {
     return Scaffold(
-            appBar: AppBar(title: Text('รายการคำขอช่วยเหลือการศึกษา',style: TextStyle(
+            appBar: AppBar(  title: Text('รายการคำขอค่าช่วยเหลือการศึกษาบุตร',style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            color: iOrangeColor,
+                            color: iWhiteColor,
                           ),),
       backgroundColor: iBlueColor,
       
@@ -131,7 +132,7 @@ setState(() {
             ): GestureDetector(onTap: (){
                Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => AddEduPage()));
-            },child: Center(child: Text("ไม่พบรายการคำขอ",style: TextStyle(color: iBlueColor,),)));
+            },child: Center(child: Text("ไม่พบรายการคำขอ",style: TextStyle(color: iBlueColor,fontFamily: 'Sarabun',),)));
           },
         ),
       ),
@@ -140,10 +141,10 @@ setState(() {
       persistentFooterButtons: <Widget>[
              if (value.SumEducationModalChoice.toString() == '40000.0') ...[
                    
- Text('ท่านได้ใช้วงเงินตามสิทธิ์ครบกำหนดแล้ว: ${value.SumEducationModalChoice.toString()} บาท ${ages.toString()}'),
+ Text('ท่านได้ใช้วงเงินตามสิทธิ์ครบกำหนดแล้ว: ${value.SumEducationModalChoice.toString()} บาท',style: TextStyle(fontFamily: 'Sarabun',),),
 
     ] else ...[
-   Text('ท่านได้ใช้วงเงินตามสิทธิ์ครบกำหนดแล้ว: ${value.Childage.toString()}'),
+  //  Text('ท่านได้ใช้วงเงินตามสิทธิ์ครบกำหนดแล้ว: ${value.Childage.toString()}'),
 
          FloatingActionButton(  
         child: Icon(Icons.add),  
@@ -185,26 +186,70 @@ setState(() {
   CardList(this.notes,this.index);
   @override
   Widget build(BuildContext context) {
+                              NumberFormat myFormat =
+                          NumberFormat.decimalPattern('en_us');
     return Padding(
       padding: const EdgeInsets.all(2.0),
 
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(10),
-              topLeft: Radius.circular(10),
-            )
-          ),
-          child: ListTile(
-           leading: Icon(Icons.note),
-            title: Text(notes.no),
-            subtitle: Text(notes.status),
-            trailing: Icon(Icons.arrow_forward_ios,color: Colors.black26,),
-             onTap: () {
-                  Navigator.push( context,MaterialPageRoute(builder: (context) =>DetailEducationPage(Notes : notes)));
-                  },
-          ),
+                   child: Container(
+             decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(
+                          color: Colors.white,
+                        ),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 6.0,
+                            spreadRadius: 2.0,
+                            color: Colors.grey,
+                            offset: Offset(0.0, 0.0),
+                          )
+                        ],
+                      ),
+        
+            child: ListTile(
+            //  leading: Icon(Icons.note),
+              title: Row(  children: [
+                  Expanded(child: Text('เลขที่ใบเสร็จ',
+                            // textAlign: TextAlign.left,
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),)),
+                  Expanded(child: Text(notes.receiptnumber, textAlign: TextAlign.end,)),
+                ],),
+              subtitle: Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(child: Text('ชื่อบุตร',
+                                // textAlign: TextAlign.left,
+                                style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),)),
+                      Expanded(child: Text(notes.namechild, textAlign: TextAlign.end,)),
+                    ],
+                  ),                 
+                  Row(
+                    children: [
+                      Expanded(child: Text('จำนวนเงินร้องขอ',
+                                // textAlign: TextAlign.left,
+                                style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),)),
+                      Expanded(child: Text(myFormat.format(int.parse(notes.amountreceipt)), textAlign: TextAlign.end,)),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(child: Text('วันที่บันทึก',
+                                // textAlign: TextAlign.left,
+                                style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),)),
+                      Expanded(child: Text(notes.savedate, textAlign: TextAlign.end,)),
+                    ],
+                  ),
+                ],
+              ),
+              trailing: Text(notes.status,style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',color: iBlueColor,),),
+               onTap: () {
+                    Navigator.push( context,MaterialPageRoute(builder: (context) =>DetailEducationPage(Notes : notes)));
+                    },
+            ),
+          
         ),
     );
   }

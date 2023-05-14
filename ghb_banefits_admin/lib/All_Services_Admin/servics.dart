@@ -1,13 +1,24 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:ghb_banefits_admin/All_Models_Admin/Notifications_model.dart';
 import 'package:ghb_banefits_admin/All_Models_Admin/child_allowane_model.dart';
 import 'package:ghb_banefits_admin/All_Models_Admin/cremation_service_model.dart';
 import 'package:ghb_banefits_admin/All_Models_Admin/education_model.dart';
+import 'package:ghb_banefits_admin/All_Models_Admin/employee_model.dart';
 import 'package:ghb_banefits_admin/All_Models_Admin/house_model.dart';
 import 'package:ghb_banefits_admin/All_Models_Admin/medical_model.dart';
 
 
 class FirebaseServicesAdmin{
+      final user = FirebaseAuth.instance.currentUser!;
+  Future<List<Employee>> getEmployee() async {
+   QuerySnapshot snapshot = 
+   await FirebaseFirestore.instance.collection('Employee').where('uid',isEqualTo: user.uid).get();
+
+   AllEmployee employee = AllEmployee.fromSnapshot(snapshot);
+   return employee.employees;
+  }
   Future<List<ChildAllowanceAdmin>> getChildAllowanceAdmin() async {
    QuerySnapshot snapshot = 
    await FirebaseFirestore.instance.collection('ChildAllowance').get();
@@ -48,6 +59,15 @@ class FirebaseServicesAdmin{
 
    AllEducationAdmin education = AllEducationAdmin.fromSnapshot(snapshot);
    return education.educations;
+
+  }
+
+          Future<List<NotificationsAdmin>> getNotiAdmin() async {
+   QuerySnapshot snapshot = 
+   await FirebaseFirestore.instance.collection('Notifications').get();
+
+   AllNotificationsAdmin notification = AllNotificationsAdmin.fromSnapshot(snapshot);
+   return notification.notifications;
 
   }
 /*

@@ -1,8 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ghb_banefits_admin/All_Controllers_Admin/master_controllers.dart';
+import 'package:ghb_banefits_admin/All_Providers_Admin/provider_master.dart';
+import 'package:ghb_banefits_admin/All_Services_Admin/servics.dart';
 import 'package:ghb_banefits_admin/Dashborad/list_Reports.dart';
 import 'package:ghb_banefits_admin/button_menu.dart';
 import 'package:ghb_banefits_admin/color.dart';
+import 'package:ghb_banefits_admin/login/main_switch_page.dart';
 import 'package:ghb_banefits_admin/my_drawer.dart';
+import 'package:provider/provider.dart';
 
 class MainHomeAdminPage extends StatefulWidget {
   @override
@@ -11,7 +17,40 @@ class MainHomeAdminPage extends StatefulWidget {
 
 class _MainHomeAdminPageState extends State<MainHomeAdminPage> {
   //final _formKey = GlobalKey<FormState>();
-  //final user = FirebaseAuth.instance.currentUser!;
+  final user = FirebaseAuth.instance.currentUser!;
+late String name = "";
+  MasterController mastecontroller = MasterController(FirebaseServicesAdmin());
+
+  void initState() {
+    super.initState();
+    _getEmployee(context);
+  }
+
+  void _getEmployee(BuildContext context) async {
+    var newEmployee = await mastecontroller.fetchEmployee();
+
+    context.read<EmployeeProviders>().EmployeeList = newEmployee;
+
+    newEmployee = context.read<EmployeeProviders>().EmployeeList ;
+
+    context.read<filedEmployeeProviders>().Empno = newEmployee.first.no;
+    context.read<filedEmployeeProviders>().Empempcode =
+        newEmployee.first.empcode;
+    context.read<filedEmployeeProviders>().Empnameemp =
+        newEmployee.first.nameemp;
+    context.read<filedEmployeeProviders>().Empdepartment =
+        newEmployee.first.department;
+    context.read<filedEmployeeProviders>().Empdivisionment =
+        newEmployee.first.divisionment;
+    context.read<filedEmployeeProviders>().Empdate = newEmployee.first.date;
+    context.read<filedEmployeeProviders>().Empuid = newEmployee.first.uid;
+
+setState(() {
+  name = newEmployee.first.nameemp;
+  print(name);
+});
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,15 +60,21 @@ class _MainHomeAdminPageState extends State<MainHomeAdminPage> {
           'GHB Welfare Admin',
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
-            color: iWhiteColor,),),backgroundColor: iOrangeColor,
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Sarabun',
+            color: iWhiteColor,
+          ),
+        ),
+        backgroundColor: iOrangeColor,
         actions: [
           IconButton(
             icon: Icon(Icons.logout),
             color: iWhiteColor,
             onPressed: () {
-              // FirebaseAuth.instance.signOut();
+              FirebaseAuth.instance.signOut();
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => MainSwitchPage()));
             },
           ),
         ],
@@ -47,18 +92,24 @@ class _MainHomeAdminPageState extends State<MainHomeAdminPage> {
                   Row(
                     children: [
                       Text(
-                        'สวัสดี ',
+                        'สวัสดี คุณ ',
                         style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
                           color: iBlueColor,
+                          fontFamily: 'Sarabun',
                         ),
                       ),
                       Text(
-                        ' gggggg '
-                        //+ user.email!
-                        ,
-                        style: TextStyle(fontSize: 18, fontFamily: 'Sarabun',color: iBlueColor),
+                        context
+                            .watch<filedEmployeeProviders>()
+                            .Empnameemp
+                            .toString(),
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: iBlueColor,
+                          fontFamily: 'Sarabun',
+                        ),
                       ),
                     ],
                   ),
@@ -122,97 +173,99 @@ class _MainHomeAdminPageState extends State<MainHomeAdminPage> {
             ),
             SizedBox(height: 10),
             //buttons
-                        Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              
               children: [
-                  Column(
-          children: [
-           InkWell(
-            onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute( builder: (context) => const ListReports()));
-            },
-              child: Container(
-                height: 120,
-                width: 120,
-                padding: EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.shade400,
-                      blurRadius: 6.0,
-                      spreadRadius: 2.0,
+                Column(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const ListReports()));
+                      },
+                      child: Container(
+                        height: 120,
+                        width: 120,
+                        padding: EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.shade400,
+                              blurRadius: 6.0,
+                              spreadRadius: 2.0,
+                            ),
+                          ],
+                        ),
+                        child: Center(
+                          child: Icon(
+                            Icons.book,
+                            size: 70,
+                            color: iOrangeColor,
+                          ),
+                          //Image.asset(iconImagePath),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 12),
+                    //text
+                    Text(
+                      'รายงานสวัสดิการ',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Sarabun',
+                        color: iBlueColor,
+                      ),
                     ),
                   ],
                 ),
-                child: Center(
-                  child: Icon(Icons.book,size: 70,
-                  color: iOrangeColor,),
-                  //Image.asset(iconImagePath),
-                ),
-              ),
-            ),
-                        SizedBox(height: 12),
-            //text
-            Text('รายงานสวัสดิการ',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
-              color: iBlueColor,
-            ),
-            ),
-          ],
-        ),
 
-          Column(
-          children: [
-           InkWell(
-            onTap: () {
-              Navigator.pushNamed(context, '');
-            },
-              child: Container(
-                height: 120,
-                width: 120,
-          //       padding: EdgeInsets.all(20),
-          //       decoration: BoxDecoration(
-          //         color: Colors.white,
-          //         borderRadius: BorderRadius.circular(20),
-          //         boxShadow: [
-          //           BoxShadow(
-          //             color: Colors.grey.shade400,
-          //             blurRadius: 6.0,
-          //             spreadRadius: 2.0,
-          //           ),
-          //         ],
-          //       ),
-          //       child: Center(
-          //         child: Icon(Icons.book,size: 70,
-          //         color: iOrangeColor,),
-          //         //Image.asset(iconImagePath),
-          //       ),
-          //     ),
-          //   ),
-          //               SizedBox(height: 12),
-          //   //text
-          //   Text('',
-          //   style: TextStyle(
-          //     fontSize: 14,
-          //     fontWeight: FontWeight.bold,
-          //     color: iBlueColor,
-            ),
-            ),
-          ],
-        ),
+                Column(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, '');
+                      },
+                      child: Container(
+                        height: 120,
+                        width: 120,
+                        //       padding: EdgeInsets.all(20),
+                        //       decoration: BoxDecoration(
+                        //         color: Colors.white,
+                        //         borderRadius: BorderRadius.circular(20),
+                        //         boxShadow: [
+                        //           BoxShadow(
+                        //             color: Colors.grey.shade400,
+                        //             blurRadius: 6.0,
+                        //             spreadRadius: 2.0,
+                        //           ),
+                        //         ],
+                        //       ),
+                        //       child: Center(
+                        //         child: Icon(Icons.book,size: 70,
+                        //         color: iOrangeColor,),
+                        //         //Image.asset(iconImagePath),
+                        //       ),
+                        //     ),
+                        //   ),
+                        //               SizedBox(height: 12),
+                        //   //text
+                        //   Text('',
+                        //   style: TextStyle(
+                        //     fontSize: 14,
+                        //     fontWeight: FontWeight.bold,
+                        //     color: iBlueColor,
+                      ),
+                    ),
+                  ],
+                ),
                 // ButtonMenu(
                 //   iconImagePath: Icons.book,
                 //   buttonText: 'รายงานสวัสดิการทั้งหมด',
                 //   index: '/5',
                 // ),
-                
-                
-                           
               ],
             ),
           ],

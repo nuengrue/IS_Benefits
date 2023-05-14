@@ -23,7 +23,7 @@ class CremationServiceProviders with ChangeNotifier {
   } 
 // function to add data to list of notes 
  void addCremationService( 
-   String         no,
+   int         no,
    String        empcode,
    String        name,
    String        department,
@@ -56,7 +56,8 @@ class CremationServiceProviders with ChangeNotifier {
       String fileUrl, 
    String filename, 
    String read, 
-   String id, 
+   String id,
+      String remarks,  
 )
  {
     CremationService cremationService = new CremationService(
@@ -93,7 +94,8 @@ class CremationServiceProviders with ChangeNotifier {
       fileUrl,
     filename,
     read,
-    id,);
+    id,    
+    remarks,);
 
    _cremationserviceList.add(cremationService);
 

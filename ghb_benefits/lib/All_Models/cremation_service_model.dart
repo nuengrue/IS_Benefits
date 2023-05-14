@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CremationService {
-  String no;
+  final int  no;
   final String empcode;
   final String name;
   final String department;
@@ -47,6 +47,7 @@ class CremationService {
   final String filename;
   final String  flagread;
   String id;
+    final String   remarks;
   CremationService(
       this.no,
       this.empcode,
@@ -81,11 +82,12 @@ class CremationService {
       this.fileUrl,
       this.filename,
       this.flagread,
-      this.id,);
+      this.id,
+      this.remarks,);
 
   factory CremationService.fromJson(Map<String, dynamic> json) {
     return CremationService(
-      json['no'] as String,
+      json['no'] as int,
       json['empcode'] as String,
       json['name'] as String,
       json['department'] as String,
@@ -119,7 +121,7 @@ class CremationService {
       json['filename'] as String,
       json['flagread'] as String,
       json['id'] as String,
-    
+      json['remarks'] as String,   
     );
   }
 
@@ -158,7 +160,8 @@ class CremationService {
     'fileUrl' : fileUrl, 
     'filename' : filename,    
     'flagread' : flagread,   
-    'id' : id,       
+    'id' : id,  
+    'remarks' : remarks,          
     };
   }
 }

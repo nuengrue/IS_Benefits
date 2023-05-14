@@ -5,10 +5,11 @@ class Notifications {
   int no;
   final String title;
   final String content;
-  final int read;
+  late int read;
   final String createDate;
   final String uid; 
   String id;
+  final  String   remarks;
   Notifications(
        this.no,
        this.title,
@@ -16,7 +17,8 @@ class Notifications {
        this.read,
        this.createDate,
        this.uid,
-       this.id,);
+       this.id,
+       this.remarks,);
 
 factory Notifications.fromJson(Map<String, dynamic> json) {
     print(json);
@@ -28,6 +30,7 @@ factory Notifications.fromJson(Map<String, dynamic> json) {
       json['createDate'] as String,
       json['uid'] as String,
       json['id'] as String,
+      json['remarks'] as String,
     );
   }
 
@@ -41,6 +44,7 @@ factory Notifications.fromJson(Map<String, dynamic> json) {
     'createDate' : createDate,
     'uid' : uid,        
     'id' : id, 
+    'remarks' : remarks, 
   };
 }
 
