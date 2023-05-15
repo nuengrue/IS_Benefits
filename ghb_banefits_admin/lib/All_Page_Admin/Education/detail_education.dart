@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:ghb_banefits_admin/All_Controllers_Admin/Education_Controller.dart';
 import 'package:ghb_banefits_admin/All_Controllers_Admin/master_controllers.dart';
 import 'package:ghb_banefits_admin/All_Models_Admin/education_model.dart';
 import 'package:ghb_banefits_admin/All_Page_Admin/Education/list_education_page.dart';
@@ -39,8 +40,12 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
    final String _createDate = DateFormat('dd-MM-yyyy  kk:mm').format(DateTime.now());
   late String _id = "";
   late String _uid;
-
-  
+  late int sumApprove = 0;
+  late int sumRequest = 0;
+  late int sumReject = 0;
+  late int dum = 0;
+    EducationAdminController controller =
+      EducationAdminController(FirebaseServicesAdmin());
     MasterController mastecontroller = MasterController(FirebaseServicesAdmin());
   void initState() {
     super.initState();
@@ -48,7 +53,25 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
   }
   late int _idcounts = 0;
   void _getcountnoti(BuildContext context) async {
+            var _dataEducation = await controller.fetchEducationAdmin();
+               var _dataEducationuid = _dataEducation.where((x) => x.email == widget.Notes.email);
+    print(widget.Notes.email);
 
+    _dataEducationuid.forEach((b) {
+
+          if (b.status == "อนุมัติ") {
+            sumApprove += int.parse(b.payamount);
+          } else if (b.status == "ร้องขอ") {
+            sumRequest += int.parse(b.amountreceipt);
+          } else if (b.status == "ปฏิเสธ") {
+            sumReject += int.parse(b.amountreceipt);
+          }
+
+      });
+    print(sumApprove);
+    setState(() {
+  
+});
                 var newNotification = await mastecontroller.fetchNotiAdmin();
           context.read<NotificationsProviders>().NotificationsAdminList = newNotification;
     setState(() {
@@ -74,7 +97,7 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
           .doc(widget.Notes.id);
 
       docStatus.update({
-        'status': _idcounts,
+        'status': _status,
         'flagread': _flagread,
         'payamount': _payamount,
         'paydate': _paydate,
@@ -97,7 +120,7 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
       doc.update({
         'id': doc.id,
       });
-      Navigator.pop(
+      Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => ListEducationAdminPage(Status:"ร้องขอ"),
@@ -142,7 +165,8 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
       doc.update({
         'id': doc.id,
       });
-    Navigator.pop(
+      
+    Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => ListEducationAdminPage(Status:"ร้องขอ"),
@@ -755,7 +779,8 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                         ],
                       ),
                     ),
-                    Padding(
+
+                                                           Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: [
@@ -767,6 +792,66 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ),
+                            // Expanded(
+                            //   child: Padding(
+                            //     padding: const EdgeInsets.all(1.0),
+                            //     child: TextFormField(
+                            //       maxLength: 10,
+                            //       //controller: _addressc,
+                            //       keyboardType: TextInputType.number,
+                            //       decoration: InputDecoration(
+                            //         border: OutlineInputBorder(),
+                            //         hintText: 'ระบุจำนวนเงินจ่าย',
+                            //       ),
+                            //       validator: (value) {
+                            //         if (value == null || value.isEmpty) {
+                            //           return 'โปรดระบุจำนวนเงินจ่าย';
+                            //         }
+                            //         else if (int.parse(value) > 40000) {
+                            //           var dum;
+                            //            dum = 40000 - sumApprove;
+                            //           print(dum);
+                            //           return 'โปรดระบุจำนวนเงินจ่าย';
+                            //         }
+                            //       },
+                            //       onSaved: (newValue) => _payamount = newValue!,
+                            //     ),
+                            //   ),
+                            //   // child: Text(
+                            //   //   widget.Notes.payamount,
+                            //   //   textAlign: TextAlign.end,
+                            //   // ),
+                            // ),
+                          ] else ...[
+                            Expanded(
+                              child: Text(
+                                'จำนวนเงินจ่าย',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                widget.Notes.payamount,
+                                textAlign: TextAlign.end,
+                              ),
+                            ),
+                          ]
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          if (widget.Notes.status == "ร้องขอ") ...[
+                            // Expanded(
+                            //   child: Text(
+                            //     'จำนวนเงินจ่าย',
+                            //     textAlign: TextAlign.left,
+                            //     style: TextStyle(fontWeight: FontWeight.bold),
+                            //   ),
+                            // ),
                             Expanded(
                               child: Padding(
                                 padding: const EdgeInsets.all(1.0),
@@ -780,7 +865,28 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                                   ),
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
-                                      return 'โปรดระบุจำนวนเงินจ่าย';
+                                      return 'โปรดระบุจำนวนเงิน';
+                                    }
+                                    else if (int.parse(value) > 40000) {
+                                      // var dum;
+                                       dum = 40000 - sumApprove;
+                                      print(dum);
+                                      setState(() {
+                                        dum = dum;
+                                      });
+                                      return 'โปรดระบุจำนวนเงินจ่ายไม่เกิน $dum บาท';
+                                    }
+                                    else if  (int.parse(value) > dum) {
+                                      if (int.parse(value) > int.parse(widget.Notes.amountreceipt))
+                                      // (int.parse(value) > dum)
+                                      {
+                                        return 'โปรดระบุจำนวนเงินจ่ายไม่เกินใบเสร็จ';
+                                          // return 'โปรดระบุจำนวนเงินจ่ายไม่เกิน $dum บาท';
+                                      }
+                                      // var dum;
+                                      //  dum = 40000 - sumApprove;
+                                      // print(dum);
+                                       return 'โปรดระบุจำนวนเงินจ่ายไม่เกิน $dum บาท';
                                     }
                                   },
                                   onSaved: (newValue) => _payamount = newValue!,
@@ -809,6 +915,60 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                         ],
                       ),
                     ),
+                    // Padding(
+                    //   padding: const EdgeInsets.all(8.0),
+                    //   child: Row(
+                    //     children: [
+                    //       if (widget.Notes.status == "ร้องขอ") ...[
+                    //         Expanded(
+                    //           child: Text(
+                    //             'จำนวนเงินจ่าย',
+                    //             textAlign: TextAlign.left,
+                    //             style: TextStyle(fontWeight: FontWeight.bold),
+                    //           ),
+                    //         ),
+                    //         Expanded(
+                    //           child: Padding(
+                    //             padding: const EdgeInsets.all(1.0),
+                    //             child: TextFormField(
+                    //               maxLength: 10,
+                    //               //controller: _addressc,
+                    //               keyboardType: TextInputType.number,
+                    //               decoration: InputDecoration(
+                    //                 border: OutlineInputBorder(),
+                    //                 hintText: 'ระบุจำนวนเงินจ่าย',
+                    //               ),
+                    //               validator: (value) {
+                    //                 if (value == null || value.isEmpty) {
+                    //                   return 'โปรดระบุจำนวนเงินจ่าย';
+                    //                 }
+                    //               },
+                    //               onSaved: (newValue) => _payamount = newValue!,
+                    //             ),
+                    //           ),
+                    //           // child: Text(
+                    //           //   widget.Notes.payamount,
+                    //           //   textAlign: TextAlign.end,
+                    //           // ),
+                    //         ),
+                    //       ] else ...[
+                    //         Expanded(
+                    //           child: Text(
+                    //             'จำนวนเงินจ่าย',
+                    //             textAlign: TextAlign.left,
+                    //             style: TextStyle(fontWeight: FontWeight.bold),
+                    //           ),
+                    //         ),
+                    //         Expanded(
+                    //           child: Text(
+                    //             widget.Notes.payamount,
+                    //             textAlign: TextAlign.end,
+                    //           ),
+                    //         ),
+                    //       ]
+                    //     ],
+                    //   ),
+                    // ),
                     // Padding(
                     //   padding: const EdgeInsets.all(8.0),
                     //   child: Row(

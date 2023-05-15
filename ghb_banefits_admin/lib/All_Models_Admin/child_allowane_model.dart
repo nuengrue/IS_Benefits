@@ -17,7 +17,7 @@ class ChildAllowanceAdmin {
   final String email;
   final String fileUrl;
   final String filename;
-  late final String  flagread;
+  late  String  flagread;
   String id;
   late  String   remarks;
   ChildAllowanceAdmin(

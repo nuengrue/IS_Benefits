@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:ghb_banefits_admin/All_Controllers_Admin/Medical_Controller.dart';
 import 'package:ghb_banefits_admin/All_Controllers_Admin/master_controllers.dart';
 import 'package:ghb_banefits_admin/All_Models_Admin/medical_model.dart';
 import 'package:ghb_banefits_admin/All_Page_Admin/Medical/list_medical_page.dart';
@@ -39,15 +40,48 @@ class _DetailMedicalAdminPageState extends State<DetailMedicalAdminPage> {
       DateFormat('dd-MM-yyyy  kk:mm').format(DateTime.now());
   late String _id = "";
   late String _uid;
-
+  late int sumApprove = 0;
+  late int sumRequest = 0;
+  late int sumReject = 0;
+    late int dum = 0;
     MasterController mastecontroller = MasterController(FirebaseServicesAdmin());
+   MedicalAdminController controller =
+      MedicalAdminController(FirebaseServicesAdmin());
+ 
   void initState() {
     super.initState();
     _getcountnoti(context);
   }
   late int _idcounts = 0;
   void _getcountnoti(BuildContext context) async {
+    var _dataMedical = await controller.fetchMedicalAdmin();
+    var _dataMedicaluid = _dataMedical.where((x) => x.email == widget.Notes.email);
+    print(widget.Notes.email);
 
+    _dataMedicaluid.forEach((b) {
+
+          if (b.status == "อนุมัติ") {
+            sumApprove += int.parse(b.payamount);
+          } else if (b.status == "ร้องขอ") {
+            sumRequest += int.parse(b.receiptamount);
+          } else if (b.status == "ปฏิเสธ") {
+            sumReject += int.parse(b.receiptamount);
+          }
+
+      });
+    print(sumApprove);
+setState(() {
+  
+});
+            // print(_dataMedical.length);
+            // // if(_dataMedical.length > 0){
+            // //             setState(() {
+            // //   data = _dataMedical;
+            // //   filteredData = _dataMedical;
+            // //   // print(filteredData);
+            // // });
+            // context.read<MedicalAdminProviders>().MedicalAdminList = _dataMedical;
+            // }
                 var newNotification = await mastecontroller.fetchNotiAdmin();
           context.read<NotificationsProviders>().NotificationsAdminList = newNotification;
     setState(() {
@@ -100,68 +134,124 @@ class _DetailMedicalAdminPageState extends State<DetailMedicalAdminPage> {
       doc.update({
         'id': doc.id,
       });
-      Navigator.pop(
+      Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ListMedicalAdminPage(Status: "ร้องขอ"),
+          builder: (context) => ListMedicalAdminPage(Status:"ร้องขอ"),
         ),
       );
     }
   }
 
-  void ModifydataReject() async {
+ void ModifydataReject() async {
     if (_formKey.currentState!.validate()) {
-    _formKey.currentState!.save();
-    _Indexs = widget.Indexs.toInt();
-    _status = "ปฏิเสธ";
-    _flagread = "1";
-    _payamount = "0";
-    _paydate = DateFormat('dd-MM-yyyy  kk:mm').format(DateTime.now());
-    _remark = _remark;
-    Provider.of<MedicalAdminProviders>(context, listen: false)
-        .modify(_Indexs, _status, _flagread, _payamount, _paydate, _remark);
-    print("done");
+      _formKey.currentState!.save();
+      _Indexs = widget.Indexs.toInt();
+      _status = "ปฏิเสธ";
+      _flagread = "1";
+      _payamount = _payamount;
+      _remark = _remark;
+      _paydate = DateFormat('dd-MM-yyyy  kk:mm').format(DateTime.now());
+      print(_status);
+      Provider.of<MedicalAdminProviders>(context, listen: false)
+          .modify(_Indexs, _status, _flagread, _payamount, _paydate, _remark);
+      print("done");
 
-    final docStatus =
-        FirebaseFirestore.instance.collection('Medical').doc(widget.Notes.id);
+      final docStatus =
+          FirebaseFirestore.instance.collection('Medical').doc(widget.Notes.id);
 
-    docStatus.update({
-      'status': _status,
-      'flagread': _flagread,
-      'payamount': _payamount,
-      'paydate': _paydate,
-      'remarks': _remark
-    });
+      docStatus.update({
+        'status': _status,
+        'flagread': _flagread,
+        'payamount': _payamount,
+        'paydate': _paydate,
+        'remarks': _remark
+      });
     _content = "คำขอเบิกค่ารักษาพยาบาล  เลขที่ใบเสร็จ " +
         widget.Notes.idreceiptnumber +
         " ได้รับการปฏิเสธจำนวน " +
         widget.Notes.receiptamount +
         " บาท";
-    _uid = widget.Notes.email;
-    CollectionReference Notifications =
-        FirebaseFirestore.instance.collection('Notifications');
-    DocumentReference doc = await Notifications.add({
-      'no': _idcounts,
-      'title': _title,
-      'content': _content,
-      'read': 0,
-      'createDate': _createDate,
-      'uid': _uid,
-      'id': _id,
-      'remarks': _remark
-    });
-    doc.update({
-      'id': doc.id,
-    });
-
-    Navigator.pop(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ListMedicalAdminPage(Status: "ร้องขอ"),
-      ),
-    );
-     }
+      _uid = widget.Notes.email;
+      CollectionReference Notifications =
+          FirebaseFirestore.instance.collection('Notifications');
+      DocumentReference doc = await Notifications.add({
+        'no': _idcounts,
+        'title': _title,
+        'content': _content,
+        'read': 0,
+        'createDate': _createDate,
+        'uid': _uid,
+        'id': _id,
+        'remarks': _remark
+      });
+      doc.update({
+        'id': doc.id,
+      });
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ListMedicalAdminPage(Status:"ร้องขอ"),
+        ),
+      );
+    }
   }
+  
+  // void ModifydataReject() async {
+  //    if (_formKey.currentState!.validate()) {
+  //    _formKey.currentState!.save();
+  //   _Indexs = widget.Indexs.toInt();
+  //   _status = "ปฏิเสธ";
+  //   _flagread = "1";
+  //   _payamount = "0";
+  //   _paydate = DateFormat('dd-MM-yyyy  kk:mm').format(DateTime.now());
+  //   _remark = _remark;
+  //         print(_status);
+  //               print(_payamount);
+  //   Provider.of<MedicalAdminProviders>(context, listen: false)
+  //       .modify(_Indexs, _status, _flagread, _payamount, _paydate, _remark);
+  //   print("done");
+
+  //   final docStatus =
+  //       FirebaseFirestore.instance.collection('Medical').doc(widget.Notes.id);
+
+  //   docStatus.update({
+  //     'status': _status,
+  //     'flagread': _flagread,
+  //     'payamount': _payamount,
+  //     'paydate': _paydate,
+  //     'remarks': _remark
+  //   });
+  //   _content = "คำขอเบิกค่ารักษาพยาบาล  เลขที่ใบเสร็จ " +
+  //       widget.Notes.idreceiptnumber +
+  //       " ได้รับการปฏิเสธจำนวน " +
+  //       widget.Notes.receiptamount +
+  //       " บาท";
+  //   _uid = widget.Notes.email;
+  //   CollectionReference Notifications =
+  //       FirebaseFirestore.instance.collection('Notifications');
+  //   DocumentReference doc = await Notifications.add({
+  //     'no': _idcounts,
+  //     'title': _title,
+  //     'content': _content,
+  //     'read': 0,
+  //     'createDate': _createDate,
+  //     'uid': _uid,
+  //     'id': _id,
+  //     'remarks': _remark
+  //   });
+  //   doc.update({
+  //     'id': doc.id,
+  //   });
+
+  //   Navigator.pop(
+  //     context,
+  //     MaterialPageRoute(
+  //       builder: (context) => ListMedicalAdminPage(Status: "ร้องขอ"),
+  //     ),
+  //   );
+  //     }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -742,7 +832,8 @@ class _DetailMedicalAdminPageState extends State<DetailMedicalAdminPage> {
                         ],
                       ),
                     ),
-                    Padding(
+
+                                       Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: [
@@ -754,6 +845,66 @@ class _DetailMedicalAdminPageState extends State<DetailMedicalAdminPage> {
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ),
+                            // Expanded(
+                            //   child: Padding(
+                            //     padding: const EdgeInsets.all(1.0),
+                            //     child: TextFormField(
+                            //       maxLength: 10,
+                            //       //controller: _addressc,
+                            //       keyboardType: TextInputType.number,
+                            //       decoration: InputDecoration(
+                            //         border: OutlineInputBorder(),
+                            //         hintText: 'ระบุจำนวนเงินจ่าย',
+                            //       ),
+                            //       validator: (value) {
+                            //         if (value == null || value.isEmpty) {
+                            //           return 'โปรดระบุจำนวนเงินจ่าย';
+                            //         }
+                            //         else if (int.parse(value) > 40000) {
+                            //           var dum;
+                            //            dum = 40000 - sumApprove;
+                            //           print(dum);
+                            //           return 'โปรดระบุจำนวนเงินจ่าย';
+                            //         }
+                            //       },
+                            //       onSaved: (newValue) => _payamount = newValue!,
+                            //     ),
+                            //   ),
+                            //   // child: Text(
+                            //   //   widget.Notes.payamount,
+                            //   //   textAlign: TextAlign.end,
+                            //   // ),
+                            // ),
+                          ] else ...[
+                            Expanded(
+                              child: Text(
+                                'จำนวนเงินจ่าย',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                widget.Notes.payamount,
+                                textAlign: TextAlign.end,
+                              ),
+                            ),
+                          ]
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          if (widget.Notes.status == "ร้องขอ") ...[
+                            // Expanded(
+                            //   child: Text(
+                            //     'จำนวนเงินจ่าย',
+                            //     textAlign: TextAlign.left,
+                            //     style: TextStyle(fontWeight: FontWeight.bold),
+                            //   ),
+                            // ),
                             Expanded(
                               child: Padding(
                                 padding: const EdgeInsets.all(1.0),
@@ -767,7 +918,28 @@ class _DetailMedicalAdminPageState extends State<DetailMedicalAdminPage> {
                                   ),
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
-                                      return 'โปรดระบุจำนวนเงินจ่าย';
+                                      return 'โปรดระบุจำนวนเงิน';
+                                    }
+                                    else if (int.parse(value) > 40000) {
+                                      // var dum;
+                                       dum = 40000 - sumApprove;
+                                      print(dum);
+                                      setState(() {
+                                        dum = dum;
+                                      });
+                                      return 'โปรดระบุจำนวนเงินจ่ายไม่เกิน $dum บาท';
+                                    }
+                                    else if  (int.parse(value) > dum) {
+                                      if (int.parse(value) > int.parse(widget.Notes.receiptamount))
+                                      // (int.parse(value) > dum)
+                                      {
+                                        return 'โปรดระบุจำนวนเงินจ่ายไม่เกินใบเสร็จ';
+                                          // return 'โปรดระบุจำนวนเงินจ่ายไม่เกิน $dum บาท';
+                                      }
+                                      // var dum;
+                                      //  dum = 40000 - sumApprove;
+                                      // print(dum);
+                                       return 'โปรดระบุจำนวนเงินจ่ายไม่เกิน $dum บาท';
                                     }
                                   },
                                   onSaved: (newValue) => _payamount = newValue!,
