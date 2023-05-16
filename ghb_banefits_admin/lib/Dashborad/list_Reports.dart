@@ -6,6 +6,7 @@ import 'package:ghb_banefits_admin/All_Page_Admin/Report/Report_House_Allowance.
 import 'package:ghb_banefits_admin/All_Page_Admin/Report/Report_Medical.dart';
 import 'package:ghb_banefits_admin/button_menu.dart';
 import 'package:ghb_banefits_admin/color.dart';
+import 'package:ghb_banefits_admin/main_home_admin_page.dart';
 import 'package:ghb_banefits_admin/my_drawer.dart';
 
 
@@ -24,6 +25,18 @@ Widget build(BuildContext context) {
       final double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
+                       leading: IconButton(
+                  
+                        
+                         icon: Icon(Icons.arrow_back),
+                          
+                        color: iWhiteColor,
+                        onPressed: () {
+                            // FirebaseAuth.instance.signOut();
+                            Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => MainHomeAdminPage()));
+                        },
+                      ),
         title: Text(
           'รายงานสวัสดิการ',
           textAlign: TextAlign.center,
@@ -288,7 +301,7 @@ Widget build(BuildContext context) {
           ],
         ),
       ),
-      drawer: MyDrawer(),
+      // drawer: MyDrawer(),
     );
   }
 }

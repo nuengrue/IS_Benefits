@@ -48,7 +48,20 @@ class _ListCremationServiceAdminPageState extends State<ListCremationServiceAdmi
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-            appBar: AppBar(title: Text('รายการคำขอสมัครฌาปนกิจ',style: TextStyle(
+            appBar: AppBar(
+                             leading: IconButton(
+                  
+                        
+                         icon: Icon(Icons.arrow_back),
+                          
+                        color: iWhiteColor,
+                        onPressed: () {
+                            // FirebaseAuth.instance.signOut();
+                            Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => MainHomeAdminPage()));
+                        },
+                      ),
+              title: Text('รายการคำขอสมัครฌาปนกิจ',style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                             color: iWhiteColor,),),backgroundColor: iOrangeColor,

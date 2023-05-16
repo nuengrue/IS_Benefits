@@ -67,7 +67,20 @@ class _ListChildAllowanceWhereAdminPageState extends State<ListChildAllowanceWhe
 
   Widget build(BuildContext context) {
     return Scaffold(
-            appBar: AppBar(title: 
+            appBar: AppBar(
+               leading: IconButton(
+                  
+                        
+                         icon: Icon(Icons.arrow_back),
+                          
+                        color: iWhiteColor,
+                        onPressed: () {
+                            // FirebaseAuth.instance.signOut();
+                            Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => MainHomeAdminPage()));
+                        },
+                      ),
+              title: 
              Text('รายการคำขอเบิกค่าช่วยเหลือบุตร',
             // Text(widget.Status.toString(),
             style: TextStyle(

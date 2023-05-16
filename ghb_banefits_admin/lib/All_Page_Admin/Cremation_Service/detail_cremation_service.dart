@@ -139,7 +139,7 @@ class _DetailCremationServiceAdminPageState
       String id,
       String remarks) async {
     final response = await http.post(
-      Uri.parse('http://localhost:5000/InsertCremationService'),
+      Uri.parse('http://192.168.1.43/APIBenefit/CremationService/InsertCremationService'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -178,11 +178,11 @@ class _DetailCremationServiceAdminPageState
         // 'flagread' : flagread,
         'no': no,
         'idfirebase': id,
-        'remarks': remarks
+        'remarks': remarks,
       }),
     );
 
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       // If the server did return a 201 CREATED response,
       // then parse the JSON.
       return CremationServiceAdmin.fromJson(jsonDecode(response.body));
@@ -276,7 +276,7 @@ class _DetailCremationServiceAdminPageState
         _flagread,
         _no,
         _id,
-        _remarks,
+        _remark,
       );
 
       print(_futureCremationServiceAdmin);
@@ -334,7 +334,75 @@ class _DetailCremationServiceAdminPageState
       _payamount = "0";
       _paydate = DateFormat('dd-MM-yyyy  kk:mm').format(DateTime.now());
       _remark = _remark;
+      _empcode = widget.Notes.email;
+      _name = widget.Notes.name;
+      _department = widget.Notes.department;
+      _divisionment = widget.Notes.divisionment;
+      _idcard = widget.Notes.idcard;
+      _savedate = widget.Notes.savedate;
+      _housenumber = widget.Notes.housenumber;
+      _alley = widget.Notes.alley;
+      _road = widget.Notes.road;
+      _district = widget.Notes.district;
+      _county = widget.Notes.county;
+      _province = widget.Notes.province;
+      _tel = widget.Notes.tel;
+      _readrules = widget.Notes.readrules.toString();
+      _age = widget.Notes.age;
+      _datebirth = widget.Notes.datebirth;
+      _namepartner = widget.Notes.namepartner;
+      _pay1 = widget.Notes.pay1.toString();
+      _pay2 = widget.Notes.pay2.toString();
+      _pay3 = widget.Notes.pay3.toString();
+      _managername = widget.Notes.managername;
+      _cardnumber = widget.Notes.cardnumber;
+      _relationship = widget.Notes.relationship;
+      _percentage = widget.Notes.percentage;
+      _conditions = widget.Notes.conditions;
+      _email = widget.Notes.email;
+      _fileUrl = widget.Notes.fileUrl;
+      _filename = widget.Notes.filename;
+      _no = widget.Notes.no.toString();
+      _id = widget.Notes.id;
 
+//set insert api
+      _futureCremationServiceAdmin = createCremationServiceAdmin(
+        _empcode,
+        _name,
+        _department,
+        _divisionment,
+        _idcard,
+        _savedate,
+        _housenumber,
+        _alley,
+        _road,
+        _district,
+        _county,
+        _province,
+        _tel,
+        _readrules,
+        _age,
+        _datebirth,
+        _namepartner,
+        _pay1,
+        _pay2,
+        _pay3,
+        _managername,
+        _cardnumber,
+        _relationship,
+        _percentage,
+        _conditions,
+        _payamount,
+        _paydate,
+        _status,
+        _email,
+        _fileUrl,
+        _filename,
+        _flagread,
+        _no,
+        _id,
+        _remark,
+      );
       Provider.of<CremationServiceAdminProviders>(context, listen: false)
           .modify(_Indexs, _status, _flagread, _payamount, _paydate, _remark);
       print("done");

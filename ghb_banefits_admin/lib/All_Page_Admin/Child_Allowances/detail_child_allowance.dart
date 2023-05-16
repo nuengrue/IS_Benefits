@@ -1,7 +1,7 @@
 //import 'dart:developer';
 
 import 'dart:convert';
-
+import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:ghb_banefits_admin/All_Controllers_Admin/child_allowance_controllers.dart';
@@ -17,7 +17,48 @@ import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:http/http.dart' as http;
 //import 'package:flutter/widgets.dart';
-
+//   Future<ChildAllowanceAdmin> createChildAllowanceAdmin(String empcode,String nameemp,String department,String divisionment,String savedate,String namechild,String namepartner,String officetner,String maritalstatus,
+//       String submaritalstatus,String status,String email,String fileUrl,String filename,String flagread, String no,String id,String remarks) 
+//       async {
+//   var response2 = await http.post(
+//     Uri.parse('http://192.168.1.43/ChildAllowance/InsertChildAllowance'),
+//     headers: <String, String>{
+//       'Content-Type': 'application/json; charset=UTF-8',
+//     },
+//       body: jsonEncode(<String, String>{
+//         'empcode': empcode,
+//         'nameemp': nameemp,
+//         'department': department,
+//         'divisionment': divisionment,
+//         'savedate': savedate,
+//         'namechild': namechild,
+//         'namepartner': namepartner,
+//         'officetner': officetner,
+//         'maritalstatus': maritalstatus,
+//         'submaritalstatus': submaritalstatus,
+//         'status': status,
+//         'email': email,
+//         'fileUrl': fileUrl,
+//         'filename': filename,
+//         'flagread': flagread,
+//         'no': no,
+//         'idfirebase': id,
+//         'remarks': remarks,
+//       }),
+//     );
+//   final response = response2;
+// print(response);
+//     if (response.statusCode == 200) {
+//       print(response.statusCode);
+//       // If the server did return a 201 CREATED response,
+//       // then parse the JSON.
+//       return ChildAllowanceAdmin.fromJson(jsonDecode(response.body));
+//     } else {
+//       // If the server did not return a 201 CREATED response,
+//       // then throw an exception.
+//       // throw Exception('Failed to create.');
+//     }
+//   }
 class DetailChildAllowanceAdminPage extends StatefulWidget {
   const DetailChildAllowanceAdminPage(
       {super.key, required this.Notes, required this.Indexs});
@@ -49,11 +90,13 @@ class _DetailChildAllowanceAdminPageState
   late String _url;
   late String _filename;
 
-  late Future<ChildAllowanceAdmin> _futureChildAllowanceAdmin;
-  Future<ChildAllowanceAdmin> createChildAllowanceAdmin(String empcode,String nameemp,String department,String divisionment,String savedate,String namechild,String namepartner,String officetner,String maritalstatus,
-      String submaritalstatus,String status,String email,String fileUrl,String filename,String flagread, String no,String id,String remarks) async {
+   late Future<ChildAllowanceAdmin> _futureChildAllowanceAdmin;
+  Future<ChildAllowanceAdmin> createChildAllowanceAdmin(String empcode,String nameemp,String department,
+  String divisionment,String savedate,String namechild,String namepartner,String officetner,String maritalstatus,
+      String submaritalstatus,String status,String email,String fileUrl,String filename,String flagread, String no,String id,String remarks) 
+      async {
   final response = await http.post(
-    Uri.parse('http://localhost:5000/ChildAllowance/InsertChildAllowance'),
+    Uri.parse('http://192.168.1.43/APIBenefit/ChildAllowance/InsertChildAllowance'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -75,17 +118,19 @@ class _DetailChildAllowanceAdminPageState
         'flagread': flagread,
         'no': no,
         'idfirebase': id,
-        'remarks': remarks
+        'remarks': remarks,
       }),
     );
 print(response);
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       // If the server did return a 201 CREATED response,
       // then parse the JSON.
-      return ChildAllowanceAdmin.fromJson(jsonDecode(response.body));
+      print(response.statusCode);
+       return ChildAllowanceAdmin.fromJson(jsonDecode(response.body));
     } else {
       // If the server did not return a 201 CREATED response,
       // then throw an exception.
+      
       throw Exception('Failed to create.');
     }
   }
@@ -162,6 +207,8 @@ print(response);
       _id = widget.Notes.id;
 
 //set insert api
+setState(() {
+  
       _futureChildAllowanceAdmin = createChildAllowanceAdmin(
           _empcode,
           _nameemp,
@@ -181,7 +228,7 @@ print(response);
           _no,
           _id,
           _remark);
-
+});
       print(_futureChildAllowanceAdmin);
       //
       Provider.of<ChildAllowanceAdminProviders>(context, listen: false)
@@ -235,7 +282,46 @@ print(response);
       print(_status);
       print(_flagread);
       print(_Indexs);
+      _empcode = widget.Notes.empcode;
+      _nameemp = widget.Notes.nameemp;
+      _department = widget.Notes.department;
+      _divisionment = widget.Notes.divisionment;
+      _savedate = widget.Notes.savedate;
+      _namechild = widget.Notes.namechild;
+      _namepartner = widget.Notes.namepartner;
+      _officetner = widget.Notes.officetner;
+      _maritalstatus = widget.Notes.maritalstatus;
+      _submaritalstatus = widget.Notes.submaritalstatus;
+      _email = widget.Notes.email;
+      _url = widget.Notes.fileUrl;
+      _filename = widget.Notes.filename;
+      _no = widget.Notes.no.toString();
+      _id = widget.Notes.id;
 
+//set insert api
+setState(() {
+  
+      _futureChildAllowanceAdmin = createChildAllowanceAdmin(
+          _empcode,
+          _nameemp,
+          _department,
+          _divisionment,
+          _savedate,
+          _namechild,
+          _namepartner,
+          _officetner,
+          _maritalstatus,
+          _submaritalstatus,
+          _status,
+          _email,
+          _url,
+          _filename,
+          _flagread,
+          _no,
+          _id,
+          _remark);
+});
+      print(_futureChildAllowanceAdmin);
       Provider.of<ChildAllowanceAdminProviders>(context, listen: false)
           .modify(_Indexs, _status, _flagread, _remark);
       print("done");

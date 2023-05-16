@@ -1,400 +1,113 @@
-import 'package:flutter/material.dart';
-import 'package:ghb_banefits_admin/All_Controllers_Admin/child_allowance_controllers.dart';
-import 'package:ghb_banefits_admin/All_Page_Admin/Child_Allowances/list_child_allowance_where.dart';
-import 'package:ghb_banefits_admin/All_Providers_Admin/provider_child_allowance.dart';
-import 'package:ghb_banefits_admin/All_Services_Admin/servics.dart';
-import 'package:ghb_banefits_admin/Dashborad/boxdashborad.dart';
-import 'package:ghb_banefits_admin/color.dart';
-import 'package:ghb_banefits_admin/main_home_admin_page.dart';
-import 'package:provider/provider.dart';
+import 'dart:async';
+import 'dart:convert';
 
-class ChildAllowancesDashboradPage extends StatefulWidget {
-  @override
-  State<ChildAllowancesDashboradPage> createState() =>
-      _ChildAllowancesDashboradPageState();
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+Future<Album> createAlbum(String titer) async {
+  final response = await http.post(
+    Uri.parse('http://192.168.1.43/APIBenefit/SQL/Inserttest'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{
+      'titer': titer,
+    }),
+  );
+print(response);
+print(response.statusCode);
+  if (response.statusCode == 201) {
+    // If the server did return a 201 CREATED response,
+    // then parse the JSON.
+    return Album.fromJson(jsonDecode(response.body));
+  } else {
+    
+    // If the server did not return a 201 CREATED response,
+    // then throw an exception.
+    throw Exception('Failed to create album.');
+  }
 }
 
-class _ChildAllowancesDashboradPageState
-    extends State<ChildAllowancesDashboradPage> {
-  ChildAllowanceAdminController controller =
-      ChildAllowanceAdminController(FirebaseServicesAdmin());
+class Album {
+  final int id;
+  final String titer;
 
-  void initState() {
-    super.initState();
-    _getChildAllowanceAdmin(context);
+  const Album({required this.id, required this.titer});
+
+  factory Album.fromJson(Map<String, dynamic> json) {
+    return Album(
+      id: json['id'],
+      titer: json['titer'],
+    );
   }
+}
 
-  void _getChildAllowanceAdmin(BuildContext context) async {
-    var newChildAllowanceAdmin = await controller.fetchChildAllowanceAdmin();
 
-    context.read<ChildAllowanceAdminProviders>().ChildAllowanceAdminList =
-        newChildAllowanceAdmin;
-    // count All Status
-    var cAll = newChildAllowanceAdmin;
-    int vAll = cAll.length;
-    context
-        .read<ChildAllowanceAdminProviders>()
-        .fliecountAllChildAllowanceAdmin = vAll;
-    // count  Status Request
-    var cRequest = newChildAllowanceAdmin.where((x) => x.status == "ร้องขอ");
-    int vRequest = cRequest.length;
-    context
-        .read<ChildAllowanceAdminProviders>()
-        .fliecountRequestChildAllowanceAdmin = vRequest;
-    // count  Status Approve
-    var cApprove = newChildAllowanceAdmin.where((x) => x.status == "Approve");
-    var chit = cApprove;
-    print(chit);
-    int vApprove = cApprove.length;
-    context
-        .read<ChildAllowanceAdminProviders>()
-        .fliecountApproveChildAllowanceAdmin = vApprove;
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
 
-    // count  Status Reject
-    var cReject = newChildAllowanceAdmin.where((x) => x.status == "Reject");
-    int vReject = cReject.length;
-    context
-        .read<ChildAllowanceAdminProviders>()
-        .fliecountRejectChildAllowanceAdmin = vReject;
+  @override
+  State<MyApp> createState() {
+    return _MyAppState();
   }
+}
 
+class _MyAppState extends State<MyApp> {
+  final TextEditingController _controller = TextEditingController();
+  Future<Album>? _futureAlbum;
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'ภาพรวมรายการค่าช่วยเหลือบุตร',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: iOrangeColor,
-          ),
+    return MaterialApp(
+      title: 'Create Data Example',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Create Data Example'),
         ),
-        backgroundColor: iBlueColor,
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.home),
-            // tooltip: 'Show Snackbar',
-            onPressed: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => MainHomeAdminPage()));
-            },
-          ),
-        ],
+        body: Container(
+          alignment: Alignment.center,
+          padding: const EdgeInsets.all(8.0),
+          child: (_futureAlbum == null) ? buildColumn() : buildFutureBuilder(),
+        ),
       ),
+    );
+  }
 
-      body: SingleChildScrollView(
-        child: Column(children: <Widget>[
-          SizedBox(height: 12),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              "ภาพรวมรายการค่าช่วยเหลือบุตร",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: iBlueColor,
-              ),
-            ),
-          ),
-          SizedBox(height: 12),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                  Column(
-                  children: [
-                    Text(
-                      'Total All',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: iBlueColor,
-                      ),
-                    ),
-                    SizedBox(height: 12),
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const ListChildAllowanceWhereAdminPage(Status:"Total All")));
-                      },
-                      child: Container(
-                        height: 80,
-                        width: 150,
-                        padding: EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          color: iAllColor,
-                          borderRadius: BorderRadius.circular(20),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black54,
-                              blurRadius: 6.0,
-                              spreadRadius: 2.0,
-                            ),
-                          ],
-                        ),
-                        child: Center(
-                          child: Text(
-                            context
-                        .watch<ChildAllowanceAdminProviders>()
-                        .fliecountAllChildAllowanceAdmin.toString(),
-                            style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                              color: iBlackColor,
-                            ),
-                          ),
-                          //Image.asset(iconImagePath),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                  Column(
-                  children: [
-                    Text(
-                      'Request',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: iBlueColor,
-                      ),
-                    ),
-                    SizedBox(height: 12),
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const ListChildAllowanceWhereAdminPage(Status:"ร้องขอ")));
-                      },
-                      child: Container(
-                        height: 80,
-                        width: 150,
-                        padding: EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          color: iRequestColor,
-                          borderRadius: BorderRadius.circular(20),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black54,
-                              blurRadius: 6.0,
-                              spreadRadius: 2.0,
-                            ),
-                          ],
-                        ),
-                        child: Center(
-                          child: Text(
-                            context
-                                .watch<ChildAllowanceAdminProviders>()
-                                .fliecountRequestChildAllowanceAdmin
-                                .toString(),
-                            style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                              color: iBlackColor,
-                            ),
-                          ),
-                          //Image.asset(iconImagePath),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                // BoxDashborad(
-                //     countnum: context
-                //         .watch<ChildAllowanceAdminProviders>()
-                //         .fliecountAllChildAllowanceAdmin,
-                //     buttonText: 'Total All',
-                //     indexColor: iAllColor,
-                //     url:
-                //         'Navigator.of(context).push(MaterialPageRoute(builder: (context) =>MainHomeAdminPage()));'),
-                // BoxDashborad(
-                //     countnum: context
-                //         .watch<ChildAllowanceAdminProviders>()
-                //         .fliecountRequestChildAllowanceAdmin,
-                //     buttonText: 'Request',
-                //     indexColor: iRequestColor,
-                //     url:
-                //         'Navigator.of(context).push(MaterialPageRoute(builder: (context) =>MainHomeAdminPage()));'),
-                // Column(
-                //   children: [
-                //     Text(
-                //       'Request',
-                //       style: TextStyle(
-                //         fontSize: 20,
-                //         fontWeight: FontWeight.bold,
-                //         color: iBlueColor,
-                //       ),
-                //     ),
-                //     SizedBox(height: 12),
-                //     InkWell(
-                //       onTap: () {
-                //         Navigator.of(context).push(MaterialPageRoute(
-                //             builder: (context) => MainHomeAdminPage()));
-                //       },
-                //       child: Container(
-                //         height: 80,
-                //         width: 150,
-                //         padding: EdgeInsets.all(20),
-                //         decoration: BoxDecoration(
-                //           color: iRequestColor,
-                //           borderRadius: BorderRadius.circular(20),
-                //           boxShadow: [
-                //             BoxShadow(
-                //               color: Colors.black54,
-                //               blurRadius: 6.0,
-                //               spreadRadius: 2.0,
-                //             ),
-                //           ],
-                //         ),
-                //         child: Center(
-                //           child: Text(
-                //             context
-                //                 .watch<ChildAllowanceAdminProviders>()
-                //                 .fliecountRequestChildAllowanceAdmin
-                //                 .toString(),
-                //             style: TextStyle(
-                //               fontSize: 25,
-                //               fontWeight: FontWeight.bold,
-                //               color: iBlackColor,
-                //             ),
-                //           ),
-                //           //Image.asset(iconImagePath),
-                //         ),
-                //       ),
-                //     ),
-                //   ],
-                // ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                     Column(
-                  children: [
-                    Text(
-                      'Approve',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: iBlueColor,
-                      ),
-                    ),
-                    SizedBox(height: 12),
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const ListChildAllowanceWhereAdminPage(Status:"Approve")));
-                      },
-                      child: Container(
-                        height: 80,
-                        width: 150,
-                        padding: EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          color: iApproveColor,
-                          borderRadius: BorderRadius.circular(20),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black54,
-                              blurRadius: 6.0,
-                              spreadRadius: 2.0,
-                            ),
-                          ],
-                        ),
-                        child: Center(
-                          child: Text(
-                            context
-                        .watch<ChildAllowanceAdminProviders>()
-                        .fliecountApproveChildAllowanceAdmin
-                                .toString(),
-                            style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                              color: iBlackColor,
-                            ),
-                          ),
-                          //Image.asset(iconImagePath),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                // BoxDashborad(
-                //     countnum: context
-                //         .watch<ChildAllowanceAdminProviders>()
-                //         .fliecountApproveChildAllowanceAdmin,
-                //     buttonText: 'Approve',
-                //     indexColor: iApproveColor,
-                //     url:
-                //         'Navigator.of(context).push(MaterialPageRoute(builder: (context) =>MainHomeAdminPage()));'),
-                // BoxDashborad(
-                    // countnum: context
-                    //     .watch<ChildAllowanceAdminProviders>()
-                    //     .fliecountRejectChildAllowanceAdmin,
-                    // buttonText: 'Reject',
-                    // indexColor: iRejectColor,
-                    // url:
-                    //     'Navigator.of(context).push(MaterialPageRoute(builder: (context) =>MainHomeAdminPage()));'),
-                     Column(
-                  children: [
-                    Text(
-                      'Reject',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: iBlueColor,
-                      ),
-                    ),
-                    SizedBox(height: 12),
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const ListChildAllowanceWhereAdminPage( Status:"Reject")));
-                      },
-                      child: Container(
-                        height: 80,
-                        width: 150,
-                        padding: EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          color: iRejectColor,
-                          borderRadius: BorderRadius.circular(20),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black54,
-                              blurRadius: 6.0,
-                              spreadRadius: 2.0,
-                            ),
-                          ],
-                        ),
-                        child: Center(
-                          child: Text(
-                            context
-                        .watch<ChildAllowanceAdminProviders>()
-                        .fliecountRejectChildAllowanceAdmin
-                                .toString(),
-                            style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                              color: iBlackColor,
-                            ),
-                          ),
-                          //Image.asset(iconImagePath),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),             
-             
-             
-              ],
-            ),
-          ),
-        ]),
-      ),
+  Column buildColumn() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        TextField(
+          controller: _controller,
+          decoration: const InputDecoration(hintText: 'Enter titer'),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            setState(() {
+              _futureAlbum = createAlbum(_controller.text);
+            });
+          },
+          child: const Text('Create Data'),
+        ),
+      ],
+    );
+  }
 
-      //drawer: const MyDrawer(),
+  FutureBuilder<Album> buildFutureBuilder() {
+    return FutureBuilder<Album>(
+      future: _futureAlbum,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Text(snapshot.data!.titer);
+        } else if (snapshot.hasError) {
+          return Text('${snapshot.error}');
+        }
+
+        return const CircularProgressIndicator();
+      },
     );
   }
 }

@@ -50,6 +50,18 @@ class _ListEducationAdminPageState extends State<ListEducationAdminPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+                       leading: IconButton(
+                  
+                        
+                         icon: Icon(Icons.arrow_back),
+                          
+                        color: iWhiteColor,
+                        onPressed: () {
+                            // FirebaseAuth.instance.signOut();
+                            Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => MainHomeAdminPage()));
+                        },
+                      ),
         title: Text(
           'รายการคำขอช่วยเหลือการศึกษา',
           style: TextStyle(
