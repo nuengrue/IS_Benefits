@@ -1,6 +1,7 @@
 //import 'dart:developer';
 import 'dart:convert';
 import 'dart:async';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:ghb_banefits_admin/All_Controllers_Admin/master_controllers.dart';
@@ -276,13 +277,29 @@ class _DetailHouseAdminPageState extends State<DetailHouseAdminPage> {
       doc.update({
         'id': doc.id,
       });
-
-      Navigator.pop(
+            AwesomeDialog(
+        context: context,
+        dialogType: DialogType.success,
+        animType: AnimType.bottomSlide,
+        showCloseIcon: true,
+        btnOkText : "ตกลง",
+        title: "สำเร็จ",
+        desc: "ดำเนินการบันทึกข้อมูลสำเร็จ",
+        btnOkOnPress: () {
+      Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => ListHouseAllowanceAdminPage(Status: "ร้องขอ"),
         ),
       );
+        },
+      ).show();
+      // Navigator.pop(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => ListHouseAllowanceAdminPage(Status: "ร้องขอ"),
+      //   ),
+      // );
     }
   }
 
@@ -392,12 +409,29 @@ class _DetailHouseAdminPageState extends State<DetailHouseAdminPage> {
       doc.update({
         'id': doc.id,
       });
-      Navigator.pop(
+                  AwesomeDialog(
+        context: context,
+        dialogType: DialogType.success,
+        animType: AnimType.bottomSlide,
+        showCloseIcon: true,
+        btnOkText : "ตกลง",
+        title: "สำเร็จ",
+        desc: "ดำเนินการบันทึกข้อมูลสำเร็จ",
+        btnOkOnPress: () {
+      Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => ListHouseAllowanceAdminPage(Status: "ร้องขอ"),
         ),
       );
+        },
+      ).show();
+      // Navigator.pop(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => ListHouseAllowanceAdminPage(Status: "ร้องขอ"),
+      //   ),
+      // );
     }
   }
 

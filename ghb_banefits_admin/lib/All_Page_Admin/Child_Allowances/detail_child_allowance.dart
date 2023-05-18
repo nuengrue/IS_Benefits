@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'dart:async';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:ghb_banefits_admin/All_Controllers_Admin/child_allowance_controllers.dart';
@@ -262,13 +263,29 @@ setState(() {
       doc.update({
         'id': doc.id,
       });
-
+            AwesomeDialog(
+        context: context,
+        dialogType: DialogType.success,
+        animType: AnimType.bottomSlide,
+        showCloseIcon: true,
+        btnOkText : "ตกลง",
+        title: "สำเร็จ",
+        desc: "ดำเนินการบันทึกข้อมูลสำเร็จ",
+        btnOkOnPress: () {
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => ListChildAllowanceAdminPage(Status: "ร้องขอ"),
         ),
       );
+        },
+      ).show();
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => ListChildAllowanceAdminPage(Status: "ร้องขอ"),
+      //   ),
+      // );
     }
   }
 
@@ -353,12 +370,30 @@ setState(() {
       doc.update({
         'id': doc.id,
       });
+
+            AwesomeDialog(
+        context: context,
+        dialogType: DialogType.success,
+        animType: AnimType.bottomSlide,
+        showCloseIcon: true,
+        btnOkText : "ตกลง",
+        title: "สำเร็จ",
+        desc: "ดำเนินการบันทึกข้อมูลสำเร็จ",
+        btnOkOnPress: () {
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => ListChildAllowanceAdminPage(Status: "ร้องขอ"),
         ),
       );
+        },
+      ).show();
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => ListChildAllowanceAdminPage(Status: "ร้องขอ"),
+      //   ),
+      // );
     }
   }
 

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HouseAllowanceAdmin {
-  final int  no;
+  final int no;
   final String empcode;
   final String name;
   final String department;
@@ -27,26 +27,50 @@ class HouseAllowanceAdmin {
   final String workstatus;
 //
   ///
-  late  String payamount;
-  late  String paydate;
-  late  String status;
+  late String payamount;
+  late String paydate;
+  late String status;
   final String email;
-    final String fileUrl;
+  final String fileUrl;
   final String filename;
-  late  String  flagread;
+  late String flagread;
   String id;
-  late  String   remarks;
-  HouseAllowanceAdmin(this.no,this.empcode, this.name, this.department, this.divisionment, this.savedate, this.startdate, 
-  this.position, this.segment, this.departmentwork, this.provincework, this.positiondate, 
-  this.typehouse, this.moneyhouse, this.housenumber, this.alley, this.road, this.district, this.county, this.province, this.workstatus, 
-  this.payamount, this.paydate, this.status, this.email,       this.fileUrl,
-       this.filename,
-       this.flagread,
-       this.id, this.remarks,
-);
+  late String remarks;
+  HouseAllowanceAdmin(
+    this.no,
+    this.empcode,
+    this.name,
+    this.department,
+    this.divisionment,
+    this.savedate,
+    this.startdate,
+    this.position,
+    this.segment,
+    this.departmentwork,
+    this.provincework,
+    this.positiondate,
+    this.typehouse,
+    this.moneyhouse,
+    this.housenumber,
+    this.alley,
+    this.road,
+    this.district,
+    this.county,
+    this.province,
+    this.workstatus,
+    this.payamount,
+    this.paydate,
+    this.status,
+    this.email,
+    this.fileUrl,
+    this.filename,
+    this.flagread,
+    this.id,
+    this.remarks,
+  );
 
   factory HouseAllowanceAdmin.fromJson(Map<String, dynamic> json) {
-        print(json);
+    print(json);
     return HouseAllowanceAdmin(
       json['no'] as int,
       json['empcode'] as String,
@@ -77,7 +101,7 @@ class HouseAllowanceAdmin {
       json['filename'] as String,
       json['flagread'] as String,
       json['id'] as String,
-            json['remarks'] as String,
+      json['remarks'] as String,
     );
   }
 
@@ -107,14 +131,13 @@ class HouseAllowanceAdmin {
       'paydate': paydate,
       'status': status,
       'email': email,
-          'fileUrl' : fileUrl, 
-    'filename' : filename,    
-    'flagread' : flagread,   
-    'id' : id,
-        'remarks' : remarks, 
+      'fileUrl': fileUrl,
+      'filename': filename,
+      'flagread': flagread,
+      'id': id,
+      'remarks': remarks,
     };
   }
-
 }
 
 class AllHouseAllowanceAdmin {

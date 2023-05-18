@@ -1,5 +1,6 @@
 //import 'dart:developer';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:ghb_banefits_admin/All_Controllers_Admin/master_controllers.dart';
@@ -315,13 +316,29 @@ class _DetailCremationServiceAdminPageState
       doc.update({
         'id': doc.id,
       });
-
+            AwesomeDialog(
+        context: context,
+        dialogType: DialogType.success,
+        animType: AnimType.bottomSlide,
+        showCloseIcon: true,
+        btnOkText : "ตกลง",
+        title: "สำเร็จ",
+        desc: "ดำเนินการบันทึกข้อมูลสำเร็จ",
+        btnOkOnPress: () {
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => ListCremationServiceAdminPage(Status: "ร้องขอ"),
         ),
       );
+        },
+      ).show();
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => ListCremationServiceAdminPage(Status: "ร้องขอ"),
+      //   ),
+      // );
     }
   }
 
@@ -434,12 +451,30 @@ class _DetailCremationServiceAdminPageState
       doc.update({
         'id': doc.id,
       });
+
+                  AwesomeDialog(
+        context: context,
+        dialogType: DialogType.success,
+        animType: AnimType.bottomSlide,
+        showCloseIcon: true,
+        btnOkText : "ตกลง",
+        title: "สำเร็จ",
+        desc: "ดำเนินการบันทึกข้อมูลสำเร็จ",
+        btnOkOnPress: () {
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => ListCremationServiceAdminPage(Status: "ร้องขอ"),
         ),
       );
+        },
+      ).show();
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => ListCremationServiceAdminPage(Status: "ร้องขอ"),
+      //   ),
+      // );
     }
   }
 

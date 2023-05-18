@@ -152,8 +152,9 @@ class _DetailNotifacationsPageState extends State<DetailNotifacationsPage> {
                               textAlign: TextAlign.start,style: TextStyle(fontFamily: 'Sarabun',),
                             ),
                           ),
-                          Expanded(
-                            child:               ElevatedButton(
+                          if(widget.Notes.read == 0) ...[
+                            Expanded(
+                                          child:               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   primary: iBluebuttonColor,
                   onPrimary: Colors.white,
@@ -168,7 +169,15 @@ class _DetailNotifacationsPageState extends State<DetailNotifacationsPage> {
                 },
                 child: Text('รับทราบ',textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),),
               ),
+                          ),              
+                          ] else ...[
+
+                                                      Expanded(
+                            
+                            child:   Text("")
                           ),
+                          ]
+
                         ],
                     ),
                      ),

@@ -242,6 +242,7 @@ class _AddHouseAllowancePageState extends State<AddHouseAllowancePage> {
         context: context,
         dialogType: DialogType.success,
         animType: AnimType.bottomSlide,
+        btnOkText : "ตกลง",
         showCloseIcon: true,
         title: "สำเร็จ",
         desc: "ดำเนินการบันทึกข้อมูลสำเร็จ",

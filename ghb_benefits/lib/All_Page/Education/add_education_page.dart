@@ -295,6 +295,7 @@ class _AddEduPageState extends State<AddEduPage> {
         dialogType: DialogType.success,
         animType: AnimType.bottomSlide,
         showCloseIcon: true,
+        btnOkText : "ตกลง",
         title: "สำเร็จ",
         desc: "ดำเนินการบันทึกข้อมูลสำเร็จ",
         btnOkOnPress: () {

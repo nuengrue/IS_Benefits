@@ -247,6 +247,7 @@ class _AddMedPageState extends State<AddMedPage> {
         dialogType: DialogType.success,
         animType: AnimType.bottomSlide,
         showCloseIcon: true,
+        btnOkText : "ตกลง",
         title: "สำเร็จ",
         desc: "ดำเนินการบันทึกข้อมูลสำเร็จ",
         btnOkOnPress: () {

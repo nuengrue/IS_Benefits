@@ -226,6 +226,7 @@ class _AddChildAllowancePageState extends State<AddChildAllowancePage> {
         dialogType: DialogType.success,
         animType: AnimType.bottomSlide,
         showCloseIcon: true,
+        btnOkText : "ตกลง",
         title: "สำเร็จ",
         desc: "ดำเนินการบันทึกข้อมูลสำเร็จ",
         btnOkOnPress: () {
