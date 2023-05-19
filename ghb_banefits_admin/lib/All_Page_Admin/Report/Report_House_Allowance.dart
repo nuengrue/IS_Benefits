@@ -227,7 +227,7 @@ setState(() {
             appBar: AppBar(title: 
              Text('รายงานค่าเช่าบ้านของพนักงาน',
             // Text(widget.Status.toString(),
-            style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color: iWhiteColor,),),backgroundColor: iOrangeColor,),
+            style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color: iWhiteColor,fontFamily: 'Sarabun',),),backgroundColor: iOrangeColor,),
     body: SingleChildScrollView(
       child: Column(children: [
           Padding(
@@ -257,7 +257,7 @@ setState(() {
                               "รายงานค่าเช่าบ้านพนักงานแยกตามฝ่ายงาน",
                               style: TextStyle(
                                 fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                                 color: iBlueColor,
                               ),
                             ),
@@ -301,7 +301,7 @@ setState(() {
                               "จำนวนเงินที่อนุมัตินำจ่ายทั้งหมด",
                               style: TextStyle(
                                 fontSize: 18,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                                 color: iBlueColor,
                               ),
                             ),
@@ -312,7 +312,7 @@ setState(() {
                               sumApprove.toString(),
                               style: TextStyle(
                                 fontSize: 25,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                                 color: Colors.green,
                               ),
                             ),
@@ -360,7 +360,7 @@ setState(() {
                               "จำนวนเงินที่รออนุมัตินำจ่ายทั้งหมด",
                               style: TextStyle(
                                 fontSize: 18,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                                 color: iBlueColor,
                               ),
                             ),
@@ -371,7 +371,7 @@ setState(() {
                               sumRequest.toString(),
                               style: TextStyle(
                                 fontSize: 25,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                                 color: Colors.yellow[800],
                               ),
                             ),
@@ -418,7 +418,7 @@ setState(() {
                               "จำนวนเงินที่ปฏิเสธนำจ่ายทั้งหมด",
                               style: TextStyle(
                                 fontSize: 18,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                                 color: iBlueColor,
                               ),
                             ),
@@ -429,7 +429,7 @@ setState(() {
                               sumReject.toString(),
                               style: TextStyle(
                                 fontSize: 25,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                                 color: Colors.red,
                               ),
                             ),
@@ -465,17 +465,17 @@ setState(() {
                   horizontalMargin: 0,
                   columns: const <DataColumn>[
                     DataColumn(
-                      label: Center(child: Flexible(child: Text('ฝ่ายงาน'))),
+                      label: Center(child: Flexible(child: Text('ฝ่ายงาน',style: TextStyle(fontFamily: 'Sarabun',),))),
                     ),
                     DataColumn(
-                      label: Center(child: Flexible(child: Text('นำจ่าย'))),
+                      label: Center(child: Flexible(child: Text('นำจ่าย',style: TextStyle(fontFamily: 'Sarabun',),))),
                     ),
                     DataColumn(
-                      label: Center(child: Flexible(child: Text('รอนำจ่าย'))),
+                      label: Center(child: Flexible(child: Text('รอนำจ่าย',style: TextStyle(fontFamily: 'Sarabun',),))),
                     ),
                     DataColumn(
                       label:
-                          Center(child: Flexible(child: Text('ปฏิเสธนำจ่าย'))),
+                          Center(child: Flexible(child: Text('ปฏิเสธนำจ่าย',style: TextStyle(fontFamily: 'Sarabun',),))),
                     ),
                   ],
                   rows:
@@ -487,16 +487,16 @@ setState(() {
                           NumberFormat.decimalPattern('en_us');
                       return DataRow(
                         cells: [
-                          DataCell(Flexible(child: Text(item.name.toString()))),
+                          DataCell(Flexible(child: Text(item.name.toString(),style: TextStyle(fontFamily: 'Sarabun',),))),
                           DataCell(Flexible(
                               child:
-                                  Center(child: Text(myFormat.format(item.amountApprove))))),
+                                  Center(child: Text(myFormat.format(item.amountApprove),style: TextStyle(fontFamily: 'Sarabun',),)))),
                           DataCell(Flexible(
                               child:
-                                  Center(child: Text(myFormat.format(item.amountRequest))))),
+                                  Center(child: Text(myFormat.format(item.amountRequest),style: TextStyle(fontFamily: 'Sarabun',),)))),
                           DataCell(Flexible(
                               child:
-                                  Center(child: Text(myFormat.format(item.amountRequest))))),
+                                  Center(child: Text(myFormat.format(item.amountRequest),style: TextStyle(fontFamily: 'Sarabun',),)))),
                         ],
                       );
                     } else {

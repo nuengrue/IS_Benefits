@@ -130,18 +130,41 @@ class _DetailNotifacationsPageState extends State<DetailNotifacationsPage> {
                     ),
 
                     const Divider(),
-                      Row(
-                      children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                        children: [
 
-                        Expanded(
-                          child: Text(
-                            widget.Notes.content,
-                            textAlign: TextAlign.start,style: TextStyle(fontFamily: 'Sarabun',),
+                          Expanded(
+                            child: Text(
+                              widget.Notes.content,
+                              textAlign: TextAlign.start,style: TextStyle(fontFamily: 'Sarabun',),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                        
                     ),
-
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              'หมายเหตุ : ',
+                              textAlign: TextAlign.start,style: TextStyle(fontFamily: 'Sarabun',),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              widget.Notes.remarks,
+                              textAlign: TextAlign.end,style: TextStyle(fontFamily: 'Sarabun',),
+                            ),
+                          ),
+                        ],
+                        
+                    ),
+                      ),
                      Padding(
                        padding: const EdgeInsets.all(8.0),
                        child: Row(

@@ -121,7 +121,7 @@ else{
             ): GestureDetector(onTap: (){
               //  Navigator.of(context).push(
               //     MaterialPageRoute(builder: (context) => AddHouseAllowancePage()));
-            },child: Center(child: Text("ไม่พบรายการคำขอ",style: TextStyle(color: iBlueColor,),)));
+            },child: Center(child: Text("ไม่พบรายการคำขอ",style: TextStyle(color: iBlueColor,fontFamily: 'Sarabun',),)));
           },
         ),
       ),
@@ -156,7 +156,7 @@ else{
                   Expanded(child: Text('ชื่อผู้ร้องขอ',
                             // textAlign: TextAlign.left,
                             style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),)),
-                  Expanded(child: Text(notes.position, textAlign: TextAlign.end,)),
+                  Expanded(child: Text(notes.name, textAlign: TextAlign.end,)),
                 ],),
               subtitle: Column(
                 children: [

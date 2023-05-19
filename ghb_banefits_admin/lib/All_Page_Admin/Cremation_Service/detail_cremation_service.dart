@@ -526,7 +526,7 @@ class _DetailCremationServiceAdminPageState
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -553,13 +553,14 @@ class _DetailCremationServiceAdminPageState
                           child: Text(
                             'สถานะรายการ',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.status,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -594,7 +595,7 @@ class _DetailCremationServiceAdminPageState
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -604,13 +605,14 @@ class _DetailCremationServiceAdminPageState
                           child: Text(
                             'พนักงาน',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.name,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -621,7 +623,7 @@ class _DetailCremationServiceAdminPageState
                           child: Text(
                             'หน่วยงาน',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Column(
@@ -631,10 +633,12 @@ class _DetailCremationServiceAdminPageState
                             Text(
                               widget.Notes.department,
                               textAlign: TextAlign.end,
+                              style: TextStyle(fontFamily: 'Sarabun',),
                             ),
                             Text(
                               widget.Notes.divisionment,
                               textAlign: TextAlign.end,
+                              style: TextStyle(fontFamily: 'Sarabun',),
                             ),
                           ],
                         ),
@@ -646,13 +650,14 @@ class _DetailCremationServiceAdminPageState
                           child: Text(
                             'เลขที่บัตรประชาชน',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.idcard,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -663,13 +668,14 @@ class _DetailCremationServiceAdminPageState
                           child: Text(
                             'วันที่บันทึก',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.savedate,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -862,7 +868,7 @@ class _DetailCremationServiceAdminPageState
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -877,7 +883,7 @@ class _DetailCremationServiceAdminPageState
                         /** CheckboxListTile Widget **/
                         child: CheckboxListTile(
                           title: const Text(
-                              'ได้อ่านและรับทราบข้อบังคับธนาคารอาคารสงเคราะห์ว่าด้วยการฌาปนกิจสงเคราะห์พ.ศ.2559 และที่แก้ไขเพิ่มเติม'),
+                              'ได้อ่านและรับทราบข้อบังคับธนาคารอาคารสงเคราะห์ว่าด้วยการฌาปนกิจสงเคราะห์พ.ศ.2559 และที่แก้ไขเพิ่มเติม',style: TextStyle(fontFamily: 'Sarabun',),),
                           //subtitle: const Text('A computer science portal for geeks.'),
                           //secondary: const Icon(Icons.code),
                           autofocus: false,
@@ -988,7 +994,7 @@ class _DetailCremationServiceAdminPageState
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -998,13 +1004,14 @@ class _DetailCremationServiceAdminPageState
                           child: Text(
                             'ชื่อ-นามสกุลคู่สมรส',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.namepartner,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -1040,7 +1047,7 @@ class _DetailCremationServiceAdminPageState
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -1057,7 +1064,7 @@ class _DetailCremationServiceAdminPageState
                         /** CheckboxListTile Widget **/
                         child: CheckboxListTile(
                           title: const Text(
-                              'ชำระเงินเป็นค่าสมัครเข้าเป็นสมาชิก เป็นเงิน 100 บาท'),
+                              'ชำระเงินเป็นค่าสมัครเข้าเป็นสมาชิก เป็นเงิน 100 บาท',style: TextStyle(fontFamily: 'Sarabun',),),
                           //subtitle: const Text('A computer science portal for geeks.'),
                           //secondary: const Icon(Icons.code),
                           autofocus: false,
@@ -1082,7 +1089,7 @@ class _DetailCremationServiceAdminPageState
                         /** CheckboxListTile Widget **/
                         child: CheckboxListTile(
                           title: const Text(
-                              'ชำระเงินสงเคราะห์ล่วงหน้าตามอัตราที่ทางการฌาปนกิจสงเคราะห์ ธนาคารอาคารสงเคราะห์ เรียกเก็บเป็นเงิน 300 บาท'),
+                              'ชำระเงินสงเคราะห์ล่วงหน้าตามอัตราที่ทางการฌาปนกิจสงเคราะห์ ธนาคารอาคารสงเคราะห์ เรียกเก็บเป็นเงิน 300 บาท',style: TextStyle(fontFamily: 'Sarabun',),),
                           //subtitle: const Text('A computer science portal for geeks.'),
                           //secondary: const Icon(Icons.code),
                           autofocus: false,
@@ -1107,7 +1114,7 @@ class _DetailCremationServiceAdminPageState
                         /** CheckboxListTile Widget **/
                         child: CheckboxListTile(
                           title: const Text(
-                              'ชำระเงินสงเคราะห์ศพเป็นไปตามอัตราที่ทางการฌาปนกิจสงเคราะห์ ธนาคารอาคารสงเคราะห์เรียกเก็บ'),
+                              'ชำระเงินสงเคราะห์ศพเป็นไปตามอัตราที่ทางการฌาปนกิจสงเคราะห์ ธนาคารอาคารสงเคราะห์เรียกเก็บ',style: TextStyle(fontFamily: 'Sarabun',),),
                           //subtitle: const Text('A computer science portal for geeks.'),
                           //secondary: const Icon(Icons.code),
                           autofocus: false,
@@ -1153,7 +1160,7 @@ class _DetailCremationServiceAdminPageState
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -1163,13 +1170,14 @@ class _DetailCremationServiceAdminPageState
                           child: Text(
                             'ชื่อ-นามสกุล',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.managername,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -1180,13 +1188,14 @@ class _DetailCremationServiceAdminPageState
                           child: Text(
                             'เลขที่บัตรประชาชน',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.cardnumber,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -1197,13 +1206,14 @@ class _DetailCremationServiceAdminPageState
                           child: Text(
                             'ตวามเกี่ยวข้องกับพนักงาน',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.relationship,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -1231,13 +1241,14 @@ class _DetailCremationServiceAdminPageState
                           child: Text(
                             'การแบ่งเงินฌาปนกิจ',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.conditions,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -1273,7 +1284,7 @@ class _DetailCremationServiceAdminPageState
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -1309,13 +1320,14 @@ class _DetailCremationServiceAdminPageState
                               child: Text(
                                 'หมายเหตุ',
                                 textAlign: TextAlign.left,
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                               ),
                             ),
                             Expanded(
                               child: Text(
                                 widget.Notes.remarks,
                                 textAlign: TextAlign.end,
+                                style: TextStyle(fontFamily: 'Sarabun',),
                               ),
                             ),
                           ]
@@ -1352,12 +1364,12 @@ class _DetailCremationServiceAdminPageState
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
                     ListTile(
-                      title: Text(widget.Notes.filename.toString()),
+                      title: Text(widget.Notes.filename.toString(),style: TextStyle(fontFamily: 'Sarabun',),),
                       trailing: Icon(Icons.remove_red_eye),
                       onTap: () {
                         Navigator.push(
@@ -1407,7 +1419,7 @@ class _DetailCremationServiceAdminPageState
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                       primary: Colors.green),
-                                  child: Text("อนุมัติ"),
+                                  child: Text("อนุมัติ",style: TextStyle(fontFamily: 'Sarabun',),),
                                   onPressed: () {
                                     ModifydataApprove();
                                   },
@@ -1420,7 +1432,7 @@ class _DetailCremationServiceAdminPageState
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                       primary: Colors.red),
-                                  child: Text("ปฏิเสธ"),
+                                  child: Text("ปฏิเสธ",style: TextStyle(fontFamily: 'Sarabun',),),
                                   onPressed: () {
                                     ModifydataReject();
                                   },

@@ -445,7 +445,7 @@ setState(() {
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -472,7 +472,7 @@ setState(() {
                           child: Text(
                             'สถานะรายการ',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
@@ -513,7 +513,7 @@ setState(() {
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -523,13 +523,14 @@ setState(() {
                           child: Text(
                             'พนักงาน',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.nameemp,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -540,7 +541,7 @@ setState(() {
                           child: Text(
                             'หน่วยงาน',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Column(
@@ -550,10 +551,12 @@ setState(() {
                             Text(
                               widget.Notes.department,
                               textAlign: TextAlign.end,
+                              style: TextStyle(fontFamily: 'Sarabun',),
                             ),
                             Text(
                               widget.Notes.divisionment,
                               textAlign: TextAlign.end,
+                              style: TextStyle(fontFamily: 'Sarabun',),
                             ),
                           ],
                         ),
@@ -565,13 +568,14 @@ setState(() {
                           child: Text(
                             'วันที่บันทึก',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.savedate,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -607,7 +611,7 @@ setState(() {
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -617,13 +621,14 @@ setState(() {
                           child: Text(
                             'บุตรของพนักงาน',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.namechild,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -659,7 +664,7 @@ setState(() {
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -669,13 +674,14 @@ setState(() {
                           child: Text(
                             'ชื่อ-นามสกุลของคู่มสมรส',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.namepartner,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -686,7 +692,7 @@ setState(() {
                           child: Text(
                             'สถานะการสมรส',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Column(
@@ -696,10 +702,12 @@ setState(() {
                             Text(
                               widget.Notes.maritalstatus,
                               textAlign: TextAlign.end,
+                              style: TextStyle(fontFamily: 'Sarabun',),
                             ),
                             Text(
                               widget.Notes.submaritalstatus,
                               textAlign: TextAlign.end,
+                              style: TextStyle(fontFamily: 'Sarabun',),
                             ),
                           ],
                         ),
@@ -736,7 +744,7 @@ setState(() {
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -792,13 +800,14 @@ setState(() {
                               child: Text(
                                 'หมายเหตุ',
                                 textAlign: TextAlign.left,
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                               ),
                             ),
                             Expanded(
                               child: Text(
                                 widget.Notes.remarks,
                                 textAlign: TextAlign.end,
+                                style: TextStyle(fontFamily: 'Sarabun',),
                               ),
                             ),
                           ]
@@ -841,7 +850,7 @@ setState(() {
                     ),
                     const Divider(),
                     ListTile(
-                      title: Text(widget.Notes.filename.toString()),
+                      title: Text(widget.Notes.filename.toString(),style: TextStyle(fontFamily: 'Sarabun',),),
                       //subtitle:Text(widget.Indexs.toString()),
                       trailing: Icon(Icons.remove_red_eye),
                       onTap: () {
@@ -891,7 +900,7 @@ setState(() {
                                       "บุตรตามคำขอดังกล่าวได้รับการอนุมัติไปแล้ว",
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                        fontWeight: FontWeight.bold,
+                                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                                         color: Colors.red,
                                       ),
                                     ),
@@ -932,7 +941,7 @@ setState(() {
                                     child: ElevatedButton(
                                       style: ElevatedButton.styleFrom(
                                           primary: Colors.red),
-                                      child: Text("ปฏิเสธ"),
+                                      child: Text("ปฏิเสธ",style: TextStyle(fontFamily: 'Sarabun',),),
                                       onPressed: () {
                                         ModifydataReject();
                                       },
@@ -979,7 +988,7 @@ setState(() {
                                     child: ElevatedButton(
                                       style: ElevatedButton.styleFrom(
                                           primary: Colors.green),
-                                      child: Text("อนุมัติ"),
+                                      child: Text("อนุมัติ",style: TextStyle(fontFamily: 'Sarabun',),),
                                       onPressed: () {
                                         ModifydataApprove();
                                       },
@@ -992,7 +1001,7 @@ setState(() {
                                     child: ElevatedButton(
                                       style: ElevatedButton.styleFrom(
                                           primary: Colors.red),
-                                      child: Text("ปฏิเสธ"),
+                                      child: Text("ปฏิเสธ",style: TextStyle(fontFamily: 'Sarabun',),),
                                       onPressed: () {
                                         ModifydataReject();
                                       },

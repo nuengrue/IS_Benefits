@@ -63,7 +63,7 @@ class _ListCremationServiceAdminPageState extends State<ListCremationServiceAdmi
                       ),
               title: Text('รายการคำขอสมัครฌาปนกิจ',style: TextStyle(
                             fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                             color: iWhiteColor,),),backgroundColor: iOrangeColor,
        actions: <Widget>[
           IconButton(

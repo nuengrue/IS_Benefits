@@ -6,6 +6,7 @@ import 'package:ghb_benefits/All_Models/child_allowane_model.dart';
 import 'package:ghb_benefits/All_Page/Child_Allowances/add_child_allowance.dart';
 import 'package:ghb_benefits/All_Page/Child_Allowances/detail_child_allowance.dart';
 import 'package:ghb_benefits/All_Providers/provider_child_allowance.dart';
+import 'package:ghb_benefits/All_Providers/provider_dashboard.dart';
 import 'package:ghb_benefits/All_Services/servics.dart';
 
 import 'package:ghb_benefits/color.dart';
@@ -24,6 +25,7 @@ class _ListChildAllowancePageState extends State<ListChildAllowancePage> {
   List<ChildAllowance> allowances = List.empty();
   bool isloading = false;
   late int count ;
+    late int countsum = 0 ;
 
   ChildAllowanceController controller =
       ChildAllowanceController(FirebaseServices());
@@ -36,7 +38,11 @@ class _ListChildAllowancePageState extends State<ListChildAllowancePage> {
 
    void   _getChildAllowance(BuildContext context) async {
             var newAllowance = await controller.fetchChildAllowance();
+var countshow = newAllowance.where((x) => x.status == "อนุมัติ").length ;
 
+setState(() {
+ countsum =  countshow;
+});
           context.read<ChildAllowanceProviders>().ChildAllowanceList = newAllowance;
       }
       
@@ -51,6 +57,7 @@ class _ListChildAllowancePageState extends State<ListChildAllowancePage> {
 */
 
   Widget build(BuildContext context) {
+
     return Scaffold(
             appBar: AppBar(title: Text('รายการคำขอเบิกค่าช่วยเหลือบุตร',style: TextStyle(
                             fontSize: 16,
@@ -72,16 +79,16 @@ class _ListChildAllowancePageState extends State<ListChildAllowancePage> {
           // ),
         ],),
 
-              floatingActionButton: FloatingActionButton(  
-        child: Icon(Icons.add),  
-        backgroundColor: iBlueColor,  
-        foregroundColor: Colors.white,  
-            onPressed: () {
+      //         floatingActionButton: FloatingActionButton(  
+      //   child: Icon(Icons.add),  
+      //   backgroundColor: iBlueColor,  
+      //   foregroundColor: Colors.white,  
+      //       onPressed: () {
 
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => AddChildAllowancePage()));
-            },
-      ), 
+      //         Navigator.of(context).push(
+      //             MaterialPageRoute(builder: (context) => AddChildAllowancePage()));
+      //       },
+      // ), 
         /*
 body:FutureBuilder<List<ChildAllowance>>(
     future: _getChildAllowance(context),
@@ -137,11 +144,42 @@ body:FutureBuilder<List<ChildAllowance>>(
         ),
       ),
      
-            drawer: MyDrawer(),
+
+
+             drawer: MyDrawer(),
+      persistentFooterButtons: <Widget>[
+             if (countsum.toString() == '3') ...[
+                   
+ Text('ท่านได้ขอเบิกบุตรครบกำหนดแล้ว: ${countsum.toString()} คน',style: TextStyle(
+                      fontSize: 15,
+                      color: iOrangeColor,
+                      fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
+                    ),),
+
+    ] else ...[
+  //  Text('ท่านได้ใช้วงเงินตามสิทธิ์ครบกำหนดแล้ว: ${value.Childage.toString()}'),
+
+         FloatingActionButton(  
+        child: Icon(Icons.add),  
+        backgroundColor: iBlueColor,  
+        foregroundColor: Colors.white,  
+            onPressed: () {
+
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => AddChildAllowancePage()));
+            },
+      ),
+    ]
+
+
+      ]
+
+    
+                      
       );
+
   }
 }
-
 
  class CardList extends StatelessWidget {
   final ChildAllowance notes;

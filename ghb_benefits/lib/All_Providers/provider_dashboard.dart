@@ -47,7 +47,7 @@ class MyDashboardProviders with ChangeNotifier {
      double _Sumchild = 0;
   get SumchildnModalChoice => this._Sumchild;
 
-  set SumchildModalChoice(value) {
+  set SumchildnModalChoice(value) {
     this._Sumchild = value;
     notifyListeners();
     
@@ -63,7 +63,7 @@ class MyDashboardProviders with ChangeNotifier {
   }
 
 
-      int _Childage = 0;
+      double _Childage = 0;
   get Childage => this._Childage;
 
   set Childage(value) {

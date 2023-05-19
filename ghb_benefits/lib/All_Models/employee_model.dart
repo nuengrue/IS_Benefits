@@ -9,6 +9,7 @@ class Employee {
   final String date;
   final String uid;
   final String idcard;
+  
   Employee(
     this.no,
     this.empcode,

@@ -179,6 +179,12 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
         sumReject += int.parse(b.amountreceipt);
       }
     });
+        print(sumApprove);
+    setState(() {
+
+      dum = 40000 - sumApprove ;
+          print(dum);
+    });
     print(sumApprove);
     setState(() {});
     var newNotification = await mastecontroller.fetchNotiAdmin();
@@ -498,7 +504,7 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -525,13 +531,14 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                           child: Text(
                             'สถานะรายการ',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.status,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -567,7 +574,7 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -577,13 +584,14 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                           child: Text(
                             'พนักงาน',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.name,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -594,7 +602,7 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                           child: Text(
                             'หน่วยงาน',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Column(
@@ -604,10 +612,12 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                             Text(
                               widget.Notes.department,
                               textAlign: TextAlign.end,
+                              style: TextStyle(fontFamily: 'Sarabun',),
                             ),
                             Text(
                               widget.Notes.divisionment,
                               textAlign: TextAlign.end,
+                              style: TextStyle(fontFamily: 'Sarabun',),
                             ),
                           ],
                         ),
@@ -674,13 +684,14 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                           child: Text(
                             'ประเภทคำร้องขอ',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.typeedu,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -691,13 +702,14 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                           child: Text(
                             'วันที่บันทึก',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.savedate,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -708,13 +720,14 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                           child: Text(
                             'วงเงินประจำปี',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.yearedu,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -749,7 +762,7 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -759,13 +772,14 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                           child: Text(
                             'บุตรของพนักงาน',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.namechild,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -801,7 +815,7 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -811,13 +825,14 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                           child: Text(
                             'ปีการศึกษา',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.year,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -828,13 +843,14 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                           child: Text(
                             'ภาคเรียน',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.term,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -845,7 +861,7 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                           child: Text(
                             'ชื่อสถานศึกษา',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Column(
@@ -855,10 +871,12 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                             Text(
                               widget.Notes.school,
                               textAlign: TextAlign.end,
+                              style: TextStyle(fontFamily: 'Sarabun',),
                             ),
                             Text(
                               widget.Notes.schooltype,
                               textAlign: TextAlign.end,
+                              style: TextStyle(fontFamily: 'Sarabun',),
                             ),
                           ],
                         ),
@@ -870,13 +888,14 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                           child: Text(
                             'ระดับการศึกษา',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.educationlevel,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -887,13 +906,14 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                           child: Text(
                             'ระดับชั้น',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.level,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -929,7 +949,7 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -939,13 +959,14 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                           child: Text(
                             'เลขที่ใบเสร็จ',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.receiptnumber,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -956,13 +977,14 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                           child: Text(
                             'เล่มที่',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.volume,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -973,13 +995,14 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                           child: Text(
                             'หมายเลขติดต่อกลับ',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.tel,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -990,13 +1013,14 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                           child: Text(
                             'วันที่ใบเสร็จ',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.receiptdate,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -1032,7 +1056,7 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -1044,13 +1068,14 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                             child: Text(
                               'จำนวนเงินตามใบเสร็จ',
                               textAlign: TextAlign.left,
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                             ),
                           ),
                           Expanded(
                             child: Text(
                               widget.Notes.amountreceipt,
                               textAlign: TextAlign.end,
+                              style: TextStyle(fontFamily: 'Sarabun',),
                             ),
                           ),
                         ],
@@ -1066,7 +1091,7 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                               child: Text(
                                 'จำนวนเงินจ่าย',
                                 textAlign: TextAlign.left,
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                               ),
                             ),
                             // Expanded(
@@ -1104,13 +1129,14 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                               child: Text(
                                 'จำนวนเงินจ่าย',
                                 textAlign: TextAlign.left,
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                               ),
                             ),
                             Expanded(
                               child: Text(
                                 widget.Notes.payamount,
                                 textAlign: TextAlign.end,
+                                style: TextStyle(fontFamily: 'Sarabun',),
                               ),
                             ),
                           ]
@@ -1143,26 +1169,39 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
                                       return 'โปรดระบุจำนวนเงิน';
-                                    } else if (int.parse(value) > 40000) {
+                                    } 
+                                      else if (sumApprove == 0 && int.parse(value) > dum) {
                                       // var dum;
-                                      dum = 40000 - sumApprove;
-                                      print(dum);
-                                      setState(() {
-                                        dum = dum;
-                                      });
-                                      return 'โปรดระบุจำนวนเงินจ่ายไม่เกิน $dum บาท';
-                                    } else if (int.parse(value) > dum) {
-                                      if (int.parse(value) >
-                                          int.parse(widget.Notes.amountreceipt))
-                                      // (int.parse(value) > dum)
-                                      {
-                                        return 'โปรดระบุจำนวนเงินจ่ายไม่เกินใบเสร็จ';
-                                        // return 'โปรดระบุจำนวนเงินจ่ายไม่เกิน $dum บาท';
-                                      }
-                                      // var dum;
-                                      //  dum = 40000 - sumApprove;
+                                      // dum = 40000 - sumApprove;
                                       // print(dum);
+                                      // setState(() {
+                                      //   dum = dum;
+                                      // });
                                       return 'โปรดระบุจำนวนเงินจ่ายไม่เกิน $dum บาท';
+                                    }
+                                     else if (sumApprove > 0 && int.parse(value) > dum) {
+                                      return 'โปรดระบุจำนวนเงินจ่ายไม่เกิน $dum บาท';
+                                    }                                        
+                                    // else if (int.parse(value) > 40000) {
+                                    //   // var dum;
+                                    //   dum = 40000 - sumApprove;
+                                    //   print(sumApprove);
+                                    //   print(dum);
+                                    //   setState(() {
+                                    //     dum = dum;
+                                    //   });
+                                    //   return 'โปรดระบุจำนวนเงินจ่ายไม่เกิน $dum บาท';
+                                    // } 
+                                    else if (int.parse(value) >
+                                          int.parse(widget.Notes.amountreceipt)) {
+                                      // if (int.parse(value) >
+                                      //     int.parse(widget.Notes.amountreceipt))
+                             
+                                      // {
+                                        return 'โปรดระบุจำนวนเงินจ่ายไม่เกินใบเสร็จ';
+                                      // }
+                                    //   if(sumApprove != 0 || int.parse(value)> 0)
+                                    //   return 'โปรดระบุจำนวนเงินจ่ายไม่เกิน $dum บาท';
                                     }
                                   },
                                   onSaved: (newValue) => _payamount = newValue!,
@@ -1178,13 +1217,14 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                               child: Text(
                                 'จำนวนเงินจ่าย',
                                 textAlign: TextAlign.left,
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                               ),
                             ),
                             Expanded(
                               child: Text(
                                 widget.Notes.payamount,
                                 textAlign: TextAlign.end,
+                                style: TextStyle(fontFamily: 'Sarabun',),
                               ),
                             ),
                           ]
@@ -1295,7 +1335,7 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -1351,13 +1391,14 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                               child: Text(
                                 'หมายเหตุ',
                                 textAlign: TextAlign.left,
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                               ),
                             ),
                             Expanded(
                               child: Text(
                                 widget.Notes.remarks,
                                 textAlign: TextAlign.end,
+                                style: TextStyle(fontFamily: 'Sarabun',),
                               ),
                             ),
                           ]
@@ -1395,12 +1436,12 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
                     ListTile(
-                      title: Text(widget.Notes.filename.toString()),
+                      title: Text(widget.Notes.filename.toString(),style: TextStyle(fontFamily: 'Sarabun',),),
                       trailing: Icon(Icons.remove_red_eye),
                       onTap: () {
                         Navigator.push(
@@ -1468,7 +1509,7 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                       primary: Colors.green),
-                                  child: Text("อนุมัติ"),
+                                  child: Text("อนุมัติ",style: TextStyle(fontFamily: 'Sarabun',),),
                                   onPressed: () {
                                     ModifydataApprove();
                                   },
@@ -1481,7 +1522,7 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                       primary: Colors.red),
-                                  child: Text("ปฏิเสธ"),
+                                  child: Text("ปฏิเสธ",style: TextStyle(fontFamily: 'Sarabun',),),
                                   onPressed: () {
                                     ModifydataReject();
                                   },

@@ -73,7 +73,7 @@ class _ListChildAllowanceAdminPageState extends State<ListChildAllowanceAdminPag
                       ),
               title: Text('รายการคำขอเบิกค่าช่วยเหลือบุตร',style: TextStyle(
                             fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                             color: iWhiteColor,),),backgroundColor: iOrangeColor,
        actions: <Widget>[
                     
@@ -146,7 +146,7 @@ else{
               },
             ): GestureDetector(
               //onTap: (){ Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddChildAllowancePage()));},
-              child: Center(child: Text("ไม่พบรายการคำขอ",style: TextStyle(color: iBlueColor,),)));
+              child: Center(child: Text("ไม่พบรายการคำขอ",style: TextStyle(color: iBlueColor,fontFamily: 'Sarabun',),)));
           },
         ),
       ),

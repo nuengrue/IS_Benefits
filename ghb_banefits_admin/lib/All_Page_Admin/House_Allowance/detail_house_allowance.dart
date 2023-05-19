@@ -483,7 +483,7 @@ class _DetailHouseAdminPageState extends State<DetailHouseAdminPage> {
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -510,13 +510,14 @@ class _DetailHouseAdminPageState extends State<DetailHouseAdminPage> {
                           child: Text(
                             'สถานะรายการ',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.status,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -551,7 +552,7 @@ class _DetailHouseAdminPageState extends State<DetailHouseAdminPage> {
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -561,13 +562,14 @@ class _DetailHouseAdminPageState extends State<DetailHouseAdminPage> {
                           child: Text(
                             'พนักงาน',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.name,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -578,7 +580,7 @@ class _DetailHouseAdminPageState extends State<DetailHouseAdminPage> {
                           child: Text(
                             'หน่วยงาน',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Column(
@@ -588,10 +590,12 @@ class _DetailHouseAdminPageState extends State<DetailHouseAdminPage> {
                             Text(
                               widget.Notes.department,
                               textAlign: TextAlign.end,
+                              style: TextStyle(fontFamily: 'Sarabun',),
                             ),
                             Text(
                               widget.Notes.divisionment,
                               textAlign: TextAlign.end,
+                              style: TextStyle(fontFamily: 'Sarabun',),
                             ),
                           ],
                         ),
@@ -603,13 +607,14 @@ class _DetailHouseAdminPageState extends State<DetailHouseAdminPage> {
                           child: Text(
                             'วันที่บันทึก',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.savedate,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -620,13 +625,14 @@ class _DetailHouseAdminPageState extends State<DetailHouseAdminPage> {
                           child: Text(
                             'วันที่เข้างาน',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.startdate,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -666,7 +672,7 @@ class _DetailHouseAdminPageState extends State<DetailHouseAdminPage> {
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -676,13 +682,14 @@ class _DetailHouseAdminPageState extends State<DetailHouseAdminPage> {
                           child: Text(
                             'ตำแหน่ง',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.position,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -693,13 +700,14 @@ class _DetailHouseAdminPageState extends State<DetailHouseAdminPage> {
                           child: Text(
                             'ส่วนงาน/สาขา',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.segment,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -710,13 +718,14 @@ class _DetailHouseAdminPageState extends State<DetailHouseAdminPage> {
                           child: Text(
                             'ฝ่าย/สำนัก',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.departmentwork,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -727,13 +736,14 @@ class _DetailHouseAdminPageState extends State<DetailHouseAdminPage> {
                           child: Text(
                             'จังหวัด',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.provincework,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -744,13 +754,14 @@ class _DetailHouseAdminPageState extends State<DetailHouseAdminPage> {
                           child: Text(
                             'วันที่ดำรงตำแหน่ง',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.positiondate,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -787,6 +798,7 @@ class _DetailHouseAdminPageState extends State<DetailHouseAdminPage> {
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
                         fontWeight: FontWeight.bold,
+                        
                       ),
                     ),
                     const Divider(),
@@ -796,13 +808,14 @@ class _DetailHouseAdminPageState extends State<DetailHouseAdminPage> {
                           child: Text(
                             'ประเภทการเช่าบ้าน',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.typehouse,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -813,13 +826,14 @@ class _DetailHouseAdminPageState extends State<DetailHouseAdminPage> {
                           child: Text(
                             'จำนวนเงินค่าเช่าบ้าน',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.moneyhouse,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -830,13 +844,14 @@ class _DetailHouseAdminPageState extends State<DetailHouseAdminPage> {
                           child: Text(
                             'บ้านเลขที่',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.housenumber,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -847,13 +862,14 @@ class _DetailHouseAdminPageState extends State<DetailHouseAdminPage> {
                           child: Text(
                             'ตรอก/ซอย',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.alley,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -864,13 +880,14 @@ class _DetailHouseAdminPageState extends State<DetailHouseAdminPage> {
                           child: Text(
                             'ถนน',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.road,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -881,13 +898,14 @@ class _DetailHouseAdminPageState extends State<DetailHouseAdminPage> {
                           child: Text(
                             'ตำบล/แขวง',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.district,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -898,13 +916,14 @@ class _DetailHouseAdminPageState extends State<DetailHouseAdminPage> {
                           child: Text(
                             'อำเภอ/เขต',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.county,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -915,13 +934,14 @@ class _DetailHouseAdminPageState extends State<DetailHouseAdminPage> {
                           child: Text(
                             'จังหวัด',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.province,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -932,13 +952,14 @@ class _DetailHouseAdminPageState extends State<DetailHouseAdminPage> {
                           child: Text(
                             'เพื่อใช้พักอาศับปฏิบัติงาน',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.workstatus,
                             textAlign: TextAlign.end,
+                            style: TextStyle(fontFamily: 'Sarabun',),
                           ),
                         ),
                       ],
@@ -973,7 +994,7 @@ class _DetailHouseAdminPageState extends State<DetailHouseAdminPage> {
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -1029,13 +1050,14 @@ class _DetailHouseAdminPageState extends State<DetailHouseAdminPage> {
                               child: Text(
                                 'หมายเหตุ',
                                 textAlign: TextAlign.left,
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Sarabun',),
                               ),
                             ),
                             Expanded(
                               child: Text(
                                 widget.Notes.remarks,
                                 textAlign: TextAlign.end,
+                                style: TextStyle(fontFamily: 'Sarabun',),
                               ),
                             ),
                           ]
@@ -1073,12 +1095,12 @@ class _DetailHouseAdminPageState extends State<DetailHouseAdminPage> {
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
                     ListTile(
-                      title: Text(widget.Notes.filename.toString()),
+                      title: Text(widget.Notes.filename.toString(),style: TextStyle(fontFamily: 'Sarabun',),),
                       trailing: Icon(Icons.remove_red_eye),
                       onTap: () {
                         Navigator.push(
@@ -1127,7 +1149,7 @@ class _DetailHouseAdminPageState extends State<DetailHouseAdminPage> {
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                       primary: Colors.green),
-                                  child: Text("อนุมัติ"),
+                                  child: Text("อนุมัติ",style: TextStyle(fontFamily: 'Sarabun',),),
                                   onPressed: () {
                                     ModifydataApprove();
                                   },
@@ -1140,7 +1162,7 @@ class _DetailHouseAdminPageState extends State<DetailHouseAdminPage> {
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                       primary: Colors.red),
-                                  child: Text("ปฏิเสธ"),
+                                  child: Text("ปฏิเสธ",style: TextStyle(fontFamily: 'Sarabun',),),
                                   onPressed: () {
                                     ModifydataReject();
                                   },

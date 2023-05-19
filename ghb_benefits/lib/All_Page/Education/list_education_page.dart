@@ -141,7 +141,11 @@ setState(() {
       persistentFooterButtons: <Widget>[
              if (value.SumEducationModalChoice.toString() == '40000.0') ...[
                    
- Text('ท่านได้ใช้วงเงินตามสิทธิ์ครบกำหนดแล้ว: ${value.SumEducationModalChoice.toString()} บาท',style: TextStyle(fontFamily: 'Sarabun',),),
+ Text('ท่านได้ใช้วงเงินตามสิทธิ์ครบกำหนดแล้ว: ${value.SumEducationModalChoice.toString()} บาท',style: TextStyle(
+                      fontSize: 15,
+                      color: iOrangeColor,
+                      fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
+                    ),),
 
     ] else ...[
   //  Text('ท่านได้ใช้วงเงินตามสิทธิ์ครบกำหนดแล้ว: ${value.Childage.toString()}'),

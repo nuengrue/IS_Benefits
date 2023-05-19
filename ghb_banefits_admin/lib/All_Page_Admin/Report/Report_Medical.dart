@@ -515,17 +515,17 @@ setState(() {
                   horizontalMargin: 0,
                   columns: const <DataColumn>[
                     DataColumn(
-                      label: Center(child: Flexible(child: Text('ฝ่ายงาน'))),
+                      label: Center(child: Flexible(child: Text('ฝ่ายงาน',style: TextStyle(fontFamily: 'Sarabun',),))),
                     ),
                     DataColumn(
-                      label: Center(child: Flexible(child: Text('นำจ่าย'))),
+                      label: Center(child: Flexible(child: Text('นำจ่าย',style: TextStyle(fontFamily: 'Sarabun',),))),
                     ),
                     DataColumn(
-                      label: Center(child: Flexible(child: Text('รอนำจ่าย'))),
+                      label: Center(child: Flexible(child: Text('รอนำจ่าย',style: TextStyle(fontFamily: 'Sarabun',),))),
                     ),
                     DataColumn(
                       label:
-                          Center(child: Flexible(child: Text('ปฏิเสธนำจ่าย'))),
+                          Center(child: Flexible(child: Text('ปฏิเสธนำจ่าย',style: TextStyle(fontFamily: 'Sarabun',),))),
                     ),
                   ],
                   rows:
@@ -537,16 +537,16 @@ setState(() {
                           NumberFormat.decimalPattern('en_us');
                       return DataRow(
                         cells: [
-                          DataCell(Flexible(child: Text(item.name.toString()))),
+                          DataCell(Flexible(child: Text(item.name.toString(),style: TextStyle(fontFamily: 'Sarabun',),))),
                           DataCell(Flexible(
                               child:
-                                  Center(child: Text(myFormat.format(item.amountApprove))))),
+                                  Center(child: Text(myFormat.format(item.amountApprove),style: TextStyle(fontFamily: 'Sarabun',),)))),
                           DataCell(Flexible(
                               child:
-                                  Center(child: Text(myFormat.format(item.amountRequest))))),
+                                  Center(child: Text(myFormat.format(item.amountRequest),style: TextStyle(fontFamily: 'Sarabun',),)))),
                           DataCell(Flexible(
                               child:
-                                  Center(child: Text(myFormat.format(item.amountRequest))))),
+                                  Center(child: Text(myFormat.format(item.amountRequest),style: TextStyle(fontFamily: 'Sarabun',),)))),
                         ],
                       );
                     } else {

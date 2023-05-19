@@ -183,7 +183,7 @@ class _AllDashboradPageState extends State<AllDashboradPage> {
           'Dashboard รายการอนุมัติสวัสดิการ',
           style: TextStyle(
             fontSize: 16,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
             color: iWhiteColor,),),backgroundColor: iOrangeColor,
         actions: <Widget>[
           IconButton(
@@ -222,7 +222,7 @@ body: SingleChildScrollView(
                   "ภาพรวมรายการค่าช่วยเหลือค่ารักษาพยาบาล",
                   style: TextStyle(
                     fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                     color: iBlueColor,
                   ),
                 ),
@@ -230,7 +230,7 @@ body: SingleChildScrollView(
       padding: const EdgeInsets.all(5.0),
       child: ListTile(
         tileColor: iAllColor,
-                      title: Text('จำนวนรายการทั้งหมด : ' + context.watch<MedicalAdminProviders>().fliecountAllMedicalAdmin.toString(),),
+                      title: Text('จำนวนรายการทั้งหมด : ' + context.watch<MedicalAdminProviders>().fliecountAllMedicalAdmin.toString(),style: TextStyle(fontFamily: 'Sarabun',),),
                                 trailing:  IconButton(
                                   icon:  Icon(Icons.visibility),
                                   onPressed: () { Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ListMedicalAdminPage(Status:"Total All"))); },
@@ -241,7 +241,7 @@ body: SingleChildScrollView(
       padding: const EdgeInsets.all(5.0),
       child: ListTile(
         tileColor: iRequestColor,
-                      title: Text('จำนวนรายการร้องขอ : ' + context.watch<MedicalAdminProviders>().fliecountRequestMedicalAdmin.toString(),),
+                      title: Text('จำนวนรายการร้องขอ : ' + context.watch<MedicalAdminProviders>().fliecountRequestMedicalAdmin.toString(),style: TextStyle(fontFamily: 'Sarabun',),),
                                 trailing:  IconButton(
                                   icon:  Icon(Icons.visibility),
                                   onPressed: () { Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ListMedicalAdminPage(Status:"ร้องขอ"))); },
@@ -252,7 +252,7 @@ body: SingleChildScrollView(
       padding: const EdgeInsets.all(5.0),
       child: ListTile(
         tileColor: iApproveColor,
-                      title: Text('จำนวนรายการอนุมัติ : ' + context.watch<MedicalAdminProviders>().fliecountApproveMedicalAdmin.toString(),),
+                      title: Text('จำนวนรายการอนุมัติ : ' + context.watch<MedicalAdminProviders>().fliecountApproveMedicalAdmin.toString(),style: TextStyle(fontFamily: 'Sarabun',),),
                                 trailing:  IconButton(
                                   icon:  Icon(Icons.visibility),
                                   onPressed: () { Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ListMedicalAdminPage(Status:"อนุมัติ"))); },
@@ -263,7 +263,7 @@ body: SingleChildScrollView(
       padding: const EdgeInsets.all(5.0),
       child: ListTile(
         tileColor: iRejectColor,
-                      title: Text('จำนวนรายการปฏิเสธ : ' + context.watch<MedicalAdminProviders>().fliecountRejectMedicalAdmin.toString(),),
+                      title: Text('จำนวนรายการปฏิเสธ : ' + context.watch<MedicalAdminProviders>().fliecountRejectMedicalAdmin.toString(),style: TextStyle(fontFamily: 'Sarabun',),),
                                 trailing:  IconButton(
                                   icon:  Icon(Icons.visibility),
                                   onPressed: () { Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ListMedicalAdminPage(Status:"ปฏิเสธ"))); },
@@ -312,7 +312,7 @@ body: SingleChildScrollView(
                   "ภาพรวมรายการค่าช่วยเหลือการศึกษาบุตร",
                   style: TextStyle(
                     fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                     color: iBlueColor,
                   ),
                 ),
@@ -320,7 +320,7 @@ body: SingleChildScrollView(
       padding: const EdgeInsets.all(5.0),
       child: ListTile(
         tileColor: iAllColor,
-                      title: Text('จำนวนรายการทั้งหมด : ' + context.watch<EducationAdminProviders>().fliecountAllEducationAdmin.toString(),),
+                      title: Text('จำนวนรายการทั้งหมด : ' + context.watch<EducationAdminProviders>().fliecountAllEducationAdmin.toString(),style: TextStyle(fontFamily: 'Sarabun',),),
                                 trailing:  IconButton(
                                   icon:  Icon(Icons.visibility),
                                   onPressed: () { Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ListEducationAdminPage(Status:"Total All"))); },
@@ -331,7 +331,7 @@ body: SingleChildScrollView(
       padding: const EdgeInsets.all(5.0),
       child: ListTile(
         tileColor: iRequestColor,
-                      title: Text('จำนวนรายการร้องขอ : ' + context.watch<EducationAdminProviders>().fliecountRequestEducationAdmin.toString(),),
+                      title: Text('จำนวนรายการร้องขอ : ' + context.watch<EducationAdminProviders>().fliecountRequestEducationAdmin.toString(),style: TextStyle(fontFamily: 'Sarabun',),),
                                 trailing:  IconButton(
                                   icon:  Icon(Icons.visibility),
                                   onPressed: () { Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ListEducationAdminPage(Status:"ร้องขอ"))); },
@@ -342,7 +342,7 @@ body: SingleChildScrollView(
       padding: const EdgeInsets.all(5.0),
       child: ListTile(
         tileColor: iApproveColor,
-                      title: Text('จำนวนรายการอนุมัติ : ' + context.watch<EducationAdminProviders>().fliecountApproveEducationAdmin.toString(),),
+                      title: Text('จำนวนรายการอนุมัติ : ' + context.watch<EducationAdminProviders>().fliecountApproveEducationAdmin.toString(),style: TextStyle(fontFamily: 'Sarabun',),),
                                 trailing:  IconButton(
                                   icon:  Icon(Icons.visibility),
                                   onPressed: () { Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ListEducationAdminPage(Status:"อนุมัติ"))); },
@@ -353,7 +353,7 @@ body: SingleChildScrollView(
       padding: const EdgeInsets.all(5.0),
       child: ListTile(
         tileColor: iRejectColor,
-                      title: Text('จำนวนรายการปฏิเสธ : ' + context.watch<EducationAdminProviders>().fliecountRejectEducationAdmin.toString(),),
+                      title: Text('จำนวนรายการปฏิเสธ : ' + context.watch<EducationAdminProviders>().fliecountRejectEducationAdmin.toString(),style: TextStyle(fontFamily: 'Sarabun',),),
                                 trailing:  IconButton(
                                   icon:  Icon(Icons.visibility),
                                   onPressed: () { Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ListEducationAdminPage(Status:"ปฏิเสธ"))); },
@@ -401,7 +401,7 @@ body: SingleChildScrollView(
                   "ภาพรวมรายการเงินช่วยเหลือบุตร",
                   style: TextStyle(
                     fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                     color: iBlueColor,
                   ),
                 ),
@@ -409,7 +409,7 @@ body: SingleChildScrollView(
       padding: const EdgeInsets.all(5.0),
       child: ListTile(
         tileColor: iAllColor,
-                      title: Text('จำนวนรายการทั้งหมด : ' + context.watch<ChildAllowanceAdminProviders>().fliecountAllChildAllowanceAdmin.toString(),),
+                      title: Text('จำนวนรายการทั้งหมด : ' + context.watch<ChildAllowanceAdminProviders>().fliecountAllChildAllowanceAdmin.toString(),style: TextStyle(fontFamily: 'Sarabun',),),
                                 trailing:  IconButton(
                                   icon:  Icon(Icons.visibility),
                                   onPressed: () { Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ListChildAllowanceAdminPage(Status:"Total All"))); },
@@ -420,7 +420,7 @@ body: SingleChildScrollView(
       padding: const EdgeInsets.all(5.0),
       child: ListTile(
         tileColor: iRequestColor,
-                      title: Text('จำนวนรายการร้องขอ : ' + context.watch<ChildAllowanceAdminProviders>().fliecountRequestChildAllowanceAdmin.toString(),),
+                      title: Text('จำนวนรายการร้องขอ : ' + context.watch<ChildAllowanceAdminProviders>().fliecountRequestChildAllowanceAdmin.toString(),style: TextStyle(fontFamily: 'Sarabun',),),
                                 trailing:  IconButton(
                                   icon:  Icon(Icons.visibility),
                                   onPressed: () { Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ListChildAllowanceAdminPage(Status:"ร้องขอ"))); },
@@ -431,7 +431,7 @@ body: SingleChildScrollView(
       padding: const EdgeInsets.all(5.0),
       child: ListTile(
         tileColor: iApproveColor,
-                      title: Text('จำนวนรายการอนุมัติ : ' + context.watch<ChildAllowanceAdminProviders>().fliecountApproveChildAllowanceAdmin.toString(),),
+                      title: Text('จำนวนรายการอนุมัติ : ' + context.watch<ChildAllowanceAdminProviders>().fliecountApproveChildAllowanceAdmin.toString(),style: TextStyle(fontFamily: 'Sarabun',),),
                                 trailing:  IconButton(
                                   icon:  Icon(Icons.visibility),
                                   onPressed: () { Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ListChildAllowanceAdminPage(Status:"อนุมัติ"))); },
@@ -442,7 +442,7 @@ body: SingleChildScrollView(
       padding: const EdgeInsets.all(5.0),
       child: ListTile(
         tileColor: iRejectColor,
-                      title: Text('จำนวนรายการปฏิเสธ : ' + context.watch<ChildAllowanceAdminProviders>().fliecountRejectChildAllowanceAdmin.toString(),),
+                      title: Text('จำนวนรายการปฏิเสธ : ' + context.watch<ChildAllowanceAdminProviders>().fliecountRejectChildAllowanceAdmin.toString(),style: TextStyle(fontFamily: 'Sarabun',),),
                                 trailing:  IconButton(
                                   icon:  Icon(Icons.visibility),
                                   onPressed: () { Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ListChildAllowanceAdminPage(Status:"ปฏิเสธ"))); },
@@ -486,7 +486,7 @@ body: SingleChildScrollView(
                   "ภาพรวมรายการค่าเช่าบ้านสำหรับพนักงาน",
                   style: TextStyle(
                     fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                     color: iBlueColor,
                   ),
                 ),
@@ -494,7 +494,7 @@ body: SingleChildScrollView(
       padding: const EdgeInsets.all(5.0),
       child: ListTile(
         tileColor: iAllColor,
-                      title: Text('จำนวนรายการทั้งหมด : ' + context.watch<HouseAllowanceAdminProviders>().fliecountAllHouseAllowanceAdmin.toString(),),
+                      title: Text('จำนวนรายการทั้งหมด : ' + context.watch<HouseAllowanceAdminProviders>().fliecountAllHouseAllowanceAdmin.toString(),style: TextStyle(fontFamily: 'Sarabun',),),
                                 trailing:  IconButton(
                                   icon:  Icon(Icons.visibility),
                                   onPressed: () { Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ListHouseAllowanceAdminPage(Status:"Total All"))); },
@@ -505,7 +505,7 @@ body: SingleChildScrollView(
       padding: const EdgeInsets.all(5.0),
       child: ListTile(
         tileColor: iRequestColor,
-                      title: Text('จำนวนรายการร้องขอ : ' + context.watch<HouseAllowanceAdminProviders>().fliecountRequestHouseAllowanceAdmin.toString(),),
+                      title: Text('จำนวนรายการร้องขอ : ' + context.watch<HouseAllowanceAdminProviders>().fliecountRequestHouseAllowanceAdmin.toString(),style: TextStyle(fontFamily: 'Sarabun',),),
                                 trailing:  IconButton(
                                   icon:  Icon(Icons.visibility),
                                   onPressed: () { Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ListHouseAllowanceAdminPage(Status:"ร้องขอ"))); },
@@ -516,7 +516,7 @@ body: SingleChildScrollView(
       padding: const EdgeInsets.all(5.0),
       child: ListTile(
         tileColor: iApproveColor,
-                      title: Text('จำนวนรายการอนุมัติ : ' + context.watch<HouseAllowanceAdminProviders>().fliecountApproveHouseAllowanceAdmin.toString(),),
+                      title: Text('จำนวนรายการอนุมัติ : ' + context.watch<HouseAllowanceAdminProviders>().fliecountApproveHouseAllowanceAdmin.toString(),style: TextStyle(fontFamily: 'Sarabun',),),
                                 trailing:  IconButton(
                                   icon:  Icon(Icons.visibility),
                                   onPressed: () { Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ListHouseAllowanceAdminPage(Status:"อนุมัติ"))); },
@@ -527,7 +527,7 @@ body: SingleChildScrollView(
       padding: const EdgeInsets.all(5.0),
       child: ListTile(
         tileColor: iRejectColor,
-                      title: Text('จำนวนรายการปฏิเสธ : ' + context.watch<HouseAllowanceAdminProviders>().fliecountRejectHouseAllowanceAdmin.toString(),),
+                      title: Text('จำนวนรายการปฏิเสธ : ' + context.watch<HouseAllowanceAdminProviders>().fliecountRejectHouseAllowanceAdmin.toString(),style: TextStyle(fontFamily: 'Sarabun',),),
                                 trailing:  IconButton(
                                   icon:  Icon(Icons.visibility),
                                   onPressed: () { Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ListHouseAllowanceAdminPage(Status:"ปฏิเสธ"))); },
@@ -575,7 +575,7 @@ body: SingleChildScrollView(
                   "ภาพรวมรายการสมัครฌาปนกิจ",
                   style: TextStyle(
                     fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                     color: iBlueColor,
                   ),
                 ),
@@ -583,7 +583,7 @@ body: SingleChildScrollView(
       padding: const EdgeInsets.all(5.0),
       child: ListTile(
         tileColor: iAllColor,
-                      title: Text('จำนวนรายการทั้งหมด : ' + context.watch<CremationServiceAdminProviders>().fliecountAllCremationServiceAdmin.toString(),),
+                      title: Text('จำนวนรายการทั้งหมด : ' + context.watch<CremationServiceAdminProviders>().fliecountAllCremationServiceAdmin.toString(),style: TextStyle(fontFamily: 'Sarabun',),),
                                 trailing:  IconButton(
                                   icon:  Icon(Icons.visibility),
                                   onPressed: () { Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ListCremationServiceAdminPage(Status:"Total All"))); },
@@ -594,7 +594,7 @@ body: SingleChildScrollView(
       padding: const EdgeInsets.all(5.0),
       child: ListTile(
         tileColor: iRequestColor,
-                      title: Text('จำนวนรายการร้องขอ : ' + context.watch<CremationServiceAdminProviders>().fliecountRequestCremationServiceAdmin.toString(),),
+                      title: Text('จำนวนรายการร้องขอ : ' + context.watch<CremationServiceAdminProviders>().fliecountRequestCremationServiceAdmin.toString(),style: TextStyle(fontFamily: 'Sarabun',),),
                                 trailing:  IconButton(
                                   icon:  Icon(Icons.visibility),
                                   onPressed: () { Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ListCremationServiceAdminPage(Status:"ร้องขอ"))); },
@@ -605,7 +605,7 @@ body: SingleChildScrollView(
       padding: const EdgeInsets.all(5.0),
       child: ListTile(
         tileColor: iApproveColor,
-                      title: Text('จำนวนรายการอนุมัติ : ' + context.watch<CremationServiceAdminProviders>().fliecountApproveCremationServiceAdmin.toString(),),
+                      title: Text('จำนวนรายการอนุมัติ : ' + context.watch<CremationServiceAdminProviders>().fliecountApproveCremationServiceAdmin.toString(),style: TextStyle(fontFamily: 'Sarabun',),),
                                 trailing:  IconButton(
                                   icon:  Icon(Icons.visibility),
                                   onPressed: () { Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ListCremationServiceAdminPage(Status:"อนุมัติ"))); },
@@ -616,7 +616,7 @@ body: SingleChildScrollView(
       padding: const EdgeInsets.all(5.0),
       child: ListTile(
         tileColor: iRejectColor,
-                      title: Text('จำนวนรายการปฏิเสธ : ' + context.watch<CremationServiceAdminProviders>().fliecountRejectCremationServiceAdmin.toString(),),
+                      title: Text('จำนวนรายการปฏิเสธ : ' + context.watch<CremationServiceAdminProviders>().fliecountRejectCremationServiceAdmin.toString(),style: TextStyle(fontFamily: 'Sarabun',),),
                                 trailing:  IconButton(
                                   icon:  Icon(Icons.visibility),
                                   onPressed: () { Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ListCremationServiceAdminPage(Status:"ปฏิเสธ"))); },

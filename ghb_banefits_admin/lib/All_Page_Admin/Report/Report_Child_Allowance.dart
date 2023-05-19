@@ -169,7 +169,7 @@ class _ReportChildAllowancePageState extends State<ReportChildAllowancePage> {
             appBar: AppBar(title: 
              Text('รายงานค่าช่วยเหลือบุตร',
             // Text(widget.Status.toString(),
-            style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: iWhiteColor,),),backgroundColor: iOrangeColor,),
+            style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: iWhiteColor,fontFamily: 'Sarabun',),),backgroundColor: iOrangeColor,),
     body: SingleChildScrollView(
       child: Column(children: [
 //             Padding(
@@ -542,17 +542,17 @@ class _ReportChildAllowancePageState extends State<ReportChildAllowancePage> {
                   horizontalMargin: 0,
                   columns: const <DataColumn>[
                     DataColumn(
-                      label: Center(child: Flexible(child: Text('ฝ่ายงาน'))),
+                      label: Center(child: Flexible(child: Text('ฝ่ายงาน',style: TextStyle(fontFamily: 'Sarabun',),))),
                     ),
                     DataColumn(
-                      label: Center(child: Flexible(child: Text('อนุมัติ'))),
+                      label: Center(child: Flexible(child: Text('อนุมัติ',style: TextStyle(fontFamily: 'Sarabun',),))),
                     ),
                     DataColumn(
-                      label: Center(child: Flexible(child: Text('ร้องขอ'))),
+                      label: Center(child: Flexible(child: Text('ร้องขอ',style: TextStyle(fontFamily: 'Sarabun',),))),
                     ),
                     DataColumn(
                       label:
-                          Center(child: Flexible(child: Text('ปฏิเสธ'))),
+                          Center(child: Flexible(child: Text('ปฏิเสธ',style: TextStyle(fontFamily: 'Sarabun',),))),
                     ),
                   ],
                   rows:
@@ -564,16 +564,16 @@ class _ReportChildAllowancePageState extends State<ReportChildAllowancePage> {
                           NumberFormat.decimalPattern('en_us');
                       return DataRow(
                         cells: [
-                          DataCell(Flexible(child: Text(item.name.toString()))),
+                          DataCell(Flexible(child: Text(item.name.toString(),style: TextStyle(fontFamily: 'Sarabun',),))),
                           DataCell(Flexible(
                               child:
-                                  Center(child: Text(myFormat.format(item.amountApprove))))),
+                                  Center(child: Text(myFormat.format(item.amountApprove),style: TextStyle(fontFamily: 'Sarabun',),)))),
                           DataCell(Flexible(
                               child:
-                                  Center(child: Text(myFormat.format(item.amountRequest))))),
+                                  Center(child: Text(myFormat.format(item.amountRequest),style: TextStyle(fontFamily: 'Sarabun',),)))),
                           DataCell(Flexible(
                               child:
-                                  Center(child: Text(myFormat.format(item.amountRequest))))),
+                                  Center(child: Text(myFormat.format(item.amountRequest),style: TextStyle(fontFamily: 'Sarabun',),)))),
                         ],
                       );
                     } else {

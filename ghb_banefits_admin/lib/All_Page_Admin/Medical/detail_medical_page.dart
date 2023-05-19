@@ -14,6 +14,9 @@ import 'package:ghb_banefits_admin/color.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'dart:convert';
+import 'dart:async';
+import 'package:http/http.dart' as http;
 
 class DetailMedicalAdminPage extends StatefulWidget {
   const DetailMedicalAdminPage(
@@ -28,6 +31,111 @@ class DetailMedicalAdminPage extends StatefulWidget {
 }
 
 class _DetailMedicalAdminPageState extends State<DetailMedicalAdminPage> {
+  late String _no;
+  late String _empcode;
+  late String _name;
+  late String _department;
+  late String _divisionment;
+  late String _numbercodemed;
+  late String _savedate;
+  late String _typemed;
+  late String _yearmed;
+  late String _hospitalname;
+  late String _hospitaltype;
+  late String _claimstartdate;
+  late String _claimenddate;
+  late String _idreceiptnumber;
+  late String _receiptnumber;
+  late String _tel;
+  late String _namedisease;
+  late String _diseasegroup;
+  late String _receiptamount;
+  late String _email;
+  late String _fileUrl;
+  late String _filename;
+  late String _remarks;
+
+  late Future<MedicalAdmin> _futureMedicalAdmin;
+  Future<MedicalAdmin> createMedicalAdmin(
+    String no,
+    String empcode,
+    String name,
+    String department,
+    String divisionment,
+    String numbercodemed,
+    String savedate,
+    String typemed,
+    String yearmed,
+    String hospitalname,
+    String hospitaltype,
+    String claimstartdate,
+    String claimenddate,
+    String idreceiptnumber,
+    String receiptnumber,
+    String tel,
+    String namedisease,
+    String diseasegroup,
+    String receiptamount,
+    String payamount,
+    String paydate,
+    String status,
+    String email,
+    String fileUrl,
+    String filename,
+    String flagread,
+    String id,
+    String remarks,
+  ) async {
+    final response = await http.post(
+      Uri.parse('http://192.168.1.43/APIBenefit/Medical/InsertMedical'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'empcode': empcode,
+        'name': name,
+        'department': department,
+        'divisionment': divisionment,
+        'numbercodemed': numbercodemed,
+        'savedate': savedate,
+        'typemed': typemed,
+        'yearmed': yearmed,
+        'hospitalname': hospitalname,
+        'hospitaltype': hospitaltype,
+        'claimstartdate': claimstartdate,
+        'claimenddate': claimenddate,
+        'idreceiptnumber': idreceiptnumber,
+        'receiptnumber': receiptnumber,
+        'tel': tel,
+        'namedisease': namedisease,
+        'diseasegroup': diseasegroup,
+        'receiptamount': receiptamount,
+        'payamount': payamount,
+        'paydate': paydate,
+        'status': status,
+        'email': email,
+        'fileUrl': fileUrl,
+        'filename': filename,
+        'flagread': flagread,
+        'no': no,
+        'idfirebase': id,
+        'remarks': remarks,
+      }),
+    );
+    print(response);
+    if (response.statusCode == 200) {
+      // If the server did return a 201 CREATED response,
+      // then parse the JSON.
+      print(response.statusCode);
+      return MedicalAdmin.fromJson(jsonDecode(response.body));
+    } else {
+      // If the server did not return a 201 CREATED response,
+      // then throw an exception.
+
+      throw Exception('Failed to create.');
+    }
+  }
+
   late String _status = "";
   late String _flagread = "";
   late int _Indexs;
@@ -44,47 +152,50 @@ class _DetailMedicalAdminPageState extends State<DetailMedicalAdminPage> {
   late int sumApprove = 0;
   late int sumRequest = 0;
   late int sumReject = 0;
-    late int dum = 0;
-    MasterController mastecontroller = MasterController(FirebaseServicesAdmin());
-   MedicalAdminController controller =
+  late int dum = 0;
+  MasterController mastecontroller = MasterController(FirebaseServicesAdmin());
+  MedicalAdminController controller =
       MedicalAdminController(FirebaseServicesAdmin());
- 
+
   void initState() {
     super.initState();
     _getcountnoti(context);
   }
+
   late int _idcounts = 0;
   void _getcountnoti(BuildContext context) async {
     var _dataMedical = await controller.fetchMedicalAdmin();
-    var _dataMedicaluid = _dataMedical.where((x) => x.email == widget.Notes.email);
+    var _dataMedicaluid =
+        _dataMedical.where((x) => x.email == widget.Notes.email);
     print(widget.Notes.email);
 
     _dataMedicaluid.forEach((b) {
-
-          if (b.status == "อนุมัติ") {
-            sumApprove += int.parse(b.payamount);
-          } else if (b.status == "ร้องขอ") {
-            sumRequest += int.parse(b.receiptamount);
-          } else if (b.status == "ปฏิเสธ") {
-            sumReject += int.parse(b.receiptamount);
-          }
-
-      });
+      if (b.status == "อนุมัติ") {
+        sumApprove += int.parse(b.payamount);
+      } else if (b.status == "ร้องขอ") {
+        sumRequest += int.parse(b.receiptamount);
+      } else if (b.status == "ปฏิเสธ") {
+        sumReject += int.parse(b.receiptamount);
+      }
+    });
     print(sumApprove);
-setState(() {
-  
-});
-            // print(_dataMedical.length);
-            // // if(_dataMedical.length > 0){
-            // //             setState(() {
-            // //   data = _dataMedical;
-            // //   filteredData = _dataMedical;
-            // //   // print(filteredData);
-            // // });
-            // context.read<MedicalAdminProviders>().MedicalAdminList = _dataMedical;
-            // }
-                var newNotification = await mastecontroller.fetchNotiAdmin();
-          context.read<NotificationsProviders>().NotificationsAdminList = newNotification;
+    setState(() {
+
+      dum = 40000 - sumApprove ;
+          print(dum);
+    });
+    // print(_dataMedical.length);
+    // // if(_dataMedical.length > 0){
+    // //             setState(() {
+    // //   data = _dataMedical;
+    // //   filteredData = _dataMedical;
+    // //   // print(filteredData);
+    // // });
+    // context.read<MedicalAdminProviders>().MedicalAdminList = _dataMedical;
+    // }
+    var newNotification = await mastecontroller.fetchNotiAdmin();
+    context.read<NotificationsProviders>().NotificationsAdminList =
+        newNotification;
     setState(() {
       _idcounts = newNotification.length + 1;
     });
@@ -99,6 +210,65 @@ setState(() {
       _payamount = _payamount;
       _remark = _remark;
       _paydate = DateFormat('dd-MM-yyyy  kk:mm').format(DateTime.now());
+
+      _no = widget.Notes.no.toString();
+      _empcode = widget.Notes.empcode;
+      _name = widget.Notes.name;
+      _department = widget.Notes.department;
+      _divisionment = widget.Notes.divisionment;
+      _numbercodemed = widget.Notes.numbercodemed;
+      _savedate = widget.Notes.savedate;
+      _typemed = widget.Notes.typemed;
+      _yearmed = widget.Notes.yearmed;
+      _hospitalname = widget.Notes.hospitalname;
+      _hospitaltype = widget.Notes.hospitaltype;
+      _claimstartdate = widget.Notes.claimstartdate;
+      _claimenddate = widget.Notes.claimenddate;
+      _idreceiptnumber = widget.Notes.idreceiptnumber;
+      _receiptnumber = widget.Notes.receiptnumber;
+      _tel = widget.Notes.tel;
+      _namedisease = widget.Notes.namedisease;
+      _diseasegroup = widget.Notes.diseasegroup;
+      _receiptamount = widget.Notes.receiptamount;
+
+      _email = widget.Notes.email;
+      _fileUrl = widget.Notes.fileUrl;
+      _filename = widget.Notes.filename;
+      _id = widget.Notes.id;
+//set insert api
+      setState(() {
+        _futureMedicalAdmin = createMedicalAdmin(
+            _empcode,
+            _name,
+            _department,
+            _divisionment,
+            _numbercodemed,
+            _savedate,
+            _typemed,
+            _yearmed,
+            _hospitalname,
+            _hospitaltype,
+            _claimstartdate,
+            _claimenddate,
+            _idreceiptnumber,
+            _receiptnumber,
+            _tel,
+            _namedisease,
+            _diseasegroup,
+            _receiptamount,
+            _payamount,
+            _paydate,
+            _status,
+            _email,
+            _fileUrl,
+            _filename,
+            _flagread,
+            _no,
+            _id,
+            _remark);
+      });
+      print(_futureMedicalAdmin);
+      //
       print(_status);
       Provider.of<MedicalAdminProviders>(context, listen: false)
           .modify(_Indexs, _status, _flagread, _payamount, _paydate, _remark);
@@ -135,21 +305,21 @@ setState(() {
       doc.update({
         'id': doc.id,
       });
-            AwesomeDialog(
+      AwesomeDialog(
         context: context,
         dialogType: DialogType.success,
         animType: AnimType.bottomSlide,
         showCloseIcon: true,
-        btnOkText : "ตกลง",
+        btnOkText: "ตกลง",
         title: "สำเร็จ",
         desc: "ดำเนินการบันทึกข้อมูลสำเร็จ",
         btnOkOnPress: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ListMedicalAdminPage(Status: "ร้องขอ"),
-        ),
-      );
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ListMedicalAdminPage(Status: "ร้องขอ"),
+            ),
+          );
         },
       ).show();
 
@@ -162,7 +332,7 @@ setState(() {
     }
   }
 
- void ModifydataReject() async {
+  void ModifydataReject() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       _Indexs = widget.Indexs.toInt();
@@ -171,6 +341,65 @@ setState(() {
       _payamount = _payamount;
       _remark = _remark;
       _paydate = DateFormat('dd-MM-yyyy  kk:mm').format(DateTime.now());
+      
+      _no = widget.Notes.no.toString();
+      _empcode = widget.Notes.empcode;
+      _name = widget.Notes.name;
+      _department = widget.Notes.department;
+      _divisionment = widget.Notes.divisionment;
+      _numbercodemed = widget.Notes.numbercodemed;
+      _savedate = widget.Notes.savedate;
+      _typemed = widget.Notes.typemed;
+      _yearmed = widget.Notes.yearmed;
+      _hospitalname = widget.Notes.hospitalname;
+      _hospitaltype = widget.Notes.hospitaltype;
+      _claimstartdate = widget.Notes.claimstartdate;
+      _claimenddate = widget.Notes.claimenddate;
+      _idreceiptnumber = widget.Notes.idreceiptnumber;
+      _receiptnumber = widget.Notes.receiptnumber;
+      _tel = widget.Notes.tel;
+      _namedisease = widget.Notes.namedisease;
+      _diseasegroup = widget.Notes.diseasegroup;
+      _receiptamount = widget.Notes.receiptamount;
+
+      _email = widget.Notes.email;
+      _fileUrl = widget.Notes.fileUrl;
+      _filename = widget.Notes.filename;
+      _id = widget.Notes.id;
+//set insert api
+      setState(() {
+        _futureMedicalAdmin = createMedicalAdmin(
+            _empcode,
+            _name,
+            _department,
+            _divisionment,
+            _numbercodemed,
+            _savedate,
+            _typemed,
+            _yearmed,
+            _hospitalname,
+            _hospitaltype,
+            _claimstartdate,
+            _claimenddate,
+            _idreceiptnumber,
+            _receiptnumber,
+            _tel,
+            _namedisease,
+            _diseasegroup,
+            _receiptamount,
+            _payamount,
+            _paydate,
+            _status,
+            _email,
+            _fileUrl,
+            _filename,
+            _flagread,
+            _no,
+            _id,
+            _remark);
+      });
+      print(_futureMedicalAdmin);
+      //
       print(_status);
       Provider.of<MedicalAdminProviders>(context, listen: false)
           .modify(_Indexs, _status, _flagread, _payamount, _paydate, _remark);
@@ -186,11 +415,11 @@ setState(() {
         'paydate': _paydate,
         'remarks': _remark
       });
-    _content = "คำขอเบิกค่ารักษาพยาบาล  เลขที่ใบเสร็จ " +
-        widget.Notes.idreceiptnumber +
-        " ได้รับการปฏิเสธจำนวน " +
-        widget.Notes.receiptamount +
-        " บาท";
+      _content = "คำขอเบิกค่ารักษาพยาบาล  เลขที่ใบเสร็จ " +
+          widget.Notes.idreceiptnumber +
+          " ได้รับการปฏิเสธจำนวน " +
+          widget.Notes.receiptamount +
+          " บาท";
       _uid = widget.Notes.email;
       CollectionReference Notifications =
           FirebaseFirestore.instance.collection('Notifications');
@@ -208,22 +437,21 @@ setState(() {
         'id': doc.id,
       });
 
-
-            AwesomeDialog(
+      AwesomeDialog(
         context: context,
         dialogType: DialogType.success,
         animType: AnimType.bottomSlide,
         showCloseIcon: true,
-        btnOkText : "ตกลง",
+        btnOkText: "ตกลง",
         title: "สำเร็จ",
         desc: "ดำเนินการบันทึกข้อมูลสำเร็จ",
         btnOkOnPress: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ListMedicalAdminPage(Status: "ร้องขอ"),
-        ),
-      );
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ListMedicalAdminPage(Status: "ร้องขอ"),
+            ),
+          );
         },
       ).show();
       // Navigator.push(
@@ -234,7 +462,7 @@ setState(() {
       // );
     }
   }
-  
+
   // void ModifydataReject() async {
   //    if (_formKey.currentState!.validate()) {
   //    _formKey.currentState!.save();
@@ -342,6 +570,7 @@ setState(() {
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -375,6 +604,9 @@ setState(() {
                           child: Text(
                             widget.Notes.status,
                             textAlign: TextAlign.end,
+                            style: TextStyle(
+                              fontFamily: 'Sarabun',
+                            ),
                           ),
                         ),
                       ],
@@ -411,6 +643,7 @@ setState(() {
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -420,13 +653,19 @@ setState(() {
                           child: Text(
                             'พนักงาน',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Sarabun',
+                            ),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.name,
                             textAlign: TextAlign.end,
+                            style: TextStyle(
+                              fontFamily: 'Sarabun',
+                            ),
                           ),
                         ),
                       ],
@@ -437,7 +676,10 @@ setState(() {
                           child: Text(
                             'หน่วยงาน',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Sarabun',
+                            ),
                           ),
                         ),
                         Column(
@@ -447,10 +689,16 @@ setState(() {
                             Text(
                               widget.Notes.department,
                               textAlign: TextAlign.end,
+                              style: TextStyle(
+                                fontFamily: 'Sarabun',
+                              ),
                             ),
                             Text(
                               widget.Notes.divisionment,
                               textAlign: TextAlign.end,
+                              style: TextStyle(
+                                fontFamily: 'Sarabun',
+                              ),
                             ),
                           ],
                         ),
@@ -489,6 +737,7 @@ setState(() {
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -516,13 +765,19 @@ setState(() {
                           child: Text(
                             'วันที่บันทึก',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Sarabun',
+                            ),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.savedate,
                             textAlign: TextAlign.end,
+                            style: TextStyle(
+                              fontFamily: 'Sarabun',
+                            ),
                           ),
                         ),
                       ],
@@ -533,13 +788,19 @@ setState(() {
                           child: Text(
                             'วงเงินประจำปี',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Sarabun',
+                            ),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.yearmed,
                             textAlign: TextAlign.end,
+                            style: TextStyle(
+                              fontFamily: 'Sarabun',
+                            ),
                           ),
                         ),
                       ],
@@ -577,6 +838,7 @@ setState(() {
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -586,7 +848,10 @@ setState(() {
                           child: Text(
                             'ชื่อโรงพยาบาล',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Sarabun',
+                            ),
                           ),
                         ),
                         Column(
@@ -596,10 +861,16 @@ setState(() {
                             Text(
                               widget.Notes.hospitalname,
                               textAlign: TextAlign.end,
+                              style: TextStyle(
+                                fontFamily: 'Sarabun',
+                              ),
                             ),
                             Text(
                               widget.Notes.hospitaltype,
                               textAlign: TextAlign.end,
+                              style: TextStyle(
+                                fontFamily: 'Sarabun',
+                              ),
                             ),
                           ],
                         ),
@@ -637,6 +908,7 @@ setState(() {
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -646,13 +918,19 @@ setState(() {
                           child: Text(
                             'เลขที่ใบเสร็จ',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Sarabun',
+                            ),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.idreceiptnumber,
                             textAlign: TextAlign.end,
+                            style: TextStyle(
+                              fontFamily: 'Sarabun',
+                            ),
                           ),
                         ),
                       ],
@@ -663,13 +941,19 @@ setState(() {
                           child: Text(
                             'เล่มที่',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Sarabun',
+                            ),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.receiptnumber,
                             textAlign: TextAlign.end,
+                            style: TextStyle(
+                              fontFamily: 'Sarabun',
+                            ),
                           ),
                         ),
                       ],
@@ -680,13 +964,19 @@ setState(() {
                           child: Text(
                             'หมายเลขติดต่อกลับ',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Sarabun',
+                            ),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.tel,
                             textAlign: TextAlign.end,
+                            style: TextStyle(
+                              fontFamily: 'Sarabun',
+                            ),
                           ),
                         ),
                       ],
@@ -697,13 +987,19 @@ setState(() {
                           child: Text(
                             'วันที่เริ่มต้นการรักษา',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Sarabun',
+                            ),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.claimstartdate,
                             textAlign: TextAlign.end,
+                            style: TextStyle(
+                              fontFamily: 'Sarabun',
+                            ),
                           ),
                         ),
                       ],
@@ -714,13 +1010,19 @@ setState(() {
                           child: Text(
                             'วันที่สิ้นสุดการรักษา',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Sarabun',
+                            ),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.claimenddate,
                             textAlign: TextAlign.end,
+                            style: TextStyle(
+                              fontFamily: 'Sarabun',
+                            ),
                           ),
                         ),
                       ],
@@ -757,6 +1059,7 @@ setState(() {
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -785,13 +1088,19 @@ setState(() {
                           child: Text(
                             'ชื่อโรค',
                             textAlign: TextAlign.left,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Sarabun',
+                            ),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             widget.Notes.namedisease,
                             textAlign: TextAlign.end,
+                            style: TextStyle(
+                              fontFamily: 'Sarabun',
+                            ),
                           ),
                         ),
                       ],
@@ -847,6 +1156,7 @@ setState(() {
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -858,20 +1168,26 @@ setState(() {
                             child: Text(
                               'จำนวนเงินตามใบเสร็จ',
                               textAlign: TextAlign.left,
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Sarabun',
+                              ),
                             ),
                           ),
                           Expanded(
                             child: Text(
                               widget.Notes.receiptamount,
                               textAlign: TextAlign.end,
+                              style: TextStyle(
+                                fontFamily: 'Sarabun',
+                              ),
                             ),
                           ),
                         ],
                       ),
                     ),
 
-                                       Padding(
+                    Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: [
@@ -880,7 +1196,10 @@ setState(() {
                               child: Text(
                                 'จำนวนเงินจ่าย',
                                 textAlign: TextAlign.left,
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Sarabun',
+                                ),
                               ),
                             ),
                             // Expanded(
@@ -918,13 +1237,19 @@ setState(() {
                               child: Text(
                                 'จำนวนเงินจ่าย',
                                 textAlign: TextAlign.left,
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Sarabun',
+                                ),
                               ),
                             ),
                             Expanded(
                               child: Text(
                                 widget.Notes.payamount,
                                 textAlign: TextAlign.end,
+                                style: TextStyle(
+                                  fontFamily: 'Sarabun',
+                                ),
                               ),
                             ),
                           ]
@@ -957,27 +1282,38 @@ setState(() {
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
                                       return 'โปรดระบุจำนวนเงิน';
-                                    }
-                                    else if (int.parse(value) > 40000) {
+                                    } 
+                                      else if (sumApprove == 0 && int.parse(value) > dum) {
                                       // var dum;
-                                       dum = 40000 - sumApprove;
-                                      print(dum);
-                                      setState(() {
-                                        dum = dum;
-                                      });
+                                      // dum = 40000 - sumApprove;
+                                      // print(dum);
+                                      // setState(() {
+                                      //   dum = dum;
+                                      // });
                                       return 'โปรดระบุจำนวนเงินจ่ายไม่เกิน $dum บาท';
                                     }
-                                    else if  (int.parse(value) > dum) {
-                                      if (int.parse(value) > int.parse(widget.Notes.receiptamount))
-                                      // (int.parse(value) > dum)
+                                     else if (sumApprove > 0 && int.parse(value) > dum) {
+                                      return 'โปรดระบุจำนวนเงินจ่ายไม่เกิน $dum บาท';
+                                    }                                        
+                                    // else if (int.parse(value) > 40000) {
+                                    //   // var dum;
+                                    //   dum = 40000 - sumApprove;
+                                    //   print(sumApprove);
+                                    //   print(dum);
+                                    //   setState(() {
+                                    //     dum = dum;
+                                    //   });
+                                    //   return 'โปรดระบุจำนวนเงินจ่ายไม่เกิน $dum บาท';
+                                    // } 
+                                    else if (int.parse(value) > dum) {
+                                      if (int.parse(value) >
+                                          int.parse(widget.Notes.receiptamount))
+                             
                                       {
                                         return 'โปรดระบุจำนวนเงินจ่ายไม่เกินใบเสร็จ';
-                                          // return 'โปรดระบุจำนวนเงินจ่ายไม่เกิน $dum บาท';
                                       }
-                                      // var dum;
-                                      //  dum = 40000 - sumApprove;
-                                      // print(dum);
-                                       return 'โปรดระบุจำนวนเงินจ่ายไม่เกิน $dum บาท';
+                                    //   if(sumApprove != 0 || int.parse(value)> 0)
+                                    //   return 'โปรดระบุจำนวนเงินจ่ายไม่เกิน $dum บาท';
                                     }
                                   },
                                   onSaved: (newValue) => _payamount = newValue!,
@@ -993,13 +1329,19 @@ setState(() {
                               child: Text(
                                 'จำนวนเงินจ่าย',
                                 textAlign: TextAlign.left,
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Sarabun',
+                                ),
                               ),
                             ),
                             Expanded(
                               child: Text(
                                 widget.Notes.payamount,
                                 textAlign: TextAlign.end,
+                                style: TextStyle(
+                                  fontFamily: 'Sarabun',
+                                ),
                               ),
                             ),
                           ]
@@ -1059,6 +1401,7 @@ setState(() {
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
@@ -1114,13 +1457,19 @@ setState(() {
                               child: Text(
                                 'หมายเหตุ',
                                 textAlign: TextAlign.left,
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Sarabun',
+                                ),
                               ),
                             ),
                             Expanded(
                               child: Text(
                                 widget.Notes.remarks,
                                 textAlign: TextAlign.end,
+                                style: TextStyle(
+                                  fontFamily: 'Sarabun',
+                                ),
                               ),
                             ),
                           ]
@@ -1158,11 +1507,17 @@ setState(() {
                         fontSize: 16,
                         color: Color.fromARGB(255, 9, 28, 235),
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Sarabun',
                       ),
                     ),
                     const Divider(),
                     ListTile(
-                      title: Text(widget.Notes.filename.toString()),
+                      title: Text(
+                        widget.Notes.filename.toString(),
+                        style: TextStyle(
+                          fontFamily: 'Sarabun',
+                        ),
+                      ),
                       trailing: Icon(Icons.remove_red_eye),
                       onTap: () {
                         Navigator.push(
@@ -1231,7 +1586,12 @@ setState(() {
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                       primary: Colors.green),
-                                  child: Text("อนุมัติ"),
+                                  child: Text(
+                                    "อนุมัติ",
+                                    style: TextStyle(
+                                      fontFamily: 'Sarabun',
+                                    ),
+                                  ),
                                   onPressed: () {
                                     ModifydataApprove();
                                   },
@@ -1244,7 +1604,12 @@ setState(() {
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                       primary: Colors.red),
-                                  child: Text("ปฏิเสธ"),
+                                  child: Text(
+                                    "ปฏิเสธ",
+                                    style: TextStyle(
+                                      fontFamily: 'Sarabun',
+                                    ),
+                                  ),
                                   onPressed: () {
                                     ModifydataReject();
                                   },

@@ -66,7 +66,7 @@ class _ListEducationAdminPageState extends State<ListEducationAdminPage> {
           'รายการคำขอช่วยเหลือการศึกษา',
           style: TextStyle(
             fontSize: 16,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
             color: iWhiteColor,),),backgroundColor: iOrangeColor,
         actions: <Widget>[
           IconButton(
@@ -117,7 +117,7 @@ else{
                         child: Text(
                       "ไม่พบรายการคำขอ",
                       style: TextStyle(
-                        color: iBlueColor,
+                        color: iBlueColor,fontFamily: 'Sarabun',
                       ),
                     )));
           },
