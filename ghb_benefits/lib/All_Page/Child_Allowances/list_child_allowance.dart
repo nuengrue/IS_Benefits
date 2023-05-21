@@ -38,12 +38,17 @@ class _ListChildAllowancePageState extends State<ListChildAllowancePage> {
 
    void   _getChildAllowance(BuildContext context) async {
             var newAllowance = await controller.fetchChildAllowance();
+
+                       
+             newAllowance.sort((a,b) => a.no.compareTo(b.no));
+
+             allowances =  newAllowance.reversed.toList();
 var countshow = newAllowance.where((x) => x.status == "อนุมัติ").length ;
 
 setState(() {
  countsum =  countshow;
 });
-          context.read<ChildAllowanceProviders>().ChildAllowanceList = newAllowance;
+          context.read<ChildAllowanceProviders>().ChildAllowanceList = allowances;
       }
       
 /*

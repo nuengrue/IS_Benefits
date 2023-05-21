@@ -47,7 +47,10 @@ class _ListChildAllowanceWhereAdminPageState extends State<ListChildAllowanceWhe
 
 // if(widget.Status.toString() == "Total All" ){
             var newAllowance = await controller.fetchChildAllowanceAdmin();
-          context.read<ChildAllowanceAdminProviders>().ChildAllowanceAdminListwhere = newAllowance;
+                                    newAllowance.sort((a,b) => a.no.compareTo(b.no));
+
+             allowances =  newAllowance.reversed.toList();
+          context.read<ChildAllowanceAdminProviders>().ChildAllowanceAdminListwhere = allowances;
 
 // }
 //             var newAllowance = await controller.fetchChildAllowanceAdmin();

@@ -43,7 +43,11 @@ class _ListChildAllowanceAdminPageState extends State<ListChildAllowanceAdminPag
    void   _getChildAllowanceAdmin(BuildContext context) async {
             var newAllowance = await controller.fetchChildAllowanceAdmin();
 
-          context.read<ChildAllowanceAdminProviders>().ChildAllowanceAdminList = newAllowance;
+                         newAllowance.sort((a,b) => a.no.compareTo(b.no));
+
+             allowances =  newAllowance.reversed.toList();
+
+          context.read<ChildAllowanceAdminProviders>().ChildAllowanceAdminList = allowances;
       }
       
 /*

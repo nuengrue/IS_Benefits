@@ -42,7 +42,7 @@ Widget build(BuildContext context) {
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 18,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
             color: iWhiteColor,),),backgroundColor: iOrangeColor,
       
       ),
@@ -87,7 +87,7 @@ Widget build(BuildContext context) {
 
       style: TextStyle(
                 fontSize: 16,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                 color: iBlueColor,
               ),
     ),
@@ -135,7 +135,7 @@ Widget build(BuildContext context) {
 
       style: TextStyle(
                 fontSize: 16,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                 color: iBlueColor,
               ),
     ),
@@ -183,7 +183,7 @@ Widget build(BuildContext context) {
 
       style: TextStyle(
                 fontSize: 16,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                 color: iBlueColor,
               ),
     ),
@@ -231,7 +231,7 @@ Widget build(BuildContext context) {
 
       style: TextStyle(
                 fontSize: 16,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                 color: iBlueColor,
               ),
     ),
@@ -280,7 +280,7 @@ Widget build(BuildContext context) {
 
       style: TextStyle(
                 fontSize: 16,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                 color: iBlueColor,
               ),
     ),

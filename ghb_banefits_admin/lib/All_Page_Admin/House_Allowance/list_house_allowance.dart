@@ -40,8 +40,10 @@ class _ListHouseAllowanceAdminPageState extends State<ListHouseAllowanceAdminPag
 
    void   _getHouseAllowanceAdmin(BuildContext context) async {
             var newhouse = await controller.fetchHouseAllowanceAdmin();
+             newhouse.sort((a,b) => a.no.compareTo(b.no));
 
-          context.read<HouseAllowanceAdminProviders>().HouseAllowanceAdminList = newhouse;
+             houses =  newhouse.reversed.toList();
+          context.read<HouseAllowanceAdminProviders>().HouseAllowanceAdminList = houses;
       }
   @override
   Widget build(BuildContext context) {

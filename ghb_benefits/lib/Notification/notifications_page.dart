@@ -31,6 +31,7 @@ class NotificationsPage extends StatefulWidget {
 
 class _NotificationsPageState extends State<NotificationsPage> {
     List<Notifications> medicals = List.empty();
+        List<Notifications> beNotification = List.empty();
   bool isloading = false;
   late int count ;
 
@@ -45,8 +46,16 @@ class _NotificationsPageState extends State<NotificationsPage> {
 
    void   _getNotifications(BuildContext context) async {
             var newNotification = await controller.fetchNotifications();
+            var be = beNotification ;
+             newNotification.sort((a,b) => a.no.compareTo(b.no));
 
-          context.read<NotificationsProviders>().NotificationsList = newNotification;
+             beNotification =  newNotification.reversed.toList();
+setState(() {
+
+});
+            
+
+          context.read<NotificationsProviders>().NotificationsList = beNotification;
       }
   @override
     Widget build(BuildContext context) {

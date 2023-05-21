@@ -35,7 +35,11 @@ class _ListCremationServicePageState extends State<ListCremationServicePage> {
    void   _getCremationService(BuildContext context) async {
             var newCremation = await controller.fetchCremationService();
 
-          context.read<CremationServiceProviders>().CremationServiceList = newCremation;
+                         newCremation.sort((a,b) => a.no.compareTo(b.no));
+
+             Cremations =  newCremation.reversed.toList();
+
+          context.read<CremationServiceProviders>().CremationServiceList = Cremations;
       }
   @override
   Widget build(BuildContext context) {

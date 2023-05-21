@@ -77,7 +77,7 @@ class MyApp extends StatelessWidget {
           '/7': (context) => ListReports(),
           '/8': (context) => MedicalDashboradPage(),
           '/9': (context) => EducationDashboradPage(),
-          '/10': (context) => ChildAllowancesDashboradPage(),
+          '/10': (context) => MyApp(),
           '/11': (context) => HouseAllowanceDashboradPage(),
           // '/12': (context) => CremationServiceDashboradPage(),
         }); // MaterialApp

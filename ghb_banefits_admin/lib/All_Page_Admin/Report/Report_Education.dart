@@ -219,9 +219,9 @@ setState(() {
                           Padding(
                             padding: const EdgeInsets.all(3.0),
                             child: Text(
-                              "รายงานค่ารักษาพยาบาลแยกตามฝ่ายงาน",
+                              "รายงานค่าช่วยเหลือการศึกษาบุตรแยกตามฝ่ายงาน",
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 16,
                                 fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
                                 color: iBlueColor,
                               ),

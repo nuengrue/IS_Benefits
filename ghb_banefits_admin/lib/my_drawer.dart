@@ -13,6 +13,7 @@ import 'package:ghb_banefits_admin/All_Page_Admin/Report/Report_House_Allowance.
 import 'package:ghb_banefits_admin/All_Page_Admin/Report/Report_Medical.dart';
 import 'package:ghb_banefits_admin/All_Providers_Admin/provider_master.dart';
 import 'package:ghb_banefits_admin/Dashborad/all_dashborad.dart';
+import 'package:ghb_banefits_admin/Dashborad/child_allowances_dashborad.dart';
 import 'package:ghb_banefits_admin/Dashborad/list_Reports.dart';
 import 'package:ghb_banefits_admin/color.dart';
 import 'package:ghb_banefits_admin/main_home_admin_page.dart';
@@ -144,13 +145,13 @@ class _MyDrawerState extends State<MyDrawer> {
                     builder: (context) => ListCremationServiceAdminPage(Status:"Total All")));
               },
             ),
-  //            ListTile(
-  //             leading: Icon(Icons.note),
-  //             title: const Text('รายงานค่ารักษาพยาบาล'),
-  //             onTap: () {
-  //              Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ReportMedicalPage()));
-  //             },
-  //           ),
+            //  ListTile(
+            //   leading: Icon(Icons.note),
+            //   title: const Text('รายงานค่ารักษาพยาบาล'),
+            //   onTap: () {
+            //    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const MyApp()));
+            //   },
+            // ),
   //                       ListTile(
   //             leading: Icon(Icons.note),
   //             title: const Text('รายงานค่าช่วยเหลือการศึกษาบุตร'),

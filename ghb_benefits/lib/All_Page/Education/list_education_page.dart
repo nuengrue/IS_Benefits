@@ -42,7 +42,11 @@ class _ListEducationPageState extends State<ListEducationPage> {
    void   _getEducation(BuildContext context) async {
             var newEducation = await controller.fetchEducation();
 
-          context.read<EducationProviders>().EducationList = newEducation;
+                                     newEducation.sort((a,b) => a.no.compareTo(b.no));
+
+             educations =  newEducation.reversed.toList();
+
+          context.read<EducationProviders>().EducationList = educations;
 
 calculateAge(DateTime birthDate) {
   DateTime currentDate = DateTime.now();

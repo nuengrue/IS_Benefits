@@ -40,8 +40,11 @@ class _ListMedicalPageState extends State<ListMedicalPage> {
 
    void   _getMedical(BuildContext context) async {
             var newMedical = await controller.fetchMedical();
+                         newMedical.sort((a,b) => a.no.compareTo(b.no));
 
-          context.read<MedicalProviders>().MedicalList = newMedical;
+             medicals =  newMedical.reversed.toList();
+
+          context.read<MedicalProviders>().MedicalList = medicals;
       }
   @override
     Widget build(BuildContext context) {

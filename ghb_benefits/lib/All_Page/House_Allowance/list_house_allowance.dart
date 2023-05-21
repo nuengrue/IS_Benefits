@@ -34,8 +34,12 @@ class _ListHouseAllowanceePageState extends State<ListHouseAllowanceePage> {
 
    void   _getHouseAllowancee(BuildContext context) async {
             var newhouse = await controller.fetchHouseAllowance();
+            
+                                     newhouse.sort((a,b) => a.no.compareTo(b.no));
 
-          context.read<HouseAllowanceProviders>().HouseAllowanceList = newhouse;
+             houses =  newhouse.reversed.toList();
+
+          context.read<HouseAllowanceProviders>().HouseAllowanceList = houses;
       }
   @override
   Widget build(BuildContext context) {

@@ -42,8 +42,10 @@ class _ListEducationAdminPageState extends State<ListEducationAdminPage> {
 
   void _getEducationAdmin(BuildContext context) async {
     var newEducation = await controller.fetchEducationAdmin();
+                                                newEducation.sort((a,b) => a.no.compareTo(b.no));
 
-    context.read<EducationAdminProviders>().EducationAdminList = newEducation;
+             educations =  newEducation.reversed.toList();
+    context.read<EducationAdminProviders>().EducationAdminList = educations;
   }
 
   @override
