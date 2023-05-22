@@ -94,7 +94,7 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
       },
       body: jsonEncode(<String, String>{
         'empcode': empcode,
-        'name': name,
+        'nameemp': name,
         'department': department,
         'divisionment': divisionment,
         'typeedu': typeedu,
@@ -280,7 +280,7 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
       _content = "คำขอช่วยเหลือการศึกษา  เลขที่ใบเสร็จ " +
           widget.Notes.receiptnumber +
           "ได้รับการอนุมัติจำนวน " +
-          widget.Notes.payamount +
+          _payamount +
           " บาท";
       _uid = widget.Notes.email;
       CollectionReference Notifications =

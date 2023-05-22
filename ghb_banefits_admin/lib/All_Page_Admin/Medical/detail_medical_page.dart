@@ -287,7 +287,7 @@ class _DetailMedicalAdminPageState extends State<DetailMedicalAdminPage> {
       _content = "คำขอเบิกค่ารักษาพยาบาล  เลขที่ใบเสร็จ " +
           widget.Notes.idreceiptnumber +
           " ได้รับการอนุมัติจำนวน " +
-          widget.Notes.payamount +
+          _payamount +
           " บาท";
       _uid = widget.Notes.email;
       CollectionReference Notifications =

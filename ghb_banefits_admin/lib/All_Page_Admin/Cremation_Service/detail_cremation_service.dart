@@ -210,7 +210,7 @@ class _DetailCremationServiceAdminPageState
       print(_Indexs);
 //
 
-      _empcode = widget.Notes.email;
+      _empcode = widget.Notes.empcode;
       _name = widget.Notes.name;
       _department = widget.Notes.department;
       _divisionment = widget.Notes.divisionment;

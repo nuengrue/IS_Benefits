@@ -96,7 +96,7 @@ class _DetailHouseAdminPageState extends State<DetailHouseAdminPage> {
       },
       body: jsonEncode(<String, String>{
         'empcode': empcode,
-        'name': name,
+        'nameemp': name,
         'department': department,
         'divisionment': divisionment,
         'savedate': savedate,

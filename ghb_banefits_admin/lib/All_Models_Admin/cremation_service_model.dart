@@ -129,7 +129,7 @@ class CremationServiceAdmin {
     return {
       'no': no,
       'empcode': empcode,
-      'name': name,
+      'nameemp': name,
       'department': department,
       'divisionment': divisionment,
       'idcard': idcard,
