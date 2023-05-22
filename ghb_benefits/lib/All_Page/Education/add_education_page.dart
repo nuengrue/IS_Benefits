@@ -7,6 +7,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:ghb_benefits/All_Controllers/Education_Controller.dart';
 import 'package:ghb_benefits/All_Controllers/master_controllers.dart';
+import 'package:ghb_benefits/All_Models/child_model.dart';
 import 'package:ghb_benefits/All_Page/Education/list_education_page.dart';
 import 'package:ghb_benefits/All_Providers/provider_child_allowance.dart';
 import 'package:ghb_benefits/All_Providers/provider_education.dart';
@@ -40,7 +41,10 @@ class _AddEduPageState extends State<AddEduPage> {
 
   MasterController mastecontroller = MasterController(FirebaseServices());
   EducationController controller = EducationController(FirebaseServices());
+   late String _nochildName  = "";
+     List<Child> child = List.empty();
 
+       List<DropdownMenuItem<String>> _ddlchildName = [];
   void initState() {
     super.initState();
     _getEducationadd(context);
@@ -69,6 +73,18 @@ class _AddEduPageState extends State<AddEduPage> {
       _divisionment = newEmployee.first.divisionment;
     });
 
+    var newChilder = await mastecontroller.fetchChilder();
+                 newChilder.sort((a,b) => a.nochild.compareTo(b.nochild));
+
+             child =  newChilder.reversed.toList();
+        setState(() {
+      _ddlchildName
+          .add(DropdownMenuItem(value: "", child: Text("เลือกบุตร")));
+      child.forEach((e) {
+        _ddlchildName.add(DropdownMenuItem(
+            child: Text(e.namechild), value: e.namechild));
+      });
+    });
     var newEducation = await controller.fetchEducation();
     setState(() {
       _idcounts = newEducation.length + 1;
@@ -83,20 +99,109 @@ class _AddEduPageState extends State<AddEduPage> {
     "ทดสอบ คนที่4"
   ];
   final List<String> _className = [
-    "อ.1",
-    "อ.2",
-    "อ.3",
-    "ป.1",
-    "ป.2",
-    "ป.3 ",
-    "ป.4",
-    "ป.5",
-    "ป.6"
+"อนุบาล 1",
+"อนุบาล 2",
+"อนุบาล 3",
+"ประถมศึกษาปีที่ 1",
+"ประถมศึกษาปีที่ 2",
+"ประถมศึกษาปีที่ 3",
+"ประถมศึกษาปีที่ 4",
+"ประถมศึกษาปีที่ 5",
+"ประถมศึกษาปีที่ 6",
+"มัธยมศึกษาปีที่ 1",
+"มัธยมศึกษาปีที่ 2",
+"มัธยมศึกษาปีที่ 3",
+"มัธยมศึกษาปีที่ 4",
+"มัธยมศึกษาปีที่ 5",
+"มัธยมศึกษาปีที่ 6",
+"ประกาศนียบัตรวิชาชีพปีที่ 1",
+"ประกาศนียบัตรวิชาชีพปีที่ 2",
+"ประกาศนียบัตรวิชาชีพปีที่ 3",
+"ประกาศนียบัตรวิชาชีพเทคนิคปีที่ 1",
+"ประกาศนียบัตรวิชาชีพเทคนิคปีที่ 2",
+"ประกาศนียบัตรวิชาชีพชั้นสูงปีที่ 1",
+"ประกาศนียบัตรวิชาชีพชั้นสูงปีที่ 2",
+"อนุปริญญา",
+"ปริญญาตรี"
   ];
   final List<String> _academyName = [
-    "โรงเรียนสามเสนวิทยาลัย",
-    "โรงเรียนพญาไท",
-    "โรงเรียนฤทธิยะวรรณาลัย"
+"โรงเรียนเด่นหล้า",
+"โรงเรียนเตรียมอุดมศึกษา",
+"โรงเรียนเลิศหล้า",
+"โรงเรียนแจงร้อนวิทยา",
+"โรงเรียนโชคชัยครูเกียว",
+"โรงเรียนไชยฉิมพลีวิทยาคม",
+"โรงเรียนไตรมิตรวิทยาลัย",
+"โรงเรียนจันทร์ประดิษฐารามวิทยาคม",
+"โรงเรียนชิโนรสวิทยาลัย",
+"โรงเรียนบางปะกอกวิทยาคม",
+"โรงเรียนบางมดวิทยา",
+"โรงเรียนพญาไท",
+"โรงเรียนราชวินิต เขตดุสิต",
+"โรงเรียนวัดโสมนัส",
+"โรงเรียนวัดชนะสงคราม",
+"โรงเรียนวัดพลับพลาชัย",
+"โรงเรียนอนุบาลวัดไร่ขิง",
+"โรงเรียนอนุบาลวัดปรินายก",
+"จุฬาลงกรณ์มหาวิทยาลัย",
+"มหาวิทยาลัยเกษตรศาสตร์",
+"มหาวิทยาลัยเชียงใหม่",
+"มหาวิทยาลัยกรุงเทพ",
+"มหาวิทยาลัยกาฬสินธุ์",
+"มหาวิทยาลัยธรรมศาสตร์",
+"มหาวิทยาลัยนเรศวร",
+"มหาวิทยาลัยนครพนม",
+"มหาวิทยาลัยนราธิวาสราชนครินทร์",
+"มหาวิทยาลัยมหาสารคาม",
+"มหาวิทยาลัยมหิดล",
+"มหาวิทยาลัยรังสิต",
+"มหาวิทยาลัยราชภัฏเชียงใหม่",
+"มหาวิทยาลัยราชภัฏเชียงราย",
+"มหาวิทยาลัยราชภัฏเทพสตรี",
+"มหาวิทยาลัยราชภัฏเพชรบุรี",
+"มหาวิทยาลัยราชภัฏเพชรบูรณ์",
+"มหาวิทยาลัยราชภัฏเลย",
+"มหาวิทยาลัยราชภัฏกาญจนบุรี",
+"มหาวิทยาลัยราชภัฏกำแพงเพชร",
+"มหาวิทยาลัยราชภัฏจันทรเกษม",
+"มหาวิทยาลัยราชภัฏชัยภูมิ",
+"มหาวิทยาลัยราชภัฏธนบุรี",
+"มหาวิทยาลัยราชภัฏนครปฐม",
+"มหาวิทยาลัยราชภัฏนครราชสีมา",
+"มหาวิทยาลัยราชภัฏนครศรีธรรมราช",
+"มหาวิทยาลัยราชภัฏนครสวรรค์",
+"มหาวิทยาลัยราชภัฏบุรีรัมย์",
+"มหาวิทยาลัยราชภัฏพระนคร",
+"มหาวิทยาลัยราชภัฏพิบูลสงคราม",
+"มหาวิทยาลัยราชภัฏภูเก็ต",
+"มหาวิทยาลัยราชภัฏมหาสารคาม",
+"มหาวิทยาลัยราชภัฏยะลา",
+"มหาวิทยาลัยราชภัฏร้อยเอ็ด",
+"มหาวิทยาลัยราชภัฏราชนครินทร์",
+"มหาวิทยาลัยราชภัฏรำไพพรรณี",
+"มหาวิทยาลัยราชภัฏลำปาง",
+"มหาวิทยาลัยราชภัฏศรีสะเกษ",
+"มหาวิทยาลัยราชภัฏสกลนคร",
+"มหาวิทยาลัยราชภัฏสงขลา",
+"มหาวิทยาลัยราชภัฏสวนสุนันทา",
+"มหาวิทยาลัยราชภัฏสุราษฎร์ธานี",
+"มหาวิทยาลัยราชภัฏสุรินทร์",
+"มหาวิทยาลัยราชภัฏหมู่บ้านจอมบึง",
+"มหาวิทยาลัยราชภัฏอุดรธานี",
+"มหาวิทยาลัยราชภัฏอุตรดิตถ์",
+"มหาวิทยาลัยราชภัฏอุบลราชธานี",
+"มหาวิทยาลัยรามคำแหง",
+"มหาวิทยาลัยสยาม",
+"มหาวิทยาลัยสุโขทัยธรรมาธิราช",
+"มหาวิทยาลัยหอการค้า",
+"มหาวิทยาลัยอัสสัมชัญ",
+"มหาวิทยาลัยอุบลราชธานี",
+"สถาบันเทคโนโลยีกรุงเทพ",
+"สถาบันเทคโนโลยีปทุมวัน",
+"สถาบันการบินพลเรือน",
+"สถาบันการพลศึกษา",
+"สถาบันบัณฑิตพัฒนศิลป์"
+
   ];
   final List<String> _yearName = [
     DateFormat.y().format(DateTime.now()).toString(),
@@ -106,7 +211,15 @@ class _AddEduPageState extends State<AddEduPage> {
     "1",
     "2",
   ];
-  final List<String> _educationlevelName = ["อนุบาล", "ประถมต้น", "ประถมปลาย"];
+  final List<String> _educationlevelName = ["อนุบาล",
+"ประถมศึกษา",
+"มัธยมศึกษาตอนต้น",
+"มัธยมศึกษาตอนปลาย",
+"ประกาศนียบัตรวิชาชีพ (ปวช.)",
+"อนุปริญญา",
+"ประกาศนียบัตรวิชาชีพชั้นสูง (ปวส.)",
+"ปริญญาตรี"
+];
   final List<String> _educationtypeName = [
     "เอกชน",
     "รัฐบาล",
@@ -175,7 +288,7 @@ class _AddEduPageState extends State<AddEduPage> {
       _savedate = DateFormat('dd-MM-yyyy  kk:mm').format(DateTime.now());
 //
 
-      _namechild = _selectedValchild!;
+      _namechild = _nochildName;
       ;
 
 //
@@ -635,8 +748,7 @@ class _AddEduPageState extends State<AddEduPage> {
                   ],
                 ),
               ),
-
-              /////////////
+//////
               Container(
                 margin: const EdgeInsets.all(10.0),
                 padding: const EdgeInsets.all(10.0),
@@ -669,44 +781,133 @@ class _AddEduPageState extends State<AddEduPage> {
                       ),
                     ),
                     const Divider(),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'บุตร',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Sarabun',
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              'บุตรของพนักงาน',
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Sarabun',
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                          Expanded(
+                            child: Text(
+                              '',
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    Row(
-                      children: [
+
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: DropdownButton(
-                            value: _selectedValchild,
-                            items: _childName
-                                .map((e) => DropdownMenuItem(
-                                      child: Text(e),
-                                      value: e,
-                                    ))
-                                .toList(),
-                            onChanged: (val) {
-                              setState(() {
-                                _selectedValchild = val as String;
-                              });
+                          child: DropdownButtonFormField(
+                            decoration: const InputDecoration(
+                              labelText: 'ชื่อบุตร',
+                            ),
+                            value: _nochildName,
+                            items: _ddlchildName,
+                            validator: (value) {
+                              if (value == "") {
+                                return "กรุณาระบุ บุตร";
+                              }
+                              return null;
+                            },
+                            onChanged: (value) {
+                              _nochildName = value.toString();
+                            },
+                            onSaved: (value) {
+                              _nochildName = value.toString();
                             },
                           ),
                         ),
-                      ],
-                    ),
+                        //     ]
+
+
                   ],
                 ),
               ),
+///
+
+///
+              /////////////
+              // Container(
+              //   margin: const EdgeInsets.all(10.0),
+              //   padding: const EdgeInsets.all(10.0),
+              //   //height: double.infinity,
+              //   width: 450,
+              //   decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.circular(5),
+              //     border: Border.all(
+              //       color: Colors.white,
+              //     ),
+              //     color: Colors.white,
+              //     boxShadow: [
+              //       BoxShadow(
+              //         blurRadius: 6.0,
+              //         spreadRadius: 2.0,
+              //         color: Colors.grey,
+              //         offset: Offset(0.0, 0.0),
+              //       )
+              //     ],
+              //   ),
+              //   child: Column(
+              //     children: <Widget>[
+              //       Text(
+              //         'ข้อมูลบุตร',
+              //         style: TextStyle(
+              //           fontSize: 16,
+              //           color: Color.fromARGB(255, 9, 28, 235),
+              //           fontWeight: FontWeight.bold,
+              //           fontFamily: 'Sarabun',
+              //         ),
+              //       ),
+              //       const Divider(),
+              //       Row(
+              //         children: [
+              //           Expanded(
+              //             child: Text(
+              //               'บุตร',
+              //               textAlign: TextAlign.left,
+              //               style: TextStyle(
+              //                 fontWeight: FontWeight.bold,
+              //                 fontFamily: 'Sarabun',
+              //               ),
+              //             ),
+              //           ),
+              //         ],
+              //       ),
+              //       Row(
+              //         children: [
+              //           Padding(
+              //             padding: const EdgeInsets.all(8.0),
+              //             child: DropdownButton(
+              //               value: _selectedValchild,
+              //               items: _childName
+              //                   .map((e) => DropdownMenuItem(
+              //                         child: Text(e),
+              //                         value: e,
+              //                       ))
+              //                   .toList(),
+              //               onChanged: (val) {
+              //                 setState(() {
+              //                   _selectedValchild = val as String;
+              //                 });
+              //               },
+              //             ),
+              //           ),
+              //         ],
+              //       ),
+              //     ],
+              //   ),
+              // ),
               //
               Container(
                 margin: const EdgeInsets.all(10.0),
@@ -756,19 +957,22 @@ class _AddEduPageState extends State<AddEduPage> {
                     ),
                     Row(
                       children: [
-                        DropdownButton(
-                          value: _selectedValclass,
-                          items: _className
-                              .map((e) => DropdownMenuItem(
-                                    child: Text(e),
-                                    value: e,
-                                  ))
-                              .toList(),
-                          onChanged: (val) {
-                            setState(() {
-                              _selectedValclass = val as String;
-                            });
-                          },
+                        Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: DropdownButton(
+                            value: _selectedValclass,
+                            items: _className
+                                .map((e) => DropdownMenuItem(
+                                      child: Text(e),
+                                      value: e,
+                                    ))
+                                .toList(),
+                            onChanged: (val) {
+                              setState(() {
+                                _selectedValclass = val as String;
+                              });
+                            },
+                          ),
                         ),
                       ],
                     ),
@@ -788,19 +992,22 @@ class _AddEduPageState extends State<AddEduPage> {
                     ),
                     Row(
                       children: [
-                        DropdownButton(
-                          value: _selectedValacademy,
-                          items: _academyName
-                              .map((e) => DropdownMenuItem(
-                                    child: Text(e),
-                                    value: e,
-                                  ))
-                              .toList(),
-                          onChanged: (val) {
-                            setState(() {
-                              _selectedValacademy = val as String;
-                            });
-                          },
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: DropdownButton(
+                            value: _selectedValacademy,
+                            items: _academyName
+                                .map((e) => DropdownMenuItem(
+                                      child: Text(e),
+                                      value: e,
+                                    ))
+                                .toList(),
+                            onChanged: (val) {
+                              setState(() {
+                                _selectedValacademy = val as String;
+                              });
+                            },
+                          ),
                         ),
                       ],
                     ),
@@ -841,27 +1048,49 @@ class _AddEduPageState extends State<AddEduPage> {
                               ),
                             ),
                           ),
+                                                    Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: DropdownButton(
+                              value: _selectedValsector,
+                              items: _sectorName
+                                  .map((e) => DropdownMenuItem(
+                                        child: Text(e),
+                                        value: e,
+                                      ))
+                                  .toList(),
+                              onChanged: (val) {
+                                setState(() {
+                                  _selectedValsector = val as String;
+                                });
+                              },
+                          ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
-                    Row(
-                      children: [
-                        DropdownButton(
-                          value: _selectedValsector,
-                          items: _sectorName
-                              .map((e) => DropdownMenuItem(
-                                    child: Text(e),
-                                    value: e,
-                                  ))
-                              .toList(),
-                          onChanged: (val) {
-                            setState(() {
-                              _selectedValsector = val as String;
-                            });
-                          },
-                        ),
-                      ],
-                    ),
+                    // Row(
+                    //   children: [
+                    //     Padding(
+                    //       padding: const EdgeInsets.all(20.0),
+                    //       child: DropdownButton(
+                    //         value: _selectedValsector,
+                    //         items: _sectorName
+                    //             .map((e) => DropdownMenuItem(
+                    //                   child: Text(e),
+                    //                   value: e,
+                    //                 ))
+                    //             .toList(),
+                    //         onChanged: (val) {
+                    //           setState(() {
+                    //             _selectedValsector = val as String;
+                    //           });
+                    //         },
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
                     Row(
                       children: [
                         Expanded(
@@ -878,19 +1107,22 @@ class _AddEduPageState extends State<AddEduPage> {
                     ),
                     Row(
                       children: [
-                        DropdownButton(
-                          value: _selectedValeducationlevel,
-                          items: _educationlevelName
-                              .map((e) => DropdownMenuItem(
-                                    child: Text(e),
-                                    value: e,
-                                  ))
-                              .toList(),
-                          onChanged: (val) {
-                            setState(() {
-                              _selectedValeducationlevel = val as String;
-                            });
-                          },
+                        Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: DropdownButton(
+                            value: _selectedValeducationlevel,
+                            items: _educationlevelName
+                                .map((e) => DropdownMenuItem(
+                                      child: Text(e),
+                                      value: e,
+                                    ))
+                                .toList(),
+                            onChanged: (val) {
+                              setState(() {
+                                _selectedValeducationlevel = val as String;
+                              });
+                            },
+                          ),
                         ),
                       ],
                     ),
@@ -910,19 +1142,22 @@ class _AddEduPageState extends State<AddEduPage> {
                     ),
                     Row(
                       children: [
-                        DropdownButton(
-                          value: _selectedValeducationtype,
-                          items: _educationtypeName
-                              .map((e) => DropdownMenuItem(
-                                    child: Text(e),
-                                    value: e,
-                                  ))
-                              .toList(),
-                          onChanged: (val) {
-                            setState(() {
-                              _selectedValeducationtype = val as String;
-                            });
-                          },
+                        Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: DropdownButton(
+                            value: _selectedValeducationtype,
+                            items: _educationtypeName
+                                .map((e) => DropdownMenuItem(
+                                      child: Text(e),
+                                      value: e,
+                                    ))
+                                .toList(),
+                            onChanged: (val) {
+                              setState(() {
+                                _selectedValeducationtype = val as String;
+                              });
+                            },
+                          ),
                         ),
                       ],
                     ),

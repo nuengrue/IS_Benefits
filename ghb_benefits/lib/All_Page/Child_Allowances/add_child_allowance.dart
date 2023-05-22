@@ -7,6 +7,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:ghb_benefits/All_Controllers/child_allowance_controllers.dart';
 import 'package:ghb_benefits/All_Controllers/master_controllers.dart';
+import 'package:ghb_benefits/All_Models/child_allowane_model.dart';
 import 'package:ghb_benefits/All_Models/child_model.dart';
 import 'package:ghb_benefits/All_Models/employee_model.dart';
 import 'package:ghb_benefits/All_Page/Child_Allowances/list_child_allowance.dart';
@@ -31,7 +32,10 @@ class AddChildAllowancePage extends StatefulWidget {
 
 class _AddChildAllowancePageState extends State<AddChildAllowancePage> {
   MasterController mastecontroller = MasterController(FirebaseServices());
-
+   late String _nochildName  = "";
+     List<Child> child = List.empty();
+ 
+  List<DropdownMenuItem<String>> _ddlchildName = [];
   ChildAllowanceController controller =
       ChildAllowanceController(FirebaseServices());
 
@@ -45,6 +49,17 @@ class _AddChildAllowancePageState extends State<AddChildAllowancePage> {
     var newEmployee = await mastecontroller.fetchEmployee();
     context.read<EmployeeProviders>().EmployeeList = newEmployee;
     var newChilder = await mastecontroller.fetchChilder();
+                 newChilder.sort((a,b) => a.nochild.compareTo(b.nochild));
+
+             child =  newChilder.reversed.toList();
+        setState(() {
+      _ddlchildName
+          .add(DropdownMenuItem(value: "", child: Text("เลือกบุตร")));
+      child.forEach((e) {
+        _ddlchildName.add(DropdownMenuItem(
+            child: Text(e.namechild), value: e.namechild));
+      });
+    });
     context.read<ChilderProviders>().ChilderList = newChilder;
     List<String> childName = [];
     for (var doc in newChilder) {
@@ -82,11 +97,13 @@ class _AddChildAllowancePageState extends State<AddChildAllowancePage> {
   }
 
   _AddChildAllowancePageState() {
-    _selectedVal = _childName[0];
+    // _selectedVal = _childName[0];
     _selectedpartner = _childpartner[0];
     _selectedstatuspartner = _childstatuspartner[0];
   }
 
+
+  // List<DropdownMenuItem<String>> _ddlchildName = [];
   late String _selectedchild;
   String dropdownValue = 'Dog';
 
@@ -154,7 +171,7 @@ class _AddChildAllowancePageState extends State<AddChildAllowancePage> {
       _divisionment = _divisionment;
       _savedate = DateFormat('dd-MM-yyyy  kk:mm').format(DateTime.now());
       // _savedate = DateFormat.yMd().add_Hm().format(DateTime.now());
-      _namechild = _selectedVal!;
+      _namechild = _nochildName;
       _namepartner;
       _officetner;
       _maritalstatus = _selectedpartner!;
@@ -599,26 +616,50 @@ class _AddChildAllowancePageState extends State<AddChildAllowancePage> {
 //     ] else ...[
 //      Text('ท่านได้ใช้วงเงินตามสิทธิ์ครบกำหนดแล้ว: ไม่มี'),
 
-//     ]
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: DropdownButtonFormField(
+                            decoration: const InputDecoration(
+                              labelText: 'ชื่อบุตร',
+                            ),
+                            value: _nochildName,
+                            items: _ddlchildName,
+                            validator: (value) {
+                              if (value == "") {
+                                return "กรุณาระบุ บุตร";
+                              }
+                              return null;
+                            },
+                            onChanged: (value) {
+                              _nochildName = value.toString();
+                            },
+                            onSaved: (value) {
+                              _nochildName = value.toString();
+                            },
+                          ),
+                        ),
+                        //     ]
+
+
                     // var clients = context.read<ChilderProviders>().ChilderList.toList();
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: DropdownButtonFormField(
-                        // value: _selectedVal,
-                        value: _selectedVal,
-                        items: _childName
-                            .map((e) => DropdownMenuItem(
-                                  child: Text(e),
-                                  value: e,
-                                ))
-                            .toList(),
-                        onChanged: (val) {
-                          setState(() {
-                            _selectedVal = val as String;
-                          });
-                        },
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.all(8.0),
+                    //   child: DropdownButtonFormField(
+                    //     // value: _selectedVal,
+                    //     value: _selectedVal,
+                    //     items: _childName
+                    //         .map((e) => DropdownMenuItem(
+                    //               child: Text(e),
+                    //               value: e,
+                    //             ))
+                    //         .toList(),
+                    //     onChanged: (val) {
+                    //       setState(() {
+                    //         _selectedVal = val as String;
+                    //       });
+                    //     },
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

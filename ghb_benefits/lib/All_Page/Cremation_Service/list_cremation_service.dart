@@ -22,7 +22,7 @@ class _ListCremationServicePageState extends State<ListCremationServicePage> {
   List<CremationService> Cremations = List.empty();
   bool isloading = false;
   late int count ;
-
+    late int countsum = 0 ;
   CremationServiceController controller =
       CremationServiceController(FirebaseServices());
       
@@ -38,7 +38,11 @@ class _ListCremationServicePageState extends State<ListCremationServicePage> {
                          newCremation.sort((a,b) => a.no.compareTo(b.no));
 
              Cremations =  newCremation.reversed.toList();
+var countshow = newCremation.where((x) => x.status == "อนุมัติ").length ;
 
+setState(() {
+ countsum =  countshow;
+});
           context.read<CremationServiceProviders>().CremationServiceList = Cremations;
       }
   @override
@@ -61,16 +65,16 @@ class _ListCremationServicePageState extends State<ListCremationServicePage> {
       //     ),
       //   ],
         ),
-          floatingActionButton: FloatingActionButton(  
-        child: Icon(Icons.add),  
-        backgroundColor: iBlueColor,  
-        foregroundColor: Colors.white,  
-            onPressed: () {
+      //     floatingActionButton: FloatingActionButton(  
+      //   child: Icon(Icons.add),  
+      //   backgroundColor: iBlueColor,  
+      //   foregroundColor: Colors.white,  
+      //       onPressed: () {
 
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => AddCremationServicePage()));
-            },
-      ), 
+      //         Navigator.of(context).push(
+      //             MaterialPageRoute(builder: (context) => AddCremationServicePage()));
+      //       },
+      // ), 
              body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Consumer<CremationServiceProviders>(
@@ -103,11 +107,40 @@ class _ListCremationServicePageState extends State<ListCremationServicePage> {
           },
         ),
       ),
-             drawer: MyDrawer(),
+           drawer: MyDrawer(),
+      persistentFooterButtons: <Widget>[
+             if (countsum.toString() == '1') ...[
+                   
+ Text('ท่านได้อนุมัติตามคำขอสมัครฌาปนกิจสงเคราะห์',style: TextStyle(
+                      fontSize: 15,
+                      color: iOrangeColor,
+                      fontWeight: FontWeight.bold,fontFamily: 'Sarabun',
+                    ),),
+
+    ] else ...[
+  //  Text('ท่านได้ใช้วงเงินตามสิทธิ์ครบกำหนดแล้ว: ${value.Childage.toString()}'),
+
+         FloatingActionButton(  
+        child: Icon(Icons.add),  
+        backgroundColor: iBlueColor,  
+        foregroundColor: Colors.white,  
+            onPressed: () {
+
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => AddCremationServicePage()));
+            },
+      ),
+    ]
+
+
+      ]
+
+    
+                      
       );
+
   }
 }
-
  class CardList extends StatelessWidget {
   final CremationService notes;
   int index;

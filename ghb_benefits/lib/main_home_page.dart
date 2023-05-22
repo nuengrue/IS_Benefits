@@ -18,6 +18,7 @@ import 'package:ghb_benefits/Notification/notifications_page.dart';
 import 'package:ghb_benefits/color.dart';
 import 'package:ghb_benefits/login/main_switch_page.dart';
 import 'package:ghb_benefits/my_drawer.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 
@@ -38,6 +39,7 @@ class _MainHomePageState extends State<MainHomePage> {
  double Achild = 3;
  double schild = 0;
  int    Countnotishow = 0; 
+   String    _year = DateFormat.y().format(DateTime.now());
 
   MedicalController medicalcontroller = MedicalController(FirebaseServices());
   EducationController educationcontroller = EducationController(FirebaseServices());
@@ -52,13 +54,15 @@ class _MainHomePageState extends State<MainHomePage> {
   void _getDashboard(BuildContext context) async {
     // Duration(seconds: 5);
         var newMedicalDashboard = await medicalcontroller.fetchMedical();
+         var wherenewMedicalDashboard = newMedicalDashboard.where((x) => x.yearmed == _year);
+
       //  print(newMedicalDashboard.length);
-    if(newMedicalDashboard.length > 0){
+    if(wherenewMedicalDashboard.length > 0){
     // get data  MedicalDashboard
     //var newMedicalDashboard = await medicalcontroller.fetchMedical();
     context.read<MedicalProviders>().MedicalList = newMedicalDashboard;
     final medical = [];
-    for (var doc in newMedicalDashboard) {
+    for (var doc in wherenewMedicalDashboard) {
       double a = double.parse(doc.payamount);
       medical.add(a);
     }
@@ -75,11 +79,12 @@ class _MainHomePageState extends State<MainHomePage> {
     }
         // get data  EducationDashboard
     var newEducationDashboard = await educationcontroller.fetchEducation();
+           var wherenewEducationDashboard = newEducationDashboard.where((x) => x.yearedu == _year);
      //print(newEducationDashboard.length);
-        if(newEducationDashboard.length > 0){
+        if(wherenewEducationDashboard.length > 0){
     context.read<EducationProviders>().EducationList = newEducationDashboard;
     final education = [];
-    for (var doc in newEducationDashboard) {
+    for (var doc in wherenewEducationDashboard) {
       double a = double.parse(doc.payamount);
       education.add(a);
     }

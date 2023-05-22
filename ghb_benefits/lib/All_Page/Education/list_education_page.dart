@@ -48,31 +48,31 @@ class _ListEducationPageState extends State<ListEducationPage> {
 
           context.read<EducationProviders>().EducationList = educations;
 
-calculateAge(DateTime birthDate) {
-  DateTime currentDate = DateTime.now();
-  int age = currentDate.year - birthDate.year;
-  int month1 = currentDate.month;
-  int month2 = birthDate.month;
-  if (month2 > month1) {
-    age--;
-  } else if (month1 == month2) {
-    int day1 = currentDate.day;
-    int day2 = birthDate.day;
-    if (day2 > day1) {
-      age--;
-    }
-  }
-  return age;
-}
- var a =  "1993-04-01";
-DateTime b =  DateTime.parse(a);
-          var _age = calculateAge(b);
-context.read<MyDashboardProviders>().Childage = _age;
-          print(_age);
+// calculateAge(DateTime birthDate) {
+//   DateTime currentDate = DateTime.now();
+//   int age = currentDate.year - birthDate.year;
+//   int month1 = currentDate.month;
+//   int month2 = birthDate.month;
+//   if (month2 > month1) {
+//     age--;
+//   } else if (month1 == month2) {
+//     int day1 = currentDate.day;
+//     int day2 = birthDate.day;
+//     if (day2 > day1) {
+//       age--;
+//     }
+//   }
+//   return age;
+// }
+//  var a =  "1993-04-01";
+// DateTime b =  DateTime.parse(a);
+//           var _age = calculateAge(b);
+// context.read<MyDashboardProviders>().Childage = _age;
+//           print(_age);
 
-setState(() {
- ages = _age;
-});
+// setState(() {
+//  ages = _age;
+// });
           
       }
 
