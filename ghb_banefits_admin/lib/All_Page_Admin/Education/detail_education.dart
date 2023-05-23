@@ -88,7 +88,7 @@ class _DetailEducationAdminPageState extends State<DetailEducationAdminPage> {
       String id,
       String remarks) async {
     final response = await http.post(
-      Uri.parse('http://192.168.1.43/APIBenefit/Education/InsertEducation'),
+      Uri.parse('http://192.168.1.45/APIBenefit/Education/InsertEducation'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

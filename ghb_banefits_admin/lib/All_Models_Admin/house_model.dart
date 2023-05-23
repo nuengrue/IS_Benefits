@@ -120,6 +120,7 @@ class HouseAllowanceAdmin {
       'provincework': provincework,
       'positiondate': positiondate,
       'typehouse': typehouse,
+      'moneyhouse': moneyhouse,
       'housenumber': housenumber,
       'alley': alley,
       'road': road,

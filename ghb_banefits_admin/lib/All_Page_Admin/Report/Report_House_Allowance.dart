@@ -496,7 +496,7 @@ setState(() {
                                   Center(child: Text(myFormat.format(item.amountRequest),style: TextStyle(fontFamily: 'Sarabun',),)))),
                           DataCell(Flexible(
                               child:
-                                  Center(child: Text(myFormat.format(item.amountRequest),style: TextStyle(fontFamily: 'Sarabun',),)))),
+                                  Center(child: Text(myFormat.format(item.amountReject),style: TextStyle(fontFamily: 'Sarabun',),)))),
                         ],
                       );
                     } else {

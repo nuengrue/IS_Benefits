@@ -58,9 +58,8 @@ class _DetailHouseAdminPageState extends State<DetailHouseAdminPage> {
 
   late Future<HouseAllowanceAdmin> _futureHouseAllowanceAdmin;
   Future<HouseAllowanceAdmin> createHouseAllowanceAdmin(
-      String no,
       String empcode,
-      String name,
+      String  name,
       String department,
       String divisionment,
       String savedate,
@@ -86,11 +85,44 @@ class _DetailHouseAdminPageState extends State<DetailHouseAdminPage> {
       String fileUrl,
       String filename,
       String flagread,
+      String  no,
       String id,
-      String remarks) async {
+      String remarks
+
+      // String empcode,
+      // String name,
+      // String department,
+      // String divisionment,
+      // String savedate,
+      // String startdate,
+      // String position,
+      // String segment,
+      // String departmentwork,
+      // String provincework,
+      // String positiondate,
+      // String typehouse,
+      // String moneyhouse,
+      // String housenumber,
+      // String alley,
+      // String road,
+      // String district,
+      // String county,
+      // String province,
+      // String workstatus,
+      // String payamount,
+      // String paydate,
+      // String status,
+      // String email,
+      // String fileUrl,
+      // String filename,
+      // String flagread,
+      // String no,
+      // String id,
+      // String remarks
+      ) async {
     final response = await http.post(
       Uri.parse(
-          'http://192.168.1.43/APIBenefit/HouseAllowance/InsertHouseAllowance'),
+          'http://192.168.1.45/APIBenefit/HouseAllowance/InsertHouseAllowance'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -107,6 +139,7 @@ class _DetailHouseAdminPageState extends State<DetailHouseAdminPage> {
         'provincework': provincework,
         'positiondate': positiondate,
         'typehouse': typehouse,
+        'moneyhouse': moneyhouse,
         'housenumber': housenumber,
         'alley': alley,
         'road': road,
@@ -180,8 +213,9 @@ class _DetailHouseAdminPageState extends State<DetailHouseAdminPage> {
       _paydate = DateFormat('dd-MM-yyyy  kk:mm').format(DateTime.now());
       _remark = _remark;
       _no = widget.Notes.no.toString();
-      _empcode = widget.Notes.empcode;
-      _name = widget.Notes.name;
+      _empcode = widget.Notes.empcode.toString();
+      _name = widget.Notes.name.toString();
+      print(_name);
       _department = widget.Notes.department;
       _divisionment = widget.Notes.departmentwork;
       _savedate = widget.Notes.savedate;
@@ -313,8 +347,8 @@ class _DetailHouseAdminPageState extends State<DetailHouseAdminPage> {
       _paydate = DateFormat('dd-MM-yyyy  kk:mm').format(DateTime.now());
       _remark = _remark;
        _no = widget.Notes.no.toString();
-      _empcode = widget.Notes.empcode;
-      _name = widget.Notes.name;
+      _empcode = widget.Notes.empcode.toString();;
+      _name = widget.Notes.name.toString();;
       _department = widget.Notes.department;
       _divisionment = widget.Notes.departmentwork;
       _savedate = widget.Notes.savedate;
@@ -333,7 +367,7 @@ class _DetailHouseAdminPageState extends State<DetailHouseAdminPage> {
       _county = widget.Notes.county;
       _province = widget.Notes.province;
       _workstatus = widget.Notes.workstatus;
-      _email = widget.Notes.email;
+      _email = widget.Notes.email.toString();;
       _fileUrl = widget.Notes.fileUrl;
       _filename = widget.Notes.filename;
 

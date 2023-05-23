@@ -97,7 +97,7 @@ class _DetailChildAllowanceAdminPageState
       String submaritalstatus,String status,String email,String fileUrl,String filename,String flagread, String no,String id,String remarks) 
       async {
   final response = await http.post(
-    Uri.parse('http://192.168.1.43/APIBenefit/ChildAllowance/InsertChildAllowance'),
+    Uri.parse('http://192.168.1.45/APIBenefit/ChildAllowance/InsertChildAllowance'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
